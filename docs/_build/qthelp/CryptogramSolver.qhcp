@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<QHelpCollectionProject version="1.0">
+    <assistant>
+        <title>Cryptogram Solver v0.1</title>
+        <homePage>qthelp://org.sphinx.cryptogramsolver.0.1/doc/index.html</homePage>
+        <startPage>qthelp://org.sphinx.cryptogramsolver.0.1/doc/index.html</startPage>
+    </assistant>
+    <docFiles>
+        <generate>
+            <file>
+                <input>CryptogramSolver.qhp</input>
+                <output>CryptogramSolver.qch</output>
+            </file>
+        </generate>
+        <register>
+            <file>CryptogramSolver.qch</file>
+        </register>
+    </docFiles>
+</QHelpCollectionProject>

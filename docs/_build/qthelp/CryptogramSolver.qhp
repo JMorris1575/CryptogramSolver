@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<QtHelpProject version="1.0">
+    <namespace>org.sphinx.cryptogramsolver.0.1</namespace>
+    <virtualFolder>doc</virtualFolder>
+    <customFilter name="Cryptogram Solver 0.1">
+        <filterAttribute>CryptogramSolver</filterAttribute>
+        <filterAttribute>0.1</filterAttribute>
+    </customFilter>
+    <filterSection>
+        <filterAttribute>CryptogramSolver</filterAttribute>
+        <filterAttribute>0.1</filterAttribute>
+        <toc>
+            <section title="Cryptogram Solver v0.1" ref="index.html">
+                <section title="Cryptogram Solver" ref="introduction.html">
+                    <section title="Introduction" ref="introduction.html#introduction"/>
+                </section>
+                <section title="The File Menu" ref="filemenu.html">
+                    <section title="New Player..." ref="filemenu.html#new-player"/>
+                    <section title="Login..." ref="filemenu.html#login"/>
+                    <section title="Open Collection..." ref="filemenu.html#open-collection"/>
+                    <section title="Save Progress" ref="filemenu.html#save-progress"/>
+                    <section title="Exit" ref="filemenu.html#exit"/>
+                </section>
+                <section title="The Puzzle Menu" ref="puzzlemenu.html">
+                    <section title="Select Puzzle..." ref="puzzlemenu.html#select-puzzle"/>
+                    <section title="Previous Puzzle" ref="puzzlemenu.html#previous-puzzle"/>
+                    <section title="Next Puzzle" ref="puzzlemenu.html#next-puzzle"/>
+                    <section title="Get Hint" ref="puzzlemenu.html#get-hint"/>
+                    <section title="Clear Puzzle" ref="puzzlemenu.html#clear-puzzle"/>
+                    <section title="Give Up" ref="puzzlemenu.html#give-up"/>
+                    <section title="Check Solution" ref="puzzlemenu.html#check-solution"/>
+                </section>
+                <section title="The Admin Menu" ref="adminmenu.html">
+                    <section title="Create Collection..." ref="adminmenu.html#create-collection"/>
+                    <section title="Edit Collection..." ref="adminmenu.html#edit-collection"/>
+                    <section title="Delete Collection..." ref="adminmenu.html#delete-collection"/>
+                    <section title="Save Solution" ref="adminmenu.html#save-solution"/>
+                </section>
+                <section title="The Help Menu" ref="helpmenu.html">
+                    <section title="Help" ref="helpmenu.html#help"/>
+                    <section title="About" ref="helpmenu.html#about"/>
+                </section>
+            </section>
+        </toc>
+        <keywords>
+
+        </keywords>
+        <files>
+            <file>adminmenu.html</file>
+            <file>filemenu.html</file>
+            <file>genindex.html</file>
+            <file>helpmenu.html</file>
+            <file>index.html</file>
+            <file>introduction.html</file>
+            <file>puzzlemenu.html</file>
+            <file>search.html</file>
+            <file>_images\AdminMenu.png</file>
+            <file>_images\FileMenu.png</file>
+            <file>_images\HelpMenu.png</file>
+            <file>_images\PuzzleMenu.png</file>
+            <file>_static\ajax-loader.gif</file>
+            <file>_static\alabaster.css</file>
+            <file>_static\basic.css</file>
+            <file>_static\comment-bright.png</file>
+            <file>_static\comment-close.png</file>
+            <file>_static\comment.png</file>
+            <file>_static\down-pressed.png</file>
+            <file>_static\down.png</file>
+            <file>_static\file.png</file>
+            <file>_static\minus.png</file>
+            <file>_static\plus.png</file>
+            <file>_static\pygments.css</file>
+            <file>_static\Thumbs.db</file>
+            <file>_static\up-pressed.png</file>
+            <file>_static\up.png</file>
+        </files>
+    </filterSection>
+</QtHelpProject>

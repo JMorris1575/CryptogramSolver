@@ -1,0 +1,398 @@
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+
+import data_structures
+
+alphabet = [' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+            'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+
+# Maybe this can be used to get the Return key to change tab focus too in the textEdit boxes
+# the following code doesn't throw any errors but doesn't work either
+# class EventFilter(QObject):
+#     def eventFilter(self, obj, event):
+#         if event.type() == QEvent.KeyPress:
+#             if event.key() == Qt.Key_Return\
+#                     or event.key() == Qt.Key_Enter:
+#                 newEvent = QKeyEvent(QEvent.KeyPress, Qt.Key_Tab, event.modifiers())
+#                 # obj.emit(SIGNAL('returnPressed()'))
+#                 #obj.clearFocus()
+#                 return obj.eventFilter(obj, newEvent)
+#
+#         return obj.eventFilter(obj, event)
+
+
+
+class LetterUnit(QWidget):
+
+    def __init__(self, codeLetter=" ", guessLetter=" ", xpos=0, ypos=0, size = QSize(20, 60), parent=None, enabled=False):
+        super(LetterUnit, self).__init__(parent)
+        self._codeLetter = codeLetter
+        self._guessLetter = guessLetter
+        self._xpos = xpos
+        self._ypos = ypos
+        self._size = size
+        self._enabled = enabled
+        self._letterFont = self.setLetterFont(self._size.width())
+        self._active = False
+        self._timer = QTimer()
+
+        self.setAppearance()
+        self.move(self._xpos, self._ypos)
+
+    def setAppearance(self):
+        self.resize(self.size().width(), self._size.height())
+
+        self.guessLabel = QLabel(self._guessLetter)
+        self.guessLabel.setFont(self._letterFont)
+        self.guessLabel.setStyleSheet("QLabel { background-color : white; }")
+        self.guessLabel.setFrameStyle(QFrame.Panel | QFrame.Sunken)
+        self.guessLabel.setLineWidth(1)
+        self.guessLabel.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+        if self.codeLetter() in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
+            self.guessLabel.setStyleSheet("QLabel { background-color : white; }")
+        else:
+            self.guessLabel.setStyleSheet("QLabel { background-color : rgb(240, 240, 240); }")
+
+            self.codeLabel = QLabel(self.codeLetter())
+            self.codeLabel.setFont(self._letterFont)
+            self.codeLabel.setStyleSheet("QLabel { background-color : ivory; }")
+            self.codeLabel.setFrameStyle(QFrame.WinPanel | QFrame.Sunken)
+            self.codeLabel.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.addWidget(self.guessLabel)
+        layout.addWidget(self.codeLabel)
+
+    def codeLetter(self):
+        """
+        Returns the code letter as a string
+        :return: QString
+        """
+        return self._codeLetter
+
+    def setCodeLetter(self, letter):
+        """
+        Sets the letter in the code section of the box
+        :param letter:
+        :return: None
+        """
+        if letter == ' ':
+            displayLetter = 'space'
+        else:
+            displayLetter = letter
+        print("Got to setCodeLetter with: ", displayLetter)
+        self._codeLetter = letter
+        print("self._codeLetter = ", self._codeLetter)
+        self.updateAppearance()
+
+    def moveToCodeLetter(self, letter):
+        """
+        Changes the code letter one step at a time until it comes to letter
+        :param letter:
+        :return: None
+        """
+        print("Got to moveToCodeLetter with letter: ", letter)
+        self.setCodeLetter(letter)      # for now, until you get around to implementing something fancier
+
+    # def setMode(self, letter):
+    #     if letter not in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ':
+    #         self.codeLabel.setEnabled(False)
+    #         set.guessLabel.setEnabled(False)
+    #     else:
+    #         self.codeLabel.setEnabled(True)
+    #         self.guessLabel.setEnabled(True)
+
+    def size(self):
+        """
+        Returns the current size of the LetterUnit
+        :return: QSize
+        """
+        return self._size
+
+    def setSize(self, width, height):
+        """
+        Sets the size of the LetterUnit and adjusts the font size accordingly
+        :param width: int
+        :param height: int
+        :return: QFont
+        """
+        self._size = QSize(width, height)
+        return self.setFontSize(width)
+
+    def setLetterFont(self, width):
+        """
+        Sets the fontSize of the LetterUnit according to the width of the unit itself
+        :param width: int
+        :return: QFont
+        """
+        if width <= 15:
+            fontSize = 10
+        elif width <= 20:
+            fontSize = 12
+        else:
+            fontSize = 14
+        return QFont("Arial", fontSize)
+
+    def updateAppearance(self):
+
+        print("uA A")
+        self.guessLabel.setText(self._guessLetter)
+        print("uA B")
+        self.codeLabel.setText(self._codeLetter)
+        print("ua C")
+        if self._codeLetter not in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ':
+            print("it's in the alphabet")
+            self.guessLabel.setStyleSheet("QLabel { background-color : rgb(240, 240, 240); }")
+        else:
+            print("it's a space")
+            self.guessLabel.setStyleSheet("QLabel { background-color : white; }")
+        print("uA D")
+
+
+
+class AddEditCollection(QDialog):
+
+    """
+    Invoke this class without parameters when creating a new collection,
+    invoke it with name and author set to edit the current collection
+    """
+
+    def __init__(self, name=None, author=None, puzzles=[], parent=None):
+        super(AddEditCollection, self).__init__(parent)
+        self._name = name
+        self._author = author
+        self._puzzles = puzzles
+        self.setupUI(name, author)
+
+    def name(self):
+        return self._name
+
+    def author(self):
+        return self._author
+
+    def puzzles(self):
+        return self._puzzles
+
+    def addPuzzle(self, puzzle):
+        self._puzzles.append(puzzle)
+
+
+    def setupUI(self, name, author):
+        nameLabel = QLabel("Collection Name:")
+        self.nameEdit = QLineEdit()
+        if self._name:
+            self.nameEdit.setText(self._name)
+
+        authorLabel = QLabel("Author of this Collection:")
+        self.authorEdit = QLineEdit()
+        if self._author:
+            self.authorEdit.setText(self._author)
+
+        buttonBox = QDialogButtonBox()
+        doneButton = buttonBox.addButton("Done", QDialogButtonBox.AcceptRole)
+        addPuzzleButton = buttonBox.addButton("Add Puzzle", QDialogButtonBox.ActionRole)
+        cancelButton = buttonBox.addButton("Cancel", QDialogButtonBox.RejectRole)
+        doneButton.clicked.connect(self.accept)
+        cancelButton.clicked.connect(self.reject)
+        addPuzzleButton.clicked.connect(self.addNewPuzzle)
+
+        print(buttonBox.standardButtons())
+
+        gridLayout = QGridLayout()
+        gridLayout.addWidget(nameLabel, 0, 0, Qt.AlignRight)
+        gridLayout.addWidget(self.nameEdit, 0, 1, Qt.AlignLeft)
+        gridLayout.addWidget(authorLabel, 1, 0, Qt.AlignRight)
+        gridLayout.addWidget(self.authorEdit, 1, 1, Qt.AlignLeft)
+        layout = QVBoxLayout(self)
+        layout.addLayout(gridLayout)
+        layout.addWidget(buttonBox)
+
+    def accept(self):
+
+        class NameError(Exception):pass
+
+        print("Got to AddEditCollection.accept()")
+        print("AddEditCollection's puzzle count: ", len(self.puzzles()))
+        name = self.nameEdit.text()
+        author = self.authorEdit.text()
+
+        try:
+            if len(name.strip()) == 0:
+                raise NameError("You must at least enter a name for the Collection.")
+
+        except NameError as e:
+            QMessageBox.warning(self, "Name Error", str(e))
+            self.nameEdit.selectAll()
+            self.nameEdit.setFocus()
+            return
+
+        self._name = name
+        self._author = author
+        print("Got to end of AddEditCollection's accept() method")
+        QDialog.accept(self)
+
+    def reject(self):
+        QDialog.reject(self)
+
+    def addNewPuzzle(self):
+        print("Got to addNewPuzzle")
+        dialog = AddEditPuzzle()
+        print("After dialog created")
+        if dialog.exec():
+            print("dialog.exec() returned true")
+            print("title: ", dialog.title())
+            print("puzzleCode: ", dialog.puzzleCode())
+            print("citationCode: ", dialog.citationCode())
+            print("puzzleSolution: ", dialog.puzzleSolution())
+            print("citationSolution: ", dialog.citationSolution())
+            print("hints: ", dialog.hints())
+            puzzle = data_structures.Puzzle(dialog.title(), dialog.puzzleCode(), dialog.citationCode(),
+                                            dialog.puzzleSolution(), dialog.citationSolution(), dialog.hints())
+            print("puzzle has been created")
+            self.addPuzzle(puzzle)
+            print("puzzle has been added to the dialog's collection")
+            print("The puzzle count is now: ", len(self._puzzles))
+
+
+class AddEditPuzzle(QDialog):
+
+    def __init__(self, title=None, puzzleCode=None, citationCode=None,
+                 puzzleSolution=None, citationSolution=None, hints=[], parent=None):
+        super(AddEditPuzzle, self).__init__(parent)
+        self._title = title
+        self._puzzleCode = puzzleCode
+        self._citationCode = citationCode
+        self._puzzleSolution = puzzleSolution
+        self._citationSolution = citationSolution
+        self._hints = hints
+        self._parent = parent
+
+        self.setupUI()
+
+    def title(self):
+        return self._title
+
+    def puzzleCode(self):
+        return self._puzzleCode
+
+    def citationCode(self):
+        return self._citationCode
+
+    def puzzleSolution(self):
+        return self._puzzleSolution
+
+    def citationSolution(self):
+        return self._citationSolution
+
+    def hints(self):
+        return self._hints
+
+    class puzzleTextEdit(QTextEdit):
+
+        def __init__(self, parent=None):
+            super(AddEditPuzzle.puzzleTextEdit, self).__init__(parent)
+            self.setTabChangesFocus(True)
+
+        def convertText(self):
+            self.setPlainText(self.toPlainText().toUpper())
+
+    def setupUI(self):
+
+        titleLabel = QLabel("Puzzle Name:")
+        self.titleEdit = QLineEdit()
+        if self._title:
+            self.titleEdit.setText(self._title)
+
+        puzzleCodeLabel = QLabel("Puzzle Code:")
+        self.puzzleCodeEdit = self.puzzleTextEdit()
+        print("A")
+        # self.puzzleTextEdit.focusOutEvent.connect(self.puzzleTextEdit.convertText())
+        print("B")
+        # self.puzzleCodeEdit.setTabChangesFocus(True)
+        # fltr = EventFilter(self.puzzleCodeEdit)
+        # self.puzzleCodeEdit.installEventFilter(fltr)
+        self.puzzleCodeEdit.setMaximumHeight(60)
+        if self._puzzleCode:
+            self.puzzleCodeEdit.setText(self._puzzleCode)
+
+        citationCodeLabel = QLabel("Citation Code (if any):")
+        self.citationCodeEdit = QLineEdit()
+        if self._citationCode:
+            self.ciatationCodeEdit.setText(self._citationCode)
+
+        puzzleSolutionLabel = QLabel("Puzzle Solution (if any):")
+        self.puzzleSolutionEdit = self.puzzleTextEdit()
+        # self.puzzleSolutionEdit.setTabChangesFocus(True)
+        self.puzzleSolutionEdit.setMaximumHeight(60)
+        if self._puzzleSolution:
+            self.puzzleSolutionEdit.setText(self._puzzleSolution)
+
+        citationSolutionLabel = QLabel("Citation Solution (if any):")
+        self.citationSolutionEdit = QLineEdit()
+        if self._citationSolution:
+            self.citationSolutionEdit.setText(self._citationSolution)
+
+        buttonBox = QDialogButtonBox(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
+        buttonBox.accepted.connect(self.accept)
+        buttonBox.rejected.connect(self.reject)
+
+        gridLayout = QGridLayout()
+        gridLayout.addWidget(titleLabel, 0, 0, Qt.AlignRight)
+        gridLayout.addWidget(self.titleEdit, 0, 1)
+        gridLayout.addWidget(puzzleCodeLabel, 1, 0, Qt.AlignRight)
+        gridLayout.addWidget(self.puzzleCodeEdit, 1, 1)
+        gridLayout.addWidget(citationCodeLabel, 2, 0, Qt.AlignRight)
+        gridLayout.addWidget(self.citationCodeEdit, 2, 1)
+        gridLayout.addWidget(puzzleSolutionLabel, 3, 0, Qt.AlignRight)
+        gridLayout.addWidget(self.puzzleSolutionEdit, 3, 1)
+        gridLayout.addWidget(citationSolutionLabel, 4, 0, Qt.AlignRight)
+        gridLayout.addWidget(self.citationSolutionEdit, 4, 1)
+        layout = QVBoxLayout(self)
+        layout.addLayout(gridLayout)
+        layout.addWidget(buttonBox)
+
+    def accept(self):
+
+        class TitleError(Exception):pass
+        class CodeError(Exception):pass
+
+        title = self.titleEdit.text()
+        puzzleCode = self.puzzleCodeEdit.toPlainText().upper()
+        citationCode = self.citationCodeEdit.text().upper()
+        puzzleSolution = self.puzzleSolutionEdit.toPlainText().upper()
+        citationSolution = self.citationSolutionEdit.text().upper()
+
+        try:
+            if len(title.strip()) == 0:
+                raise TitleError("You must enter a title for this Puzzle.")
+
+            if len(puzzleCode.strip()) == 0:
+                raise CodeError("You must at least enter the puzzle's code.")
+        except TitleError as e:
+            QMessageBox.warning(self, "Title Error", str(e))
+            self.titleEdit.selectAll()
+            self.titleEdit.setFocus()
+            return
+        except CodeError as e:
+            QMessageBox.warning(self, "Code Error", str(e))
+            self.puzzleCodeEdit.selectAll()
+            self.puzzleCodeEdit.setFocus()
+            return
+
+        self._title = title
+        self._puzzleCode = puzzleCode
+        self._citationCode = citationCode
+        self._puzzleSolution = puzzleSolution
+        self._citationSolution = citationSolution
+
+        print("just after setting properties")
+        QDialog.accept(self)
+
+    def reject(self):
+        print("Got to CollectionDialog's reject() routine")
+        QDialog.reject(self)
+
+
+

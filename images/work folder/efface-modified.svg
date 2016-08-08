@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg3978"
+   sodipodi:docname="efface-modified.svg"
+   viewBox="0 0 233.18 204.32"
+   version="1.1"
+   inkscape:version="0.91 r13725">
+  <defs
+     id="defs15" />
+  <title
+     id="title4026">efface</title>
+  <sodipodi:namedview
+     id="base"
+     bordercolor="#666666"
+     inkscape:pageshadow="2"
+     inkscape:window-y="-8"
+     fit-margin-left="0"
+     pagecolor="#ffffff"
+     inkscape:window-height="746"
+     inkscape:window-maximized="1"
+     inkscape:zoom="0.49497475"
+     inkscape:window-x="1592"
+     showgrid="false"
+     borderopacity="1.0"
+     inkscape:current-layer="layer1"
+     inkscape:cx="468.94969"
+     inkscape:cy="149.13117"
+     fit-margin-top="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1366"
+     inkscape:pageopacity="0.0"
+     inkscape:document-units="px" />
+  <g
+     id="layer1"
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     transform="translate(-226.27 -627.34)">
+    <g
+       id="g3953"
+       transform="matrix(1.5339781,0,0,0.98591829,105.85639,116.62943)"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         id="path9251"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccccc"
+         style="fill:#ffffff;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
+         d="m 109.33,585.17 116.79,-63.364 83.647,38.532 -109.8,77.623 z" />
+      <path
+         id="path9253"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccccc"
+         style="fill:#ffffff;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
+         d="m 109.31,586.09 -0.7649,74.212 89.013,49.298 1.5152,-72.912 -89.763,-50.599 z" />
+      <path
+         id="path9255"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccccc"
+         style="fill:#ffffff;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
+         d="m 197.27,709.18 113.31,-80.692 -0.52115,-68.24 -112.23,75.476 c -0.12828,21.967 -0.97366,45.363 -0.55527,73.457 z" />
+      <path
+         id="path9257"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccccccccc"
+         style="fill:#ffffff;stroke:#000000;stroke-width:1.54100001;stroke-linecap:round;stroke-linejoin:round"
+         d="m 193.81,703.18 -29.166,19.246 c -5.633,3.096 -15.571,2.0884 -22.546,-0.29294 l -53.543,-33.26 c -7.6239,-4.1547 -8.3475,-7.2664 -9.3145,-14.254 l -0.0579,-55.439 c 2.5291,-9.3412 9.7229,-14.063 17.119,-17.351 l 17.961,-8.9067 79.023,45.348 z" />
+      <path
+         id="path9265"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccccc"
+         style="fill:#ffffff;stroke:#000000;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"
+         d="m 138.74,569.09 87.978,46.429 63.662,-42.615 -84.673,-39.89 z" />
+      <path
+         id="path3951"
+         d="m 226.79,615.56 0.1433,71.909 63.641,-45.333 -0.59058,-69.1 z"
+         sodipodi:nodetypes="ccccc"
+         style="fill:#ffffff;stroke:#000000;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dashoffset:3.00300002"
+         inkscape:connector-curvature="0" />
+    </g>
+  </g>
+  <metadata
+     id="metadata13">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>efface</dc:title>
+        <dc:date>2011-01-13T02:33:40</dc:date>
+        <dc:description>Line art of an eraser.</dc:description>
+        <dc:source>https://openclipart.org/detail/104539/efface--eraser-by-lmproulx</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>lmproulx</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>erase</rdf:li>
+            <rdf:li>eraser</rdf:li>
+            <rdf:li>line art</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/publicdomain/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>
