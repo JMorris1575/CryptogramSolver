@@ -119,7 +119,7 @@ def readCollection(filename):
             if title == "***EOP***":
                 break
             puzzle = data_structures.Puzzle()
-            puzzle.setTitle(title)
+            puzzle.setPuzzleTitle(title)
             puzzle.setPuzzleCode(unpack_string(fh))
             print(puzzle.puzzleCode())
             puzzle.setCitationCode(unpack_string(fh))

@@ -33,20 +33,20 @@ class Collection():
 
 class Puzzle():
 
-    def __init__(self, title=None, puzzleCode=None, citationCode=None,
+    def __init__(self, puzzleTitle=None, puzzleCode=None, citationCode=None,
                  puzzleSolution=None, citationSolution=None, hints=[]):
-        self._title = title
+        self._puzzleTitle = puzzleTitle
         self._puzzleCode = puzzleCode
         self._citationCode = citationCode
         self._puzzleSolution = puzzleSolution
         self._citationSolution = citationSolution
         self._hints = hints
 
-    def title(self):
-        return self._title
+    def puzzleTitle(self):
+        return self._puzzleTitle
 
-    def setTitle(self, title):
-        self._title = title
+    def setPuzzleTitle(self, puzzleTitle):
+        self._puzzleTitle = puzzleTitle
 
     def puzzleCode(self):
         return self._puzzleCode

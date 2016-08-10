@@ -2,7 +2,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-import uiElements
+from cryptogram_solver_ui import uiElements
 
 class UserInterfaceSetup(object):
 

@@ -2,7 +2,8 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-import uiElements, SetupUI, data_structures, file_handler
+from cryptogram_solver_ui import uiElements, SetupUI
+import data_structures, file_handler
 
 class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
 
@@ -10,10 +11,8 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
         super(MainWindow, self).__init__(parent)
 
         self._collection = data_structures.Collection("Jim's Fake Collection", "Jim Morris")
-
         self.uiSetup(self)      # this is located in the file SetupUI.py
-
-        self._currentPuzzle = None
+        self._currentPuzzleIndex = None
 
     def collection(self):
         return self._collection
@@ -60,9 +59,9 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
 
     def puzzleSelectorIndexChanged(self):
         print("Got to puzzleSelectorIndexChanged")
-        self._currentPuzzle = self.puzzleSelector.currentIndex()
+        self._currentPuzzleIndex = self.puzzleSelector.currentIndex()
         print("A")
-        code = self.collection().puzzles()[self._currentPuzzle].puzzleCode()
+        code = self.collection().puzzles()[self._currentPuzzleIndex].puzzleCode()
         print("B code = ", code)
         codeLength = len(code)
         print("C codeLength = ", codeLength)
@@ -111,9 +110,10 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
             self.updateGameInfo(self.panel)
 
     def editCollection(self):
-        print(self.collection())
         if self.collection().name():
-            dialog = uiElements.AddEditCollection(self.collection().name(), self.collection().author())
+            print("self._currentPuzzleIndex = ", self._currentPuzzleIndex)
+            dialog = uiElements.AddEditCollection(self._collection.name(), self._collection.author(),
+                                                  self._currentPuzzleIndex, self._collection.puzzles())
             if dialog.exec():
                 collection = data_structures.Collection(dialog.name(), dialog.author(), dialog.puzzles())
                 self.setCollection(collection)
@@ -191,7 +191,7 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
         self.playerLabel.resize(self.smallMetrics.width(self.playerLabel.text()), self.smallMetrics.height())
         self.playerLabel.move(panel.width() - self.smallMetrics.width(self.playerLabel.text()) - self.MARGIN, 0)
 
-        solved = 3
+        solved = 3          # Eventually this information will be held in player files
         started = 1
         infoText = ""
         if solved == 1:
@@ -211,7 +211,7 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
 
         self.puzzleSelector.clear()
         for puzzle in puzzles:
-            self.puzzleSelector.addItem(puzzle.title())
+            self.puzzleSelector.addItem(puzzle.puzzleTitle())
 
 
 if __name__ == "__main__":
