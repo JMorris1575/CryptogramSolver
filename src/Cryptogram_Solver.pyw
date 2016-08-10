@@ -1,9 +1,10 @@
+import data_structures
+import file_handler
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+from .cryptogram_solver_ui import uiElements, SetupUI
 
-from cryptogram_solver_ui import uiElements, SetupUI
-import data_structures, file_handler
 
 class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
 
