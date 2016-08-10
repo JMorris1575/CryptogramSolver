@@ -265,42 +265,28 @@ class AddEditCollection(QDialog):
 
         puzzleSelectorLabel = QLabel("Puzzle Selector:")
         self.puzzleSelector = QComboBox()
-        if self._puzzles:
-            self.populatePuzzleEditor()
 
         puzzleTitleLabel = QLabel("Puzzle Name:")
         self.puzzleTitleEdit = QLineEdit()
-        if self._puzzleTitle:
-            self.puzzleTitleEdit.setText(self._puzzleTitle)
 
         puzzleCodeLabel = QLabel("Puzzle Code:")
         self.puzzleCodeEdit = CodeTextEdit()
         self.puzzleCodeEdit.setTabChangesFocus(True)
         self.puzzleCodeEdit.setMaximumHeight(60)
-        if self._puzzleCode:
-            self.puzzleCodeEdit.setText(self._puzzleCode)
 
         citationCodeLabel = QLabel("Citation Code (if any):")
         self.citationCodeEdit = CodeLineEdit()
-        if self._citationCode:
-            self.citationCodeEdit.setText(self._citationCode)
 
         puzzleSolutionLabel = QLabel("Puzzle Solution (if any):")
         self.puzzleSolutionEdit = CodeTextEdit()
         self.puzzleSolutionEdit.setTabChangesFocus(True)
         self.puzzleSolutionEdit.setMaximumHeight(60)
-        if self._puzzleSolution:
-            self.puzzleSolutionEdit.setText(self._puzzleSolution)
 
         citationSolutionLabel = QLabel("Citation Solution (if any):")
         self.citationSolutionEdit = CodeLineEdit()
-        if self._citationSolution:
-            self.citationSolutionEdit.setText(self._citationSolution)
 
         hintLabel = QLabel("Hints (if any):")
         self.hintEdit = CodeLineEdit()
-        if self._hints:
-            self.hintEdit.setText(self._hints)
 
         puzzleButtonBox = QDialogButtonBox()
         acceptPuzzleButton = puzzleButtonBox.addButton("Store Puzzle", QDialogButtonBox.AcceptRole)
@@ -331,6 +317,10 @@ class AddEditCollection(QDialog):
         self.puzzleEditControls = QGroupBox("Add or Edit Puzzles")
         self.puzzleEditControls.setEnabled(False)
         self.puzzleEditControls.setLayout(puzzleEditLayout)
+
+        if self._puzzles:
+            self.populatePuzzleEditor()
+            self.puzzleEditControls.setEnabled(True)
 
         dialogButtonBox = QDialogButtonBox()
         self.acceptCollectionButton = dialogButtonBox.addButton("Store Collection", QDialogButtonBox.AcceptRole)
@@ -367,16 +357,22 @@ class AddEditCollection(QDialog):
         with the values of the current puzzle
         :return: None
         """
-        [print("In dialog, self = ", self)]
         for puzzle in self._puzzles:
             self.puzzleSelector.addItem(puzzle.puzzleTitle())
         self.puzzleSelector.setCurrentIndex(self._currentPuzzleIndex)
+        print(self.puzzleTitleEdit.text())
         self.puzzleTitleEdit.setText(self._puzzles[self._currentPuzzleIndex].puzzleTitle())
-
+        self.puzzleCodeEdit.setText(self._puzzleCode)
+        self.citationCodeEdit.setText(self._citationCode)
+        self.puzzleSolutionEdit.setText(self._puzzleSolution)
+        self.citationSolutionEdit.setText(self._citationSolution)
+        hintText = ""
+        for hint in self._hints:
+            hintText += hint + "; "
+        self.hintEdit.setText(hintText)
 
     def acceptPuzzle(self):
         print("Got to acceptPuzzle")
-
 
     def acceptCollection(self):
         """

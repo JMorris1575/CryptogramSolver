@@ -3,7 +3,7 @@ import file_handler
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from .cryptogram_solver_ui import uiElements, SetupUI
+from src.cryptogram_solver_ui import uiElements, SetupUI
 
 
 class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
