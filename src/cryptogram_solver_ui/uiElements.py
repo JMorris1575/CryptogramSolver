@@ -7,21 +7,6 @@ import data_structures
 alphabet = [' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
             'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
-# Maybe this can be used to get the Return key to change tab focus too in the textEdit boxes
-# the following code doesn't throw any errors but doesn't work either
-# class EventFilter(QObject):
-#     def eventFilter(self, obj, event):
-#         if event.type() == QEvent.KeyPress:
-#             if event.key() == Qt.Key_Return\
-#                     or event.key() == Qt.Key_Enter:
-#                 newEvent = QKeyEvent(QEvent.KeyPress, Qt.Key_Tab, event.modifiers())
-#                 # obj.emit(SIGNAL('returnPressed()'))
-#                 #obj.clearFocus()
-#                 return obj.eventFilter(obj, newEvent)
-#
-#         return obj.eventFilter(obj, event)
-
-
 
 class LetterUnit(QWidget):
 
@@ -185,12 +170,7 @@ class AddEditCollection(QDialog):
         self._puzzles = puzzles
         self._currentPuzzleIndex = currentPuzzleIndex
         if self._puzzles:
-            self._puzzleTitle = puzzles[self._currentPuzzleIndex].puzzleTitle()
-            self._puzzleCode = puzzles[self._currentPuzzleIndex].puzzleCode()
-            self._citationCode = puzzles[self._currentPuzzleIndex].citationCode()
-            self._puzzleSolution = puzzles[self._currentPuzzleIndex].puzzleSolution()
-            self._citationSolution = puzzles[self._currentPuzzleIndex].citationSolution()
-            self._hints = puzzles[self._currentPuzzleIndex].hints()
+            self.readFromCurrentPuzzle()
         else:
             self._puzzleTitle = None
             self._puzzleCode = None
@@ -200,6 +180,14 @@ class AddEditCollection(QDialog):
             self._hints = None
 
         self.setupUI()
+
+    def readFromCurrentPuzzle(self):
+        self._puzzleTitle = self._puzzles[self._currentPuzzleIndex].puzzleTitle()
+        self._puzzleCode = self._puzzles[self._currentPuzzleIndex].puzzleCode()
+        self._citationCode = self._puzzles[self._currentPuzzleIndex].citationCode()
+        self._puzzleSolution = self._puzzles[self._currentPuzzleIndex].puzzleSolution()
+        self._citationSolution = self._puzzles[self._currentPuzzleIndex].citationSolution()
+        self._hints = self._puzzles[self._currentPuzzleIndex].hints()
 
     def name(self):
         return self._name
@@ -265,6 +253,7 @@ class AddEditCollection(QDialog):
 
         puzzleSelectorLabel = QLabel("Puzzle Selector:")
         self.puzzleSelector = QComboBox()
+        self.puzzleSelector.currentIndexChanged.connect(self.addEditPuzzleSelectorChanged)
 
         puzzleTitleLabel = QLabel("Puzzle Name:")
         self.puzzleTitleEdit = QLineEdit()
@@ -351,17 +340,26 @@ class AddEditCollection(QDialog):
             self.acceptCollectionButton.setEnabled(True)
             self.authorEdit.setFocus()
 
-    def populatePuzzleEditor(self):
+    def addEditPuzzleSelectorChanged(self):
+        print("Got to addEditPuzzleSelectorChanged")
+        self._currentPuzzleIndex = self.puzzleSelector.currentIndex()
+        self.populatePuzzleEditor()
+
+    def populatePuzzleEditor(self, index=0):
         """
         When there is a current puzzle, this method is called to populate the widgets of the puzzle editor group
         with the values of the current puzzle
         :return: None
         """
+        #self._currentPuzzleIndex = self.puzzleSelector.currentIndex()
+        self.puzzleSelector.blockSignals(True)
+        self.puzzleSelector.clear()
         for puzzle in self._puzzles:
             self.puzzleSelector.addItem(puzzle.puzzleTitle())
         self.puzzleSelector.setCurrentIndex(self._currentPuzzleIndex)
-        print(self.puzzleTitleEdit.text())
-        self.puzzleTitleEdit.setText(self._puzzles[self._currentPuzzleIndex].puzzleTitle())
+        self.puzzleSelector.blockSignals(False)
+        self.readFromCurrentPuzzle()        # reads the values of the instance variables from the current puzzle
+        self.puzzleTitleEdit.setText(self._puzzleTitle)
         self.puzzleCodeEdit.setText(self._puzzleCode)
         self.citationCodeEdit.setText(self._citationCode)
         self.puzzleSolutionEdit.setText(self._puzzleSolution)
