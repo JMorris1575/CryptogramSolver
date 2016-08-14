@@ -112,7 +112,6 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
 
     def editCollection(self):
         if self.collection().name():
-            print("self._currentPuzzleIndex = ", self._currentPuzzleIndex)
             dialog = uiElements.AddEditCollection(self._collection.name(), self._collection.author(),
                                                   self._currentPuzzleIndex, self._collection.puzzles())
             if dialog.exec():

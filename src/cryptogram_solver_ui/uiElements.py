@@ -172,6 +172,11 @@ class AddEditCollection(QDialog):
         if self._puzzles:
             self.readFromCurrentPuzzle()
         else:
+            self.clearCurrentPuzzle()
+
+        self.setupUI()
+
+    def clearCurrentPuzzle(self):
             self._puzzleTitle = None
             self._puzzleCode = None
             self._citationCode = None
@@ -179,7 +184,6 @@ class AddEditCollection(QDialog):
             self._citationSolution = None
             self._hints = None
 
-        self.setupUI()
 
     def readFromCurrentPuzzle(self):
         self._puzzleTitle = self._puzzles[self._currentPuzzleIndex].puzzleTitle()
@@ -356,7 +360,8 @@ class AddEditCollection(QDialog):
         self.puzzleSelector.clear()
         for puzzle in self._puzzles:
             self.puzzleSelector.addItem(puzzle.puzzleTitle())
-        self.puzzleSelector.setCurrentIndex(self._currentPuzzleIndex)
+        if index != -1:
+            self.puzzleSelector.setCurrentIndex(self._currentPuzzleIndex)
         self.puzzleSelector.blockSignals(False)
         self.readFromCurrentPuzzle()        # reads the values of the instance variables from the current puzzle
         self.puzzleTitleEdit.setText(self._puzzleTitle)
@@ -402,125 +407,113 @@ class AddEditCollection(QDialog):
 
     def addNewPuzzle(self):
         self.puzzleEditControls.setEnabled(True)
-    #     print("Got to addNewPuzzle")
-    #     dialog = AddEditPuzzle()
-    #     print("After dialog created")
-    #     if dialog.exec():
-    #         print("dialog.exec() returned true")
-    #         print("title: ", dialog.title())
-    #         print("puzzleCode: ", dialog.puzzleCode())
-    #         print("citationCode: ", dialog.citationCode())
-    #         print("puzzleSolution: ", dialog.puzzleSolution())
-    #         print("citationSolution: ", dialog.citationSolution())
-    #         print("hints: ", dialog.hints())
-    #         puzzle = data_structures.Puzzle(dialog.title(), dialog.puzzleCode(), dialog.citationCode(),
-    #                                         dialog.puzzleSolution(), dialog.citationSolution(), dialog.hints())
-    #         print("puzzle has been created")
-    #         self.addPuzzle(puzzle)
-    #         print("puzzle has been added to the dialog's collection")
-    #         print("The puzzle count is now: ", len(self._puzzles))
+        print("Got to addNewPuzzle")
+        if self.puzzleTitleEdit.text():     # if a puzzle has been loaded, get rid of it
+            print("there is a title")
+            self.clearCurrentPuzzle()
+            self.populatePuzzleEditor(-1)
 
     def deletePuzzle(self):
         print("Got to deletePuzzle")
 
 
-class AddEditPuzzle(QDialog):
-
-    def __init__(self, title=None, puzzleCode=None, citationCode=None,
-                 puzzleSolution=None, citationSolution=None, hints=[], parent=None):
-        super(AddEditPuzzle, self).__init__(parent)
-
-        self.setupUI()
-
-    def title(self):
-        return self._title
-
-    def puzzleCode(self):
-        return self._puzzleCode
-
-    def citationCode(self):
-        return self._citationCode
-
-    def puzzleSolution(self):
-        return self._puzzleSolution
-
-    def citationSolution(self):
-        return self._citationSolution
-
-    def hints(self):
-        return self._hints
-
-    class puzzleTextEdit(QTextEdit):
-
-        def __init__(self, parent=None):
-            super(AddEditPuzzle.puzzleTextEdit, self).__init__(parent)
-            self.setTabChangesFocus(True)
-
-        def convertText(self):
-            self.setPlainText(self.toPlainText().toUpper())
-
-    def setupUI(self):
-
-
-        buttonBox = QDialogButtonBox(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
-        buttonBox.accepted.connect(self.accept)
-        buttonBox.rejected.connect(self.reject)
-
-        gridLayout = QGridLayout()
-        gridLayout.addWidget(titleLabel, 0, 0, Qt.AlignRight)
-        gridLayout.addWidget(self.titleEdit, 0, 1)
-        gridLayout.addWidget(puzzleCodeLabel, 1, 0, Qt.AlignRight)
-        gridLayout.addWidget(self.puzzleCodeEdit, 1, 1)
-        gridLayout.addWidget(citationCodeLabel, 2, 0, Qt.AlignRight)
-        gridLayout.addWidget(self.citationCodeEdit, 2, 1)
-        gridLayout.addWidget(puzzleSolutionLabel, 3, 0, Qt.AlignRight)
-        gridLayout.addWidget(self.puzzleSolutionEdit, 3, 1)
-        gridLayout.addWidget(citationSolutionLabel, 4, 0, Qt.AlignRight)
-        gridLayout.addWidget(self.citationSolutionEdit, 4, 1)
-        layout = QVBoxLayout(self)
-        layout.addLayout(gridLayout)
-        layout.addWidget(buttonBox)
-
-    def accept(self):
-
-        class TitleError(Exception):pass
-        class CodeError(Exception):pass
-
-        title = self.titleEdit.text()
-        puzzleCode = self.puzzleCodeEdit.toPlainText().upper()
-        citationCode = self.citationCodeEdit.text().upper()
-        puzzleSolution = self.puzzleSolutionEdit.toPlainText().upper()
-        citationSolution = self.citationSolutionEdit.text().upper()
-
-        try:
-            if len(title.strip()) == 0:
-                raise TitleError("You must enter a title for this Puzzle.")
-
-            if len(puzzleCode.strip()) == 0:
-                raise CodeError("You must at least enter the puzzle's code.")
-        except TitleError as e:
-            QMessageBox.warning(self, "Title Error", str(e))
-            self.titleEdit.selectAll()
-            self.titleEdit.setFocus()
-            return
-        except CodeError as e:
-            QMessageBox.warning(self, "Code Error", str(e))
-            self.puzzleCodeEdit.selectAll()
-            self.puzzleCodeEdit.setFocus()
-            return
-
-        self._title = title
-        self._puzzleCode = puzzleCode
-        self._citationCode = citationCode
-        self._puzzleSolution = puzzleSolution
-        self._citationSolution = citationSolution
-
-        print("just after setting properties")
-        QDialog.accept(self)
-
-    def reject(self):
-        print("Got to CollectionDialog's reject() routine")
-        QDialog.reject(self)
-
-
-
+# class AddEditPuzzle(QDialog):
+#
+#     def __init__(self, title=None, puzzleCode=None, citationCode=None,
+#                  puzzleSolution=None, citationSolution=None, hints=[], parent=None):
+#         super(AddEditPuzzle, self).__init__(parent)
+#
+#         self.setupUI()
+#
+#     def title(self):
+#         return self._title
+#
+#     def puzzleCode(self):
+#         return self._puzzleCode
+#
+#     def citationCode(self):
+#         return self._citationCode
+#
+#     def puzzleSolution(self):
+#         return self._puzzleSolution
+#
+#     def citationSolution(self):
+#         return self._citationSolution
+#
+#     def hints(self):
+#         return self._hints
+#
+#     class puzzleTextEdit(QTextEdit):
+#
+#         def __init__(self, parent=None):
+#             super(AddEditPuzzle.puzzleTextEdit, self).__init__(parent)
+#             self.setTabChangesFocus(True)
+#
+#         def convertText(self):
+#             self.setPlainText(self.toPlainText().toUpper())
+#
+#     def setupUI(self):
+#
+#
+#         buttonBox = QDialogButtonBox(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
+#         buttonBox.accepted.connect(self.accept)
+#         buttonBox.rejected.connect(self.reject)
+#
+#         gridLayout = QGridLayout()
+#         gridLayout.addWidget(titleLabel, 0, 0, Qt.AlignRight)
+#         gridLayout.addWidget(self.titleEdit, 0, 1)
+#         gridLayout.addWidget(puzzleCodeLabel, 1, 0, Qt.AlignRight)
+#         gridLayout.addWidget(self.puzzleCodeEdit, 1, 1)
+#         gridLayout.addWidget(citationCodeLabel, 2, 0, Qt.AlignRight)
+#         gridLayout.addWidget(self.citationCodeEdit, 2, 1)
+#         gridLayout.addWidget(puzzleSolutionLabel, 3, 0, Qt.AlignRight)
+#         gridLayout.addWidget(self.puzzleSolutionEdit, 3, 1)
+#         gridLayout.addWidget(citationSolutionLabel, 4, 0, Qt.AlignRight)
+#         gridLayout.addWidget(self.citationSolutionEdit, 4, 1)
+#         layout = QVBoxLayout(self)
+#         layout.addLayout(gridLayout)
+#         layout.addWidget(buttonBox)
+#
+#     def accept(self):
+#
+#         class TitleError(Exception):pass
+#         class CodeError(Exception):pass
+#
+#         title = self.titleEdit.text()
+#         puzzleCode = self.puzzleCodeEdit.toPlainText().upper()
+#         citationCode = self.citationCodeEdit.text().upper()
+#         puzzleSolution = self.puzzleSolutionEdit.toPlainText().upper()
+#         citationSolution = self.citationSolutionEdit.text().upper()
+#
+#         try:
+#             if len(title.strip()) == 0:
+#                 raise TitleError("You must enter a title for this Puzzle.")
+#
+#             if len(puzzleCode.strip()) == 0:
+#                 raise CodeError("You must at least enter the puzzle's code.")
+#         except TitleError as e:
+#             QMessageBox.warning(self, "Title Error", str(e))
+#             self.titleEdit.selectAll()
+#             self.titleEdit.setFocus()
+#             return
+#         except CodeError as e:
+#             QMessageBox.warning(self, "Code Error", str(e))
+#             self.puzzleCodeEdit.selectAll()
+#             self.puzzleCodeEdit.setFocus()
+#             return
+#
+#         self._title = title
+#         self._puzzleCode = puzzleCode
+#         self._citationCode = citationCode
+#         self._puzzleSolution = puzzleSolution
+#         self._citationSolution = citationSolution
+#
+#         print("just after setting properties")
+#         QDialog.accept(self)
+#
+#     def reject(self):
+#         print("Got to CollectionDialog's reject() routine")
+#         QDialog.reject(self)
+#
+#
+#
