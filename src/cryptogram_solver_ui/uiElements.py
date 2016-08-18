@@ -244,6 +244,7 @@ class AddEditCollection(QDialog):
 
         addPuzzleButtonBox = QDialogButtonBox()
         self.addPuzzleButton = addPuzzleButtonBox.addButton("Add New Puzzle", QDialogButtonBox.ActionRole)
+        self.addPuzzleButton.setEnabled(False)
         self.addPuzzleButton.clicked.connect(self.addNewPuzzle)
 
         collectionGrid = QGridLayout()
@@ -314,6 +315,7 @@ class AddEditCollection(QDialog):
 
         dialogButtonBox = QDialogButtonBox()
         self.acceptCollectionButton = dialogButtonBox.addButton("Store Collection", QDialogButtonBox.AcceptRole)
+        self.acceptCollectionButton.setEnabled(False)
 
         dialogButtonBox.addButton("Cancel", QDialogButtonBox.RejectRole)
         dialogButtonBox.accepted.connect(self.acceptCollection)
@@ -369,7 +371,7 @@ class AddEditCollection(QDialog):
     def addEditPuzzleSelectorChanged(self):
         print("Got to addEditPuzzleSelectorChanged")
         self._currentPuzzleIndex = self.puzzleSelector.currentIndex()
-        self.populatePuzzleEditor()
+        # self.populatePuzzleEditor()
 
     def populatePuzzleEditor(self, index=0):
         """
