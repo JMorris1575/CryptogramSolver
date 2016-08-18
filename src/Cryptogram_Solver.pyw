@@ -111,9 +111,8 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
             self.updateGameInfo(self.panel)
 
     def editCollection(self):
-        if self.collection().name():
-            dialog = uiElements.AddEditCollection(self._collection.name(), self._collection.author(),
-                                                  self._currentPuzzleIndex, self._collection.puzzles())
+        if self.collection():
+            dialog = uiElements.AddEditCollection(self._collection, self._currentPuzzleIndex)
             if dialog.exec():
                 collection = data_structures.Collection(dialog.name(), dialog.author(), dialog.puzzles())
                 self.setCollection(collection)
