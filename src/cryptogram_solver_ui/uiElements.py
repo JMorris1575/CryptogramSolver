@@ -336,6 +336,12 @@ class AddEditCollection(QDialog):
             currentCollection = self.currentCollection()
             self.collectionNameEdit.setText(currentCollection.name())
             self.authorEdit.setText(currentCollection.author())
+            self.addPuzzleButton.setEnabled(True)
+            """todo: correct this routine so that it handles all cases:
+                --  when adding a new collection
+                --  when adding a puzzle to an existing collection
+                --  when editing an old collection
+            """
             if currentCollection.puzzles() and self.currentPuzzleIndex() != None:
                 self.puzzleEditControls.setEnabled(True)
                 self.puzzleSelector.blockSignals(True)
@@ -432,10 +438,8 @@ class AddEditCollection(QDialog):
     def addNewPuzzle(self):
         self.puzzleEditControls.setEnabled(True)
         print("Got to addNewPuzzle")
-        if self.puzzleTitleEdit.text():     # if a puzzle has been loaded, get rid of it
-            print("there is a title")
-            self.clearCurrentPuzzle()
-            self.populatePuzzleEditor(-1)
+        self._currentPuzzleIndex = -1
+        self.updateUI()
 
     def deletePuzzle(self):
         print("Got to deletePuzzle")
