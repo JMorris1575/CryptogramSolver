@@ -331,17 +331,18 @@ class AddEditCollection(QDialog):
         :return: None
         """
         if self.currentCollection():
-            self.collectionNameEdit.setText(self.currentCollection().name())
-            self.authorEdit.setText(self.currentCollection().author())
-            if self.currentCollection().puzzles() and self.currentPuzzleIndex() != None:
+            currentCollection = self.currentCollection()
+            self.collectionNameEdit.setText(currentCollection.name())
+            self.authorEdit.setText(currentCollection.author())
+            if currentCollection.puzzles() and self.currentPuzzleIndex() != None:
                 self.puzzleEditControls.setEnabled(True)
                 self.puzzleSelector.blockSignals(True)
                 self.puzzleSelector.clear()
-                for puzzle in self.currentCollection().puzzles():
+                for puzzle in currentCollection.puzzles():
                     self.puzzleSelector.addItem(puzzle.puzzleTitle())
                 self.puzzleSelector.setCurrentIndex(self.currentPuzzleIndex())
                 self.puzzleSelector.blockSignals(False)
-                currentPuzzle = self.currentCollection().puzzles()[self.currentPuzzleIndex()]
+                currentPuzzle = currentCollection.puzzles()[self.currentPuzzleIndex()]
                 self.puzzleTitleEdit.setText(currentPuzzle.puzzleTitle())
                 self.puzzleCodeEdit.setText(currentPuzzle.puzzleCode())
                 self.citationCodeEdit.setText(currentPuzzle.citationCode())
