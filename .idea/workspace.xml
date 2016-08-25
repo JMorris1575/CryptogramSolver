@@ -79,7 +79,7 @@
       <file leaf-file-name="uiElements.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="282">
+            <state relative-caret-position="894">
               <caret line="166" column="103" selection-start-line="166" selection-start-column="103" selection-end-line="166" selection-end-column="103" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
@@ -202,7 +202,17 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scope">
+        <subPane subId="Problems" />
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -534,7 +544,14 @@
       <option name="project" value="LOCAL" />
       <updated>1471139960131</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Preparing to work on better AddEditCollection dialog">
+      <created>1471399848129</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1471399848129</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TodoView">
@@ -607,7 +624,8 @@
     <MESSAGE value="Now moved its files too" />
     <MESSAGE value="Got AddEditPuzzle's puzzleSelector working -- though it seems klunky to me" />
     <MESSAGE value="Starting to work on addNewPuzzle -- methods in this section need some serious refactoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="Starting to work on addNewPuzzle -- methods in this section need some serious refactoring" />
+    <MESSAGE value="Preparing to work on better AddEditCollection dialog" />
+    <option name="LAST_COMMIT_MESSAGE" value="Preparing to work on better AddEditCollection dialog" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -991,7 +1009,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
+        <state relative-caret-position="894">
           <caret line="166" column="103" selection-start-line="166" selection-start-column="103" selection-end-line="166" selection-end-column="103" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
