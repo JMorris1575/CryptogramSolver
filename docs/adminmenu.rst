@@ -10,6 +10,7 @@ are designed so that administrators can enjoy the puzzles too.
 
 Create Collection...
 --------------------
+:doc:`addcollection`
 
 Edit Collection...
 ------------------

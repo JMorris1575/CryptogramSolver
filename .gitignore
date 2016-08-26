@@ -1,0 +1,7 @@
+"__pycache__" 
+"*.pyc"
+"docs/Makefile"
+"docs/make.bat"
+"docs/_build/"
+".idea/*.*"
+

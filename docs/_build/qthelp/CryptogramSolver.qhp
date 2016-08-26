@@ -46,6 +46,8 @@
 
         </keywords>
         <files>
+            <file>addcollection.html</file>
+            <file>addeditpuzzles.html</file>
             <file>adminmenu.html</file>
             <file>filemenu.html</file>
             <file>genindex.html</file>
@@ -54,6 +56,8 @@
             <file>introduction.html</file>
             <file>puzzlemenu.html</file>
             <file>search.html</file>
+            <file>_images\addCollectionIcon.png</file>
+            <file>_images\AddEditDialog.png</file>
             <file>_images\AdminMenu.png</file>
             <file>_images\FileMenu.png</file>
             <file>_images\HelpMenu.png</file>

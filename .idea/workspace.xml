@@ -2,7 +2,44 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cd7e35c9-6fc6-4969-8c5c-c3acf22add81" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_build/qthelp/addcollection.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/_build/qthelp/addeditpuzzles.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/addcollection.rst" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/addeditpuzzles.rst" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/adminmenu.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/adminmenu.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/environment.pickle" afterPath="$PROJECT_DIR$/docs/_build/doctrees/environment.pickle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/filemenu.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/filemenu.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/helpmenu.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/helpmenu.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/index.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/index.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/introduction.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/introduction.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/puzzlemenu.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/puzzlemenu.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/CryptogramSolver.qch" afterPath="$PROJECT_DIR$/docs/_build/qthelp/CryptogramSolver.qch" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/CryptogramSolver.qhc" afterPath="$PROJECT_DIR$/docs/_build/qthelp/CryptogramSolver.qhc" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/CryptogramSolver.qhcp" afterPath="$PROJECT_DIR$/docs/_build/qthelp/CryptogramSolver.qhcp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/CryptogramSolver.qhp" afterPath="$PROJECT_DIR$/docs/_build/qthelp/CryptogramSolver.qhp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/_static/alabaster.css" afterPath="$PROJECT_DIR$/docs/_build/qthelp/_static/alabaster.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/_static/basic.css" afterPath="$PROJECT_DIR$/docs/_build/qthelp/_static/basic.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/_static/doctools.js" afterPath="$PROJECT_DIR$/docs/_build/qthelp/_static/doctools.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/_static/jquery-1.11.1.js" afterPath="$PROJECT_DIR$/docs/_build/qthelp/_static/jquery-1.11.1.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/_static/jquery.js" afterPath="$PROJECT_DIR$/docs/_build/qthelp/_static/jquery.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/_static/searchtools.js" afterPath="$PROJECT_DIR$/docs/_build/qthelp/_static/searchtools.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/_static/underscore-1.3.1.js" afterPath="$PROJECT_DIR$/docs/_build/qthelp/_static/underscore-1.3.1.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/_static/underscore.js" afterPath="$PROJECT_DIR$/docs/_build/qthelp/_static/underscore.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/_static/websupport.js" afterPath="$PROJECT_DIR$/docs/_build/qthelp/_static/websupport.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/adminmenu.html" afterPath="$PROJECT_DIR$/docs/_build/qthelp/adminmenu.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/filemenu.html" afterPath="$PROJECT_DIR$/docs/_build/qthelp/filemenu.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/genindex.html" afterPath="$PROJECT_DIR$/docs/_build/qthelp/genindex.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/helpmenu.html" afterPath="$PROJECT_DIR$/docs/_build/qthelp/helpmenu.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/index.html" afterPath="$PROJECT_DIR$/docs/_build/qthelp/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/introduction.html" afterPath="$PROJECT_DIR$/docs/_build/qthelp/introduction.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/puzzlemenu.html" afterPath="$PROJECT_DIR$/docs/_build/qthelp/puzzlemenu.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/search.html" afterPath="$PROJECT_DIR$/docs/_build/qthelp/search.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/adminmenu.rst" afterPath="$PROJECT_DIR$/docs/adminmenu.rst" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/finish.bat" afterPath="$PROJECT_DIR$/docs/finish.bat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Cryptogram_Solver.pyw" afterPath="$PROJECT_DIR$/src/Cryptogram_Solver.pyw" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py" afterPath="$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py" />
     </list>
     <ignored path="Cryptogram_Solver.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -22,74 +59,68 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Cryptogram_Solver.pyw" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Cryptogram_Solver.pyw">
+      <file leaf-file-name="addcollection.rst" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/docs/addcollection.rst">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1836">
-              <caret line="113" column="36" selection-start-line="113" selection-start-column="36" selection-end-line="113" selection-end-column="36" />
-              <folding>
-                <element signature="e#0#22#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="codecs.py" pinned="false" current-in-tab="false">
-        <entry file="file://C:/Program Files/Python35/Lib/codecs.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5236">
-              <caret line="308" column="0" selection-start-line="308" selection-start-column="0" selection-end-line="308" selection-end-column="0" />
+            <state relative-caret-position="153">
+              <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="file_handler.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/file_handler.py">
+      <file leaf-file-name="adminmenu.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/_build/qthelp/adminmenu.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2023">
-              <caret line="120" column="0" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#28#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="data_structures.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/data_structures.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="765">
-              <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+            <state relative-caret-position="0">
+              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SetupUI.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/cryptogram_solver_ui/SetupUI.py">
+      <file leaf-file-name="finish.bat" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/finish.bat">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+            <state relative-caret-position="0">
+              <caret line="0" column="56" selection-start-line="0" selection-start-column="56" selection-end-line="0" selection-end-column="56" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="uiElements.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py">
+      <file leaf-file-name="addeditpuzzles.rst" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/addeditpuzzles.rst">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="894">
-              <caret line="166" column="103" selection-start-line="166" selection-start-column="103" selection-end-line="166" selection-end-column="103" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="51">
+              <caret line="3" column="20" selection-start-line="3" selection-start-column="20" selection-end-line="3" selection-end-column="20" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/cryptogram_solver_ui/__init__.py">
+      <file leaf-file-name="index.rst" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/index.rst">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="introduction.rst" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/introduction.rst">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="340">
+              <caret line="20" column="17" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Makefile" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/Makefile">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -98,14 +129,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HelpSystem.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/HelpSystem.py">
+      <file leaf-file-name="puzzlemenu.rst" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/puzzlemenu.rst">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="6" column="29" selection-start-line="6" selection-start-column="29" selection-end-line="6" selection-end-column="29" />
-              <folding>
-                <element signature="e#91#117#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="408">
+              <caret line="24" column="7" selection-start-line="24" selection-start-column="7" selection-end-line="24" selection-end-column="7" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -113,8 +142,8 @@
       <file leaf-file-name="adminmenu.rst" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/docs/adminmenu.rst">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+            <state relative-caret-position="204">
+              <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -153,7 +182,6 @@
         <option value="$PROJECT_DIR$/docs/_build/qthelp/index.html" />
         <option value="$PROJECT_DIR$/docs/puzzlemenu.rst" />
         <option value="$PROJECT_DIR$/docs/helpmenu.rst" />
-        <option value="$PROJECT_DIR$/docs/adminmenu.rst" />
         <option value="$PROJECT_DIR$/src/Letters.py" />
         <option value="$PROJECT_DIR$/src/Panel.py" />
         <option value="$PROJECT_DIR$/src/CustomWidgets/Panel.py" />
@@ -167,7 +195,12 @@
         <option value="$PROJECT_DIR$/src/file_handler.py" />
         <option value="$PROJECT_DIR$/cryptogram_solver_ui/uiElements.py" />
         <option value="$PROJECT_DIR$/src/Cryptogram_Solver.pyw" />
+        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py" />
+        <option value="$PROJECT_DIR$/docs/finish.bat" />
+        <option value="$PROJECT_DIR$/docs/addeditpuzzles.rst" />
+        <option value="$PROJECT_DIR$/docs/adminmenu.rst" />
+        <option value="$PROJECT_DIR$/docs/addcollection.rst" />
       </list>
     </option>
   </component>
@@ -202,6 +235,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="Scope">
         <subPane subId="Problems" />
         <subPane subId="Project Files">
@@ -263,13 +297,26 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CryptogramSolver" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CryptogramSolver" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="docs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.toDoOptions" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../DSSAssistant" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="329" />
@@ -560,31 +607,32 @@
     </todo-panel>
     <todo-panel id="all">
       <are-packages-shown value="true" />
+      <are-modules-shown value="true" />
       <is-autoscroll-to-source value="true" />
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="886" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.249375" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32950193" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.249375" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32860824" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32950193" sideWeight="0.504436" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32822478" sideWeight="0.4955357" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32950193" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3273196" sideWeight="0.49702382" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32950193" sideWeight="0.495564" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39819586" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3273196" sideWeight="0.49702382" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32950193" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32950193" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39819586" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -632,7 +680,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py</url>
-          <line>412</line>
+          <line>422</line>
           <option name="timeStamp" value="43" />
         </line-breakpoint>
       </breakpoints>
@@ -652,51 +700,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Cryptogram_Solver.pyw">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="697">
-          <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#22#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelpSystem.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="40" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/conf.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1972">
-          <caret line="117" column="22" selection-start-line="117" selection-start-column="22" selection-end-line="117" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/index.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="11" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/filemenu.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/puzzlemenu.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docs/adminmenu.rst">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -709,7 +712,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="42" selection-start-line="12" selection-start-column="42" selection-end-line="12" selection-end-column="42" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -872,13 +874,6 @@
           <folding>
             <element signature="e#0#22#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/introduction.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="17" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -886,50 +881,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/filemenu.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="33" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/conf.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1972">
-          <caret line="117" column="22" selection-start-line="117" selection-start-column="22" selection-end-line="117" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/index.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/puzzlemenu.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="7" selection-start-line="24" selection-start-column="7" selection-end-line="24" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/helpmenu.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="33" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/adminmenu.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -971,6 +922,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/data_structures.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="765">
+          <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="10" selection-start-line="5" selection-start-column="10" selection-end-line="5" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/file_handler.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2023">
@@ -983,37 +950,125 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/cryptogram_solver_ui/SetupUI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+        <state relative-caret-position="85">
+          <caret line="9" column="28" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Cryptogram_Solver.pyw">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1836">
-          <caret line="113" column="36" selection-start-line="113" selection-start-column="36" selection-end-line="113" selection-end-column="36" />
+        <state relative-caret-position="374">
+          <caret line="27" column="21" selection-start-line="27" selection-start-column="19" selection-end-line="27" selection-end-column="21" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/data_structures.py">
+    <entry file="file://$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+        <state relative-caret-position="1038">
+          <caret line="451" column="23" selection-start-line="451" selection-start-column="23" selection-end-line="451" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/conf.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="460">
+          <caret line="117" column="22" selection-start-line="117" selection-start-column="22" selection-end-line="117" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py">
+    <entry file="file://$PROJECT_DIR$/docs/filemenu.rst">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="894">
-          <caret line="166" column="103" selection-start-line="166" selection-start-column="103" selection-end-line="166" selection-end-column="103" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="51">
+          <caret line="3" column="33" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/helpmenu.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="33" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/index.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/introduction.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="17" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/Makefile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/puzzlemenu.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="7" selection-start-line="24" selection-start-column="7" selection-end-line="24" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/finish.bat">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="56" selection-start-line="0" selection-start-column="56" selection-end-line="0" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/addeditpuzzles.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="20" selection-start-line="3" selection-start-column="20" selection-end-line="3" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/_build/qthelp/adminmenu.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/adminmenu.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/addcollection.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
