@@ -1,16 +1,9 @@
 Adding a New Collection
 =======================
 
-.. |addcollectionicon| image:: ../images/addCollectionIcon.png
-    :width: 24px
-
-New collections of puzzles may be added to the local computer by an administrator by selecting "Create Collection..."
-from the Admin menu, using the keyboard shortcut Ctrl-Alt-C, or by clicking the |addcollectionicon| icon on the
-toolbar.  When you do so, the following dialog will appear:
-
 .. image:: ../images/AddEditDialog.png
 
-The following outlines the use of the dialog box:
+Collections are added to the system by means of the dialog box above.  The following outlines the use of the dialog box:
 
 +------------------------+---------------------------------------------------------------------+
 | Collection Name:       | Enter a name for this collection.  The name you choose will be used |

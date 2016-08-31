@@ -1,3 +1,5 @@
+.. |addcollectionicon| image:: ../images/addCollectionSmall.png
+
 The Admin Menu
 ==============
 
@@ -10,7 +12,10 @@ are designed so that administrators can enjoy the puzzles too.
 
 Create Collection...
 --------------------
-:doc:`addcollection`
+To create a new collection select "Create Collection..." from the menu bar, using the keyboard shortcut Ctrl-Alt-C,
+or by clicking the |addcollectionicon| icon on the toolbar.  See :doc:`addcollection` for more information.
+
+:doc:`addeditpuzzles`
 
 Edit Collection...
 ------------------
