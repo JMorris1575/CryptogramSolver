@@ -1,7 +1,9 @@
-"__pycache__" 
+"__pycache__/"
 "*.pyc"
 "docs/Makefile"
 "docs/make.bat"
 "docs/_build/"
 ".idea/*.*"
 
+src/__pycache__/__init__.cpython-35.pyc
+src/cryptogram_solver_ui/__pycache__/

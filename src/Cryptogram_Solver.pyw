@@ -102,7 +102,7 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
 
     def createCollection(self):
 
-        dialog = uiElements.AddEditCollection()
+        dialog = uiElements.AddCollection()
         if dialog.exec():
             collection = data_structures.Collection(dialog.name(), dialog.author(), dialog.puzzles())
             self.setCollection(collection)

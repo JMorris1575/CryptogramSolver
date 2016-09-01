@@ -56,9 +56,9 @@
             <file>introduction.html</file>
             <file>puzzlemenu.html</file>
             <file>search.html</file>
-            <file>_images\addCollectionIcon.png</file>
+            <file>_images\AddCollectionDialog.png</file>
             <file>_images\addCollectionSmall.png</file>
-            <file>_images\AddEditDialog.png</file>
+            <file>_images\AddEditPuzzleDialog.png</file>
             <file>_images\AdminMenu.png</file>
             <file>_images\FileMenu.png</file>
             <file>_images\HelpMenu.png</file>
