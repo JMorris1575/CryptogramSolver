@@ -258,20 +258,17 @@ class AddCollection(QDialog):
             if len(name.strip()) == 0:
                 raise NoNameError("You must at least enter a name for the Collection.")
 
-            print("A")
-            filename = "Temporary_Filename.col"
-            print("B")
-            msg = "Could not convert " + name + " into a valid filename.  "
-            msg += "The filename will be " + filename + " "
-            msg += "but you should use your operating system to rename it to something more useful."
-            print("C")
             if len(self.createFilename(name)) == 0:
+                filename = "Temporary_Filename.col"
+                msg = "Could not convert " + name + " into a valid filename.  "
+                msg += "The filename will be " + filename + " "
+                msg += "but you should use your operating system to rename it to something more useful."
                 raise BadNameError(msg)
 
-            successMessage = "This collection will be saved under the filaname of " + filename + ".  "
+            successMessage = "This collection will be saved under the filaname of " + filename + ".col.  "
             successMessage += "You may change it if you wish by using the methods supplied by "
             successMessage += "your computer's operating system."
-            QMessageBox.warning(successMessage)
+            QMessageBox.information(self, "Filename Information", successMessage)
 
         except NameError as e:
             QMessageBox.warning(self, "Name Error", str(e))
@@ -294,7 +291,7 @@ class AddCollection(QDialog):
         :return:
         """
         print("Got to createFilename")
-        return ""
+        return name
 
     def rejectCollection(self):
         QDialog.reject(self)

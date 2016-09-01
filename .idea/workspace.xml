@@ -2,51 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cd7e35c9-6fc6-4969-8c5c-c3acf22add81" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/AddCollectionDialog.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/AddCollectionSmall.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/AddEditDialog.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/AddEditPuzzleDialog.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/work folder/AddCollectionSmall.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/work folder/AddCollectionDialog.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/work folder/AddCollectionSmall.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/work folder/AddEditPuzzlesDialog.svg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/adminmenu.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/adminmenu.doctree" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/environment.pickle" afterPath="$PROJECT_DIR$/docs/_build/doctrees/environment.pickle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/filemenu.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/filemenu.doctree" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/helpmenu.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/helpmenu.doctree" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/index.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/index.doctree" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/introduction.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/introduction.doctree" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/puzzlemenu.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/puzzlemenu.doctree" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/CryptogramSolver.qch" afterPath="$PROJECT_DIR$/docs/_build/qthelp/CryptogramSolver.qch" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/CryptogramSolver.qhc" afterPath="$PROJECT_DIR$/docs/_build/qthelp/CryptogramSolver.qhc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/CryptogramSolver.qhcp" afterPath="$PROJECT_DIR$/docs/_build/qthelp/CryptogramSolver.qhcp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/CryptogramSolver.qhp" afterPath="$PROJECT_DIR$/docs/_build/qthelp/CryptogramSolver.qhp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/_static/alabaster.css" afterPath="$PROJECT_DIR$/docs/_build/qthelp/_static/alabaster.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/_static/basic.css" afterPath="$PROJECT_DIR$/docs/_build/qthelp/_static/basic.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/_static/doctools.js" afterPath="$PROJECT_DIR$/docs/_build/qthelp/_static/doctools.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/_static/jquery-1.11.1.js" afterPath="$PROJECT_DIR$/docs/_build/qthelp/_static/jquery-1.11.1.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/_static/jquery.js" afterPath="$PROJECT_DIR$/docs/_build/qthelp/_static/jquery.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/_static/searchtools.js" afterPath="$PROJECT_DIR$/docs/_build/qthelp/_static/searchtools.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/_static/underscore-1.3.1.js" afterPath="$PROJECT_DIR$/docs/_build/qthelp/_static/underscore-1.3.1.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/_static/underscore.js" afterPath="$PROJECT_DIR$/docs/_build/qthelp/_static/underscore.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/_static/websupport.js" afterPath="$PROJECT_DIR$/docs/_build/qthelp/_static/websupport.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/addcollection.html" afterPath="$PROJECT_DIR$/docs/_build/qthelp/addcollection.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/addeditpuzzles.html" afterPath="$PROJECT_DIR$/docs/_build/qthelp/addeditpuzzles.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/adminmenu.html" afterPath="$PROJECT_DIR$/docs/_build/qthelp/adminmenu.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/filemenu.html" afterPath="$PROJECT_DIR$/docs/_build/qthelp/filemenu.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/genindex.html" afterPath="$PROJECT_DIR$/docs/_build/qthelp/genindex.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/helpmenu.html" afterPath="$PROJECT_DIR$/docs/_build/qthelp/helpmenu.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/index.html" afterPath="$PROJECT_DIR$/docs/_build/qthelp/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/introduction.html" afterPath="$PROJECT_DIR$/docs/_build/qthelp/introduction.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/puzzlemenu.html" afterPath="$PROJECT_DIR$/docs/_build/qthelp/puzzlemenu.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/search.html" afterPath="$PROJECT_DIR$/docs/_build/qthelp/search.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/addcollection.rst" afterPath="$PROJECT_DIR$/docs/addcollection.rst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/addeditpuzzles.rst" afterPath="$PROJECT_DIR$/docs/addeditpuzzles.rst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/work folder/AddCollection.svg" afterPath="$PROJECT_DIR$/images/work folder/AddCollection.svg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Cryptogram_Solver.pyw" afterPath="$PROJECT_DIR$/src/Cryptogram_Solver.pyw" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cryptogram_solver_ui/SetupUI.py" afterPath="$PROJECT_DIR$/src/cryptogram_solver_ui/SetupUI.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py" afterPath="$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py" />
     </list>
     <ignored path="Cryptogram_Solver.iws" />
@@ -110,8 +66,8 @@
       <file leaf-file-name="uiElements.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="267" column="24" selection-start-line="267" selection-start-column="24" selection-end-line="267" selection-end-column="24" />
+            <state relative-caret-position="323">
+              <caret line="267" column="105" selection-start-line="267" selection-start-column="105" selection-end-line="267" selection-end-column="105" />
               <folding />
             </state>
           </provider>
@@ -647,7 +603,14 @@
       <option name="project" value="LOCAL" />
       <updated>1472266140852</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Working on separating Collections and Puzzles from Add/Edit Dialog box">
+      <created>1472764545499</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1472764545499</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TodoView">
@@ -724,7 +687,8 @@
     <MESSAGE value="Preparing to work on better AddEditCollection dialog" />
     <MESSAGE value="Working on addeditcollection help file" />
     <MESSAGE value="Got the addCollectionIcon to be inline and the right size - still acts as link, however" />
-    <option name="LAST_COMMIT_MESSAGE" value="Got the addCollectionIcon to be inline and the right size - still acts as link, however" />
+    <MESSAGE value="Working on separating Collections and Puzzles from Add/Edit Dialog box" />
+    <option name="LAST_COMMIT_MESSAGE" value="Working on separating Collections and Puzzles from Add/Edit Dialog box" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1077,8 +1041,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="267" column="24" selection-start-line="267" selection-start-column="24" selection-end-line="267" selection-end-column="24" />
+        <state relative-caret-position="323">
+          <caret line="267" column="105" selection-start-line="267" selection-start-column="105" selection-end-line="267" selection-end-column="105" />
           <folding />
         </state>
       </provider>
