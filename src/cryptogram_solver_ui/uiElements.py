@@ -167,14 +167,19 @@ class AddCollection(QDialog):
 
     def __init__(self, currentCollection=None):
         super(AddCollection, self).__init__()       # you removed parent from the .__init__(parent)
+
         self._currentCollection = currentCollection
         self._name = ""
         self._author = ""
 
         if self._currentCollection:     # collection present means edit mode, otherwise we are adding a new collection
             self._mode = "Edit"
+            self.setWindowIcon(QIcon("../images/editpuzzleicon-2.png"))
+            self.setWindowTitle("Edit Collection")
         else:
             self._mode = "New"
+            self.setWindowIcon(QIcon("../images/addCollectionIcon.png"))
+            self.setWindowTitle("Create New Collection")
         self.setupUI()
 
     def currentCollection(self):

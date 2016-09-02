@@ -1,9 +1,13 @@
 Adding a New Collection
 =======================
 
-.. image:: ../images/AddCollectionDialog.png
+.. image:: ../images/AddEditCollectionDialog.png
 
-Collections are added to the system by means of the dialog box above.  The following outlines the use of the dialog box:
+An administrator can add Collections to the system by means of the dialog box above.  A Collection consists of its
+name, its author (if given) and a list of puzzles.  Collections are contained in files ending with a ".col" extension
+and saved in the main program's "Collections" directory.  The dialog box above is used to create the bare bones of a
+collection, that is, its name and author, and create the file on disk.  Puzzles need to be added later.  See
+:doc:`addeditpuzzles`.  The following chart outlines the use of the **Add Collection** dialog box.
 
 +------------------------+---------------------------------------------------------------------+
 | **Collection Name:**   | Enter a name for this collection.  The name you choose will be used |
@@ -23,7 +27,7 @@ Collections are added to the system by means of the dialog box above.  The follo
 | **Cancel**             | Click this button to close this dialog box without saving anything  |
 |                        | to the local disk.  No changes you made will be saved.              |
 +------------------------+---------------------------------------------------------------------+
-| **Add New Puzzle**     | A new collection is pretty worthless without puzzles.  Click this   |
-|                        | this button to activate the Add or Edit Puzzles dialog box.  See    |
-|                        | :doc:`addeditpuzzles`.                                              |
-+------------------------+---------------------------------------------------------------------+
+
+A new collection is pretty worthless without puzzles.  After creating a new collection you still need to add puzzles.
+See :doc:`addeditpuzzles` for more information.
+
