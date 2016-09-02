@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cd7e35c9-6fc6-4969-8c5c-c3acf22add81" name="Default" comment="Made Puzzle Editor visible and restructured it a little bit">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Cryptogram_Solver.pyw" afterPath="$PROJECT_DIR$/src/Cryptogram_Solver.pyw" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cryptogram_solver_ui/SetupUI.py" afterPath="$PROJECT_DIR$/src/cryptogram_solver_ui/SetupUI.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py" afterPath="$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py" />
+    <list default="true" id="cd7e35c9-6fc6-4969-8c5c-c3acf22add81" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/AddEditCollectionDialog.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/EditPuzzleIcon-2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/EditPuzzleIcon.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/work folder/AddEditCollectionDialog.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/work folder/AddEditCollectionDialog.xcf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/work folder/Anonymous-Pencil-icon-300px.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/work folder/EditPuzzleBook.xcf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/work folder/EditPuzzleIcon.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/work folder/EditPuzzleIcon.xcf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/work folder/Anonymous-Pencil-icon.svg" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
     </list>
     <ignored path="Cryptogram_Solver.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -252,7 +259,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="docs" />
+              <option name="myItemId" value="images" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -266,11 +273,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="docs" />
+              <option name="myItemId" value="images" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="_build" />
+              <option name="myItemId" value="work folder" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -321,15 +328,6 @@
         <option name="myModuleName" value="Cryptogram_Solver" />
       </console-settings>
     </option>
-  </component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\frjam\Documents\PyCharmProjects\CryptogramSolver\src" />
-      <recent name="C:\Users\frjam\Documents\PyCharmProjects\CryptogramSolver\src\data_structures" />
-      <recent name="C:\Users\frjam\Documents\PyCharmProjects\CryptogramSolver\cryptogram_solver_ui" />
-      <recent name="C:\Users\Jim\Documents\PyCharm Projects\Cryptogram_Solver\src\CustomWidgets" />
-      <recent name="C:\Users\Jim\Documents\PyCharm Projects\Cryptogram_Solver\src" />
-    </key>
   </component>
   <component name="RunManager" selected="Python.CryptogramSolver">
     <configuration default="true" type="CompoundRunConfigurationType" factoryName="Compound Run Configuration">
@@ -510,9 +508,6 @@
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
   </component>
-  <component name="SvnConfiguration">
-    <configuration />
-  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="cd7e35c9-6fc6-4969-8c5c-c3acf22add81" name="Default" comment="" />
@@ -633,7 +628,14 @@
       <option name="project" value="LOCAL" />
       <updated>1472819896034</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Made Puzzle Editor visible and restructured it a little bit">
+      <created>1472821968772</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1472821968772</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -650,7 +652,7 @@
     <frame x="-8" y="-8" width="1616" height="916" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24904943" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24904943" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32822478" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32950193" sideWeight="0.504436" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32950193" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
