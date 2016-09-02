@@ -156,7 +156,7 @@ class UserInterfaceSetup(object):
         self.editAction.setShortcut(QKeySequence("Alt+Ctrl+E"))
         self.editAction.setShortcutContext(Qt.WidgetShortcut)
         self.editAction.setToolTip("Add, edit or delete puzzles in the current collection.")
-        self.editAction.triggered.connect(self.editCollection)
+        self.editAction.triggered.connect(self.addEditPuzzles)
         adminMenu.addAction(self.editAction)
         toolBar.addAction(self.editAction)
 

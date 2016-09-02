@@ -12,7 +12,7 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
 
-        self._collection = src.data_structures.Collection("Jim's Fake Collection", "Jim Morris")
+        self._collection = src.file_handler.readCollection("../Collections/test.col")  # temporary - for development
         self.uiSetup(self)      # this is located in the file SetupUI.py
         self._currentPuzzleIndex = -1
 
@@ -111,7 +111,7 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
             #self.updatePuzzleSelector(collection.puzzles())
             self.updateGameInfo(self.panel)
 
-    def editCollection(self):
+    def addEditPuzzles(self):
         if self.collection():
             print('self._collection', self._collection)
             print('self._currentPuzzleIndex', self._currentPuzzleIndex)

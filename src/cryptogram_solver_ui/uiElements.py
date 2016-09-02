@@ -312,6 +312,11 @@ class AddCollection(QDialog):
         QDialog.reject(self)
 
 #======================================================================================================================
+
+#ToDo: Create a means of editing existing collections by changing name and/or author.  Create corresponding help file.
+
+#======================================================================================================================
+
 class AddEditPuzzle(QDialog):
 
     def __init__(self, collection=None, currentPuzzleIndex=None, parent=None):
@@ -350,6 +355,16 @@ class AddEditPuzzle(QDialog):
     def setupUI(self):
 
         print('in setupUI')
+
+        self.setWindowIcon(QIcon("../images/editpuzzleicon-2.png"))
+        self.setWindowTitle("Add or Edit Puzzles")
+
+        self.addPuzzleButton = QPushButton("Add New Puzzle")
+        self.addPuzzleButton.clicked.connect(self.createNewPuzzle)
+        addButtonLayout = QHBoxLayout()
+        addButtonLayout.addSpacing(250)
+        addButtonLayout.addWidget(self.addPuzzleButton)
+
         puzzleSelectorLabel = QLabel("Puzzle Selector:")
         self.puzzleSelector = QComboBox()
         self.puzzleSelector.currentIndexChanged.connect(self.addEditPuzzleSelectorChanged)
@@ -402,9 +417,14 @@ class AddEditPuzzle(QDialog):
         puzzleEditLayout.addLayout(puzzleGrid)
         puzzleEditLayout.addWidget(puzzleButtonBox)
 
-        self.puzzleEditControls = QGroupBox("Add or Edit Puzzles")
+        self.puzzleEditControls = QGroupBox("Puzzle Editor")
         self.puzzleEditControls.setEnabled(False)
         self.puzzleEditControls.setLayout(puzzleEditLayout)
+
+        dialogLayout = QVBoxLayout(self)
+        dialogLayout.addLayout(addButtonLayout)
+        dialogLayout.addWidget(self.puzzleEditControls)
+
 
     def updateUI(self):
         """
@@ -446,6 +466,9 @@ class AddEditPuzzle(QDialog):
                 self.hintEdit.setText(hintText)
         else:
             pass
+
+    def createNewPuzzle(self):
+        pass
 
 #        dialogButtonBox = QDialogButtonBox()
 

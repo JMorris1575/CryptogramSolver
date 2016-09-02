@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cd7e35c9-6fc6-4969-8c5c-c3acf22add81" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/adminmenu.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/adminmenu.doctree" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/environment.pickle" afterPath="$PROJECT_DIR$/docs/_build/doctrees/environment.pickle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/filemenu.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/filemenu.doctree" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/helpmenu.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/helpmenu.doctree" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/index.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/index.doctree" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/introduction.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/introduction.doctree" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/puzzlemenu.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/puzzlemenu.doctree" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/CryptogramSolver.qch" afterPath="$PROJECT_DIR$/docs/_build/qthelp/CryptogramSolver.qch" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/CryptogramSolver.qhc" afterPath="$PROJECT_DIR$/docs/_build/qthelp/CryptogramSolver.qhc" />
+    <list default="true" id="cd7e35c9-6fc6-4969-8c5c-c3acf22add81" name="Default" comment="Made Puzzle Editor visible and restructured it a little bit">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/CryptogramSolver.qhp" afterPath="$PROJECT_DIR$/docs/_build/qthelp/CryptogramSolver.qhp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/qthelp/addcollection.html" afterPath="$PROJECT_DIR$/docs/_build/qthelp/addcollection.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/addcollection.rst" afterPath="$PROJECT_DIR$/docs/addcollection.rst" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Cryptogram_Solver.pyw" afterPath="$PROJECT_DIR$/src/Cryptogram_Solver.pyw" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cryptogram_solver_ui/SetupUI.py" afterPath="$PROJECT_DIR$/src/cryptogram_solver_ui/SetupUI.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py" afterPath="$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py" />
     </list>
     <ignored path="Cryptogram_Solver.iws" />
@@ -58,8 +48,8 @@
       <file leaf-file-name="SetupUI.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/cryptogram_solver_ui/SetupUI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="154" column="67" selection-start-line="154" selection-start-column="67" selection-end-line="154" selection-end-column="67" />
+            <state relative-caret-position="380">
+              <caret line="158" column="61" selection-start-line="158" selection-start-column="61" selection-end-line="158" selection-end-column="61" />
               <folding />
             </state>
           </provider>
@@ -68,8 +58,8 @@
       <file leaf-file-name="Cryptogram_Solver.pyw" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Cryptogram_Solver.pyw">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3910">
-              <caret line="230" column="0" selection-start-line="230" selection-start-column="0" selection-end-line="230" selection-end-column="0" />
+            <state relative-caret-position="34">
+              <caret line="14" column="116" selection-start-line="14" selection-start-column="116" selection-end-line="14" selection-end-column="116" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -90,8 +80,8 @@
       <file leaf-file-name="uiElements.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1150">
-              <caret line="180" column="51" selection-start-line="180" selection-start-column="51" selection-end-line="180" selection-end-column="51" />
+            <state relative-caret-position="165">
+              <caret line="359" column="48" selection-start-line="359" selection-start-column="48" selection-end-line="359" selection-end-column="48" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -168,13 +158,13 @@
         <option value="$PROJECT_DIR$/docs/adminmenu.rst" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/docs/addeditpuzzles.rst" />
-        <option value="$PROJECT_DIR$/src/cryptogram_solver_ui/SetupUI.py" />
         <option value="$PROJECT_DIR$/src/data_structures/Puzzle.py" />
         <option value="$PROJECT_DIR$/src/data_structures/Collection.py" />
         <option value="$PROJECT_DIR$/src/file_handler.py" />
+        <option value="$PROJECT_DIR$/docs/addcollection.rst" />
+        <option value="$PROJECT_DIR$/src/cryptogram_solver_ui/SetupUI.py" />
         <option value="$PROJECT_DIR$/src/Cryptogram_Solver.pyw" />
         <option value="$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py" />
-        <option value="$PROJECT_DIR$/docs/addcollection.rst" />
       </list>
     </option>
   </component>
@@ -636,10 +626,17 @@
       <option name="project" value="LOCAL" />
       <updated>1472781106221</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Updated the addcollection help file to reflect changes">
+      <created>1472819896034</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1472819896034</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
-  <component name="TodoView">
+  <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
       <is-autoscroll-to-source value="true" />
     </todo-panel>
@@ -651,14 +648,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="916" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24904943" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32822478" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32822478" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32950193" sideWeight="0.504436" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32950193" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32822478" sideWeight="0.4955357" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32950193" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32694763" sideWeight="0.49702382" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32694763" sideWeight="0.49702382" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32950193" sideWeight="0.495564" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -669,7 +667,6 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32950193" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32950193" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -717,15 +714,17 @@
     <MESSAGE value="Corrected filename creation for new collections" />
     <MESSAGE value="Finished AddCollectionDialog box" />
     <MESSAGE value="Beginning work on new AddEditPuzzle dialog box" />
-    <option name="LAST_COMMIT_MESSAGE" value="Beginning work on new AddEditPuzzle dialog box" />
+    <MESSAGE value="Updated the addcollection help file to reflect changes" />
+    <MESSAGE value="Made Puzzle Editor visible and restructured it a little bit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Made Puzzle Editor visible and restructured it a little bit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py</url>
-          <line>351</line>
-          <option name="timeStamp" value="49" />
+          <line>356</line>
+          <option name="timeStamp" value="50" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -735,7 +734,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="50" />
+      <option name="time" value="51" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1026,24 +1025,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Cryptogram_Solver.pyw">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3910">
-          <caret line="230" column="0" selection-start-line="230" selection-start-column="0" selection-end-line="230" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/cryptogram_solver_ui/SetupUI.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="154" column="67" selection-start-line="154" selection-start-column="67" selection-end-line="154" selection-end-column="67" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docs/addcollection.rst">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="442">
@@ -1052,10 +1033,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Cryptogram_Solver.pyw">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="14" column="116" selection-start-line="14" selection-start-column="116" selection-end-line="14" selection-end-column="116" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cryptogram_solver_ui/SetupUI.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="158" column="61" selection-start-line="158" selection-start-column="61" selection-end-line="158" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1150">
-          <caret line="180" column="51" selection-start-line="180" selection-start-column="51" selection-end-line="180" selection-end-column="51" />
+        <state relative-caret-position="165">
+          <caret line="359" column="48" selection-start-line="359" selection-start-column="48" selection-end-line="359" selection-end-column="48" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
