@@ -1,4 +1,4 @@
-import file_handler
+import src.file_handler
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
@@ -14,7 +14,7 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
 
         self._collection = src.data_structures.Collection("Jim's Fake Collection", "Jim Morris")
         self.uiSetup(self)      # this is located in the file SetupUI.py
-        self._currentPuzzleIndex = None
+        self._currentPuzzleIndex = -1
 
     def collection(self):
         return self._collection
@@ -36,7 +36,7 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
         fileInfo = QFileDialog.getOpenFileName(self, "Open Collection",
                                                "../Collections", "Collections (*.col)")
         filename = fileInfo[0]
-        self.setCollection(file_handler.readCollection(filename))
+        self.setCollection(src.file_handler.readCollection(filename))
         self.updatePuzzleSelector(self._collection.puzzles())
         self.updateGameInfo(self.panel)
 
@@ -107,17 +107,19 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
         if dialog.exec():
             collection = src.data_structures.Collection(dialog.name(), dialog.author())
             self.setCollection(collection)
-            file_handler.saveCollection(collection)
+            src.file_handler.saveCollection(collection)
             #self.updatePuzzleSelector(collection.puzzles())
             self.updateGameInfo(self.panel)
 
     def editCollection(self):
         if self.collection():
-            dialog = uiElements.AddEditCollection(self._collection, self._currentPuzzleIndex)
+            print('self._collection', self._collection)
+            print('self._currentPuzzleIndex', self._currentPuzzleIndex)
+            dialog = uiElements.AddEditPuzzle(self._collection, self._currentPuzzleIndex)
             if dialog.exec():
                 collection = src.data_structures.Collection(dialog.name(), dialog.author(), dialog.puzzles())
                 self.setCollection(collection)
-                file_handler.saveCollection(collection)
+                src.file_handler.saveCollection(collection)
                 self.updatePuzzleSelector(collection.puzzles())
                 self.updateGameInfo(self.panel)
 
@@ -212,6 +214,10 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
         self.puzzleSelector.clear()
         for puzzle in puzzles:
             self.puzzleSelector.addItem(puzzle.puzzleTitle())
+        if self.puzzleSelector.count() >= 0:
+            self._currentPuzzleIndex = 0
+        else:
+            self._currentPuzzleIndex = -1
 
 
 if __name__ == "__main__":

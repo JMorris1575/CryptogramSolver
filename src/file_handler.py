@@ -77,8 +77,6 @@ def saveCollection(collection):
 
 def readCollection(filename):
 
-    print("Got to readCollection()")
-
     def unpack_string(fh, eof_is_error=True):
         uint16 = struct.Struct("<H")
         length_data = fh.read(uint16.size)
@@ -97,13 +95,10 @@ def readCollection(filename):
 
     fh = None
     try:
-        print("before the try")
         fh = gzip.open(filename, "rb")
-        print("before reading MAGIC")
         magic = fh.read(len(MAGIC))
         if magic != MAGIC:
             raise ValueError("invalid .aib file format")
-        print("before reading FORMAT_VERSION")
         version = fh.read(len(FORMAT_VERSION))
         if version > FORMAT_VERSION:
             raise ValueError("unrecognized .aib file version")
@@ -121,7 +116,6 @@ def readCollection(filename):
             puzzle = data_structures.Puzzle()
             puzzle.setPuzzleTitle(title)
             puzzle.setPuzzleCode(unpack_string(fh))
-            print(puzzle.puzzleCode())
             puzzle.setCitationCode(unpack_string(fh))
             puzzle.setPuzzleSolution(unpack_string(fh))
             puzzle.setCitationSolution(unpack_string(fh))
