@@ -2,6 +2,8 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
+import string, unicodedata
+
 import data_structures
 
 alphabet = [' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
@@ -166,6 +168,9 @@ class AddCollection(QDialog):
     def __init__(self, currentCollection=None):
         super(AddCollection, self).__init__()       # you removed parent from the .__init__(parent)
         self._currentCollection = currentCollection
+        self._name = ""
+        self._author = ""
+
         if self._currentCollection:     # collection present means edit mode, otherwise we are adding a new collection
             self._mode = "Edit"
         else:
@@ -174,6 +179,12 @@ class AddCollection(QDialog):
 
     def currentCollection(self):
         return self._currentCollection
+
+    def name(self):
+        return self._name
+
+    def author(self):
+        return self._author
 
     def setupUI(self):
         """
@@ -186,6 +197,7 @@ class AddCollection(QDialog):
 
         collectionNameLabel = QLabel("Collection Name:")
         self.collectionNameEdit = QLineEdit()
+        self.collectionNameEdit.textEdited.connect(self.check_for_name)
         self.collectionNameEdit.editingFinished.connect(self.name_edit_lose_focus)
 
         authorLabel = QLabel("Author of this Collection:")
@@ -198,12 +210,8 @@ class AddCollection(QDialog):
 
         self.cancelButton = addCollectionButtonBox.addButton("Cancel", QDialogButtonBox.RejectRole)
 
-        self.addPuzzlesButton = QPushButton("Add Puzzles")
-        self.addPuzzlesButton.setEnabled(False)
-
         addCollectionButtonBox.accepted.connect(self.acceptCollection)
         addCollectionButtonBox.rejected.connect(self.rejectCollection)
-        self.addPuzzlesButton.clicked.connect(self.addPuzzles)
 
         collectionGrid = QGridLayout()
         collectionGrid.addWidget(collectionNameLabel, 0, 0, Qt.AlignRight)
@@ -211,20 +219,20 @@ class AddCollection(QDialog):
         collectionGrid.addWidget(authorLabel, 1, 0, Qt.AlignRight)
         collectionGrid.addWidget(self.authorEdit, 1, 1)
 
-        addPuzzlesLayout = QHBoxLayout()
-        addPuzzlesLayout.addSpacing(190)
-        addPuzzlesLayout.addWidget(self.addPuzzlesButton)
-
         collectionLayout = QVBoxLayout()
         collectionLayout.addLayout(collectionGrid)
         collectionLayout.addWidget(addCollectionButtonBox)
-        collectionLayout.addLayout(addPuzzlesLayout)
 
         dialogLayout = QVBoxLayout(self)
         dialogLayout.addLayout(collectionLayout)
-#        dialogLayout.addWidget(self.puzzleEditControls)
-#        dialogLayout.addWidget(dialogButtonBox)
 
+    def check_for_name(self):
+        """
+        deactivates the Save button when the collectionNameEdit box is empty
+        :return:
+        """
+        if self.collectionNameEdit.text() == "":
+            self.acceptCollectionButton.setEnabled(False)
 
     def name_edit_lose_focus(self):
         """
@@ -235,7 +243,7 @@ class AddCollection(QDialog):
         :return: None
         """
         if self.collectionNameEdit.text() != "":
-            self.addPuzzlesButton.setEnabled(True)
+            # self.addPuzzlesButton.setEnabled(True)
             self.acceptCollectionButton.setEnabled(True)
             self.authorEdit.setFocus()
 
@@ -247,9 +255,6 @@ class AddCollection(QDialog):
 
         class BadNameError(Exception):pass
 
-        print("Got to AddCollection.acceptCollection()")
-        # print("AddEditCollection's puzzle count: ", len(self.puzzles()))
-
         name = self.collectionNameEdit.text()
         author = self.authorEdit.text()
         filename = self.createFilename(name)
@@ -257,8 +262,7 @@ class AddCollection(QDialog):
         try:
             if len(name.strip()) == 0:
                 raise NoNameError("You must at least enter a name for the Collection.")
-
-            if len(self.createFilename(name)) == 0:
+            if len(filename) == 0:
                 filename = "Temporary_Filename.col"
                 msg = "Could not convert " + name + " into a valid filename.  "
                 msg += "The filename will be " + filename + " "
@@ -270,37 +274,37 @@ class AddCollection(QDialog):
             successMessage += "your computer's operating system."
             QMessageBox.information(self, "Filename Information", successMessage)
 
-        except NameError as e:
+        except NoNameError as e:
             QMessageBox.warning(self, "Name Error", str(e))
-            self.nameEdit.selectAll()
-            self.nameEdit.setFocus()
+            self.collectionNameEdit.selectAll()
+            self.collectionNameEdit.setFocus()
             return
 
         except BadNameError as e:
             QMessageBox.warning(self, "Filename Notice", str(e))
 
-
         self._name = name
         self._author = author
-        #QDialog.accept(self)  turn it off until the calling routine in Cryptogram_Solver.pyw is ready for it
+        QDialog.accept(self)
 
     def createFilename(self, name):
         """
         Converts name to a valid filename if possible, otherwise returns the empty string
+
+        This method is based on one from
+            http://stackoverflow.com/questions/295135/turn-a-string-into-a-valid-filename-in-python/634023
+        I removed the byte encoding since this is to be used on Windows and removed the space ' ' as a valid
+        character because I felt like it
+
         :param name:
-        :return:
+        :return: a string prepared to be used as a filename
         """
-        print("Got to createFilename")
-        return name
+        validFilenameChars = "-_.()%s%s" % (string.ascii_letters, string.digits)
+        cleanedFilename = unicodedata.normalize('NFKD', name)
+        return ''.join(c for c in cleanedFilename if c in validFilenameChars)
 
     def rejectCollection(self):
         QDialog.reject(self)
-
-    def addPuzzles(self):
-        # self.puzzleEditControls.setEnabled(True)
-        print("Got to addPuzzles")
-        # self._currentPuzzleIndex = -1
-        # self.updateUI()
 
 #======================================================================================================================
 # class AddEditPuzzle(QDialog):

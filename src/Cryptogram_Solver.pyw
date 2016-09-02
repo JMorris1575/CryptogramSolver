@@ -1,8 +1,9 @@
-import data_structures
 import file_handler
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+
+import src.data_structures
 from src.cryptogram_solver_ui import uiElements, SetupUI
 
 
@@ -11,7 +12,7 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
 
-        self._collection = data_structures.Collection("Jim's Fake Collection", "Jim Morris")
+        self._collection = src.data_structures.Collection("Jim's Fake Collection", "Jim Morris")
         self.uiSetup(self)      # this is located in the file SetupUI.py
         self._currentPuzzleIndex = None
 
@@ -104,7 +105,7 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
 
         dialog = uiElements.AddCollection()
         if dialog.exec():
-            collection = data_structures.Collection(dialog.name(), dialog.author(), dialog.puzzles())
+            collection = src.data_structures.Collection(dialog.name(), dialog.author())
             self.setCollection(collection)
             file_handler.saveCollection(collection)
             #self.updatePuzzleSelector(collection.puzzles())
@@ -114,7 +115,7 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
         if self.collection():
             dialog = uiElements.AddEditCollection(self._collection, self._currentPuzzleIndex)
             if dialog.exec():
-                collection = data_structures.Collection(dialog.name(), dialog.author(), dialog.puzzles())
+                collection = src.data_structures.Collection(dialog.name(), dialog.author(), dialog.puzzles())
                 self.setCollection(collection)
                 file_handler.saveCollection(collection)
                 self.updatePuzzleSelector(collection.puzzles())
@@ -222,5 +223,3 @@ if __name__ == "__main__":
     form = MainWindow()
     form.show()
     app.exec()
-
-
