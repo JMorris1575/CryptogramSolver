@@ -168,6 +168,9 @@ class AddCollection(QDialog):
     def __init__(self, currentCollection=None):
         super(AddCollection, self).__init__()       # you removed parent from the .__init__(parent)
 
+        # Turn off the context help button (The ? in the title bar.)
+        self.setWindowFlags(self.windowFlags() & ~Qt.WindowContextHelpButtonHint)
+
         self._currentCollection = currentCollection
         self._name = ""
         self._author = ""
@@ -323,8 +326,12 @@ class AddEditPuzzle(QDialog):
         print('Initializing AddEditPuzzle')
         super(AddEditPuzzle, self).__init__(parent)
 
+        # Turn off the context help button (The ? in the title bar.)
+        self.setWindowFlags(self.windowFlags() & ~Qt.WindowContextHelpButtonHint)
+
         self._collection = collection
         self._currentPuzzleIndex = currentPuzzleIndex
+        print('self.whatsThis() = ', self.whatsThis())
         print('About to go into setupUI')
         self.setupUI()
 
