@@ -331,9 +331,8 @@ class AddEditPuzzle(QDialog):
 
         self._collection = collection
         self._currentPuzzleIndex = currentPuzzleIndex
-        print('self.whatsThis() = ', self.whatsThis())
-        print('About to go into setupUI')
         self.setupUI()
+        self.updateUI()
 
     def collection(self):
         return self._collection
@@ -399,10 +398,15 @@ class AddEditPuzzle(QDialog):
         self.hintEdit = CodeLineEdit()
 
         puzzleButtonBox = QDialogButtonBox()
-        puzzleButtonBox.addButton("Store Puzzle", QDialogButtonBox.AcceptRole)
-        deletePuzzleButton = puzzleButtonBox.addButton("Delete", QDialogButtonBox.ActionRole)
+        puzzleButtonBox.addButton("Save Puzzle", QDialogButtonBox.AcceptRole)
+        deleteButton = puzzleButtonBox.addButton("Delete", QDialogButtonBox.DestructiveRole)
+        clearButton = puzzleButtonBox.addButton("Clear", QDialogButtonBox.AcceptRole)
+        puzzleButtonBox.addButton("Cancel Puzzle", QDialogButtonBox.RejectRole)
+
         puzzleButtonBox.accepted.connect(self.acceptPuzzle)
-        deletePuzzleButton.clicked.connect(self.deletePuzzle)
+        deleteButton.clicked.connect(self.deletePuzzle)
+        clearButton.clicked.connect(self.clearPuzzle)
+        puzzleButtonBox.rejected.connect(self.cancelPuzzle)
 
         puzzleGrid = QGridLayout()
         puzzleGrid.addWidget(puzzleSelectorLabel, 0, 0, Qt.AlignRight)
@@ -428,54 +432,65 @@ class AddEditPuzzle(QDialog):
         self.puzzleEditControls.setEnabled(False)
         self.puzzleEditControls.setLayout(puzzleEditLayout)
 
+        cancelButton = QPushButton("Cancel")
+        cancelButton.clicked.connect(self.cancelDialog)
+        cancelButtonLayout = QHBoxLayout()
+        cancelButtonLayout.addSpacing(250)
+        cancelButtonLayout.addWidget(cancelButton)
+
         dialogLayout = QVBoxLayout(self)
         dialogLayout.addLayout(addButtonLayout)
         dialogLayout.addWidget(self.puzzleEditControls)
+        dialogLayout.addLayout(cancelButtonLayout)
 
 
     def updateUI(self):
         """
-        Displays the current collection in the dialog box, if any, and
+        Displays the current puzzle in the dialog box, if any, and
         enables the corresponding controls
         :return: None
         """
-        print("updateUI self.currentCollection(): ", self.currentCollection())
-        if self._mode == "Edit":
-            currentCollection = self.currentCollection()
-            self.collectionNameEdit.setText(currentCollection.name())
-            self.authorEdit.setText(currentCollection.author())
-            self.addPuzzleButton.setEnabled(True)
-            # ToDo
-            """correct this routine so that it handles all cases:
-                --  when adding a new collection
-                --  when adding a puzzle to an existing collection
-                --  when editing an old collection
-            """
-            print("currentCollection.puzzles(): ", currentCollection.puzzles())
-            print("self.currentPuzzleIndex(): ", self.currentPuzzleIndex())
-            if currentCollection.puzzles() and self.currentPuzzleIndex() != None:
-                self.puzzleEditControls.setEnabled(True)
-                self.puzzleSelector.blockSignals(True)
-                self.puzzleSelector.clear()
-                for puzzle in currentCollection.puzzles():
-                    self.puzzleSelector.addItem(puzzle.puzzleTitle())
-                self.puzzleSelector.setCurrentIndex(self.currentPuzzleIndex())
-                self.puzzleSelector.blockSignals(False)
-                currentPuzzle = currentCollection.puzzles()[self.currentPuzzleIndex()]
-                self.puzzleTitleEdit.setText(currentPuzzle.puzzleTitle())
-                self.puzzleCodeEdit.setText(currentPuzzle.puzzleCode())
-                self.citationCodeEdit.setText(currentPuzzle.citationCode())
-                self.puzzleSolutionEdit.setText(currentPuzzle.puzzleSolution())
-                self.citationSolutionEdit.setText(currentPuzzle.citationSolution())
-                hintText = ""
-                for hint in currentPuzzle.hints():
-                    hintText += hint + "; "
-                self.hintEdit.setText(hintText)
-        else:
-            pass
+        print("updateUI self._currentPuzzleIndex: ", self._currentPuzzleIndex)
+        # if self._mode == "Edit":
+        #     currentCollection = self.currentCollection()
+        #     self.collectionNameEdit.setText(currentCollection.name())
+        #     self.authorEdit.setText(currentCollection.author())
+        #     self.addPuzzleButton.setEnabled(True)
+        #     # ToDo
+        #     """correct this routine so that it handles all cases:
+        #         --  when adding a new collection
+        #         --  when adding a puzzle to an existing collection
+        #         --  when editing an old collection
+        #     """
+        #     print("currentCollection.puzzles(): ", currentCollection.puzzles())
+        #     print("self.currentPuzzleIndex(): ", self.currentPuzzleIndex())
+        #     if currentCollection.puzzles() and self.currentPuzzleIndex() != None:
+        #         self.puzzleEditControls.setEnabled(True)
+        #         self.puzzleSelector.blockSignals(True)
+        #         self.puzzleSelector.clear()
+        #         for puzzle in currentCollection.puzzles():
+        #             self.puzzleSelector.addItem(puzzle.puzzleTitle())
+        #         self.puzzleSelector.setCurrentIndex(self.currentPuzzleIndex())
+        #         self.puzzleSelector.blockSignals(False)
+        #         currentPuzzle = currentCollection.puzzles()[self.currentPuzzleIndex()]
+        #         self.puzzleTitleEdit.setText(currentPuzzle.puzzleTitle())
+        #         self.puzzleCodeEdit.setText(currentPuzzle.puzzleCode())
+        #         self.citationCodeEdit.setText(currentPuzzle.citationCode())
+        #         self.puzzleSolutionEdit.setText(currentPuzzle.puzzleSolution())
+        #         self.citationSolutionEdit.setText(currentPuzzle.citationSolution())
+        #         hintText = ""
+        #         for hint in currentPuzzle.hints():
+        #             hintText += hint + "; "
+        #         self.hintEdit.setText(hintText)
+        # else:
+        #     pass
 
     def createNewPuzzle(self):
-        pass
+
+        print("Got to createNewPuzzle")
+
+        self.puzzleEditControls.setEnabled(True)
+
 
 #        dialogButtonBox = QDialogButtonBox()
 
@@ -546,6 +561,27 @@ class AddEditPuzzle(QDialog):
     def deletePuzzle(self):
         print("Got to deletePuzzle")
 
+    def clearPuzzle(self):
+        print("Got to clearPuzzle")
+
+    def cancelPuzzle(self):
+        """
+        If the user clicks this button he or she has decided NOT to add a new puzzle, but doesn't want to leave
+        the dialog box entirely.  Perhaps to edit an existing puzzle.
+        :return: None
+        """
+        print("Got to cancelPuzzle")
+        self.addPuzzleButton.setEnabled(True)
+        self.clearPuzzle()
+
+    def acceptPuzzle(self):
+        print("Got to acceptPuzzle")
+
+    def cancelDialog(self):
+        QDialog.reject(self)
+
+
+
 
     def addEditPuzzleSelectorChanged(self):
         print("Got to addEditPuzzleSelectorChanged")
@@ -577,8 +613,3 @@ class AddEditPuzzle(QDialog):
         # for hint in self._hints:
         #     hintText += hint + "; "
         # self.hintEdit.setText(hintText)
-
-
-    def acceptPuzzle(self):
-        print("Got to acceptPuzzle")
-

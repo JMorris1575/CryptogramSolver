@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cd7e35c9-6fc6-4969-8c5c-c3acf22add81" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/addeditpuzzles.rst" afterPath="$PROJECT_DIR$/docs/addeditpuzzles.rst" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py" afterPath="$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py" />
     </list>
     <ignored path="Cryptogram_Solver.iws" />
@@ -36,8 +37,8 @@
       <file leaf-file-name="addeditpuzzles.rst" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/docs/addeditpuzzles.rst">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1479">
-              <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+            <state relative-caret-position="170">
+              <caret line="19" column="96" selection-start-line="19" selection-start-column="96" selection-end-line="19" selection-end-column="96" />
               <folding />
             </state>
           </provider>
@@ -53,10 +54,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Cryptogram_Solver.pyw" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Cryptogram_Solver.pyw" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Cryptogram_Solver.pyw">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
+            <state relative-caret-position="-85">
               <caret line="14" column="116" selection-start-line="14" selection-start-column="116" selection-end-line="14" selection-end-column="116" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
@@ -75,11 +76,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="uiElements.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="uiElements.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="444">
-              <caret line="172" column="0" selection-start-line="172" selection-start-column="0" selection-end-line="172" selection-end-column="0" />
+            <state relative-caret-position="971">
+              <caret line="334" column="23" selection-start-line="334" selection-start-column="23" selection-end-line="334" selection-end-column="23" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -155,13 +156,13 @@
         <option value="$PROJECT_DIR$/docs/_build/qthelp/addcollection.html" />
         <option value="$PROJECT_DIR$/docs/adminmenu.rst" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/docs/addeditpuzzles.rst" />
         <option value="$PROJECT_DIR$/src/data_structures/Puzzle.py" />
         <option value="$PROJECT_DIR$/src/data_structures/Collection.py" />
         <option value="$PROJECT_DIR$/src/file_handler.py" />
         <option value="$PROJECT_DIR$/docs/addcollection.rst" />
         <option value="$PROJECT_DIR$/src/cryptogram_solver_ui/SetupUI.py" />
         <option value="$PROJECT_DIR$/src/Cryptogram_Solver.pyw" />
+        <option value="$PROJECT_DIR$/docs/addeditpuzzles.rst" />
         <option value="$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py" />
       </list>
     </option>
@@ -629,7 +630,14 @@
       <option name="project" value="LOCAL" />
       <updated>1472821968772</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Got rid of the ContextHelpHint button (the ?) in the AddCollection and AddEditPuzzle dialog boxes">
+      <created>1472867890436</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1472867890436</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TodoView">
@@ -712,17 +720,11 @@
     <MESSAGE value="Beginning work on new AddEditPuzzle dialog box" />
     <MESSAGE value="Updated the addcollection help file to reflect changes" />
     <MESSAGE value="Made Puzzle Editor visible and restructured it a little bit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Made Puzzle Editor visible and restructured it a little bit" />
+    <MESSAGE value="Got rid of the ContextHelpHint button (the ?) in the AddCollection and AddEditPuzzle dialog boxes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Got rid of the ContextHelpHint button (the ?) in the AddCollection and AddEditPuzzle dialog boxes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py</url>
-          <line>363</line>
-          <option name="timeStamp" value="50" />
-        </line-breakpoint>
-      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -987,14 +989,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs/addeditpuzzles.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1479">
-          <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/Program Files/Python35/Lib/codecs.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="182">
@@ -1029,16 +1023,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Cryptogram_Solver.pyw">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="14" column="116" selection-start-line="14" selection-start-column="116" selection-end-line="14" selection-end-column="116" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/cryptogram_solver_ui/SetupUI.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2618">
@@ -1047,12 +1031,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/docs/addeditpuzzles.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="19" column="96" selection-start-line="19" selection-start-column="96" selection-end-line="19" selection-end-column="96" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="444">
-          <caret line="172" column="0" selection-start-line="172" selection-start-column="0" selection-end-line="172" selection-end-column="0" />
+        <state relative-caret-position="971">
+          <caret line="334" column="23" selection-start-line="334" selection-start-column="23" selection-end-line="334" selection-end-column="23" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Cryptogram_Solver.pyw">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-85">
+          <caret line="14" column="116" selection-start-line="14" selection-start-column="116" selection-end-line="14" selection-end-column="116" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
           </folding>
         </state>
       </provider>

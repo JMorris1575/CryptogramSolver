@@ -13,12 +13,15 @@ The following chart outlines the use of the dialog box:
 
 +------------------------+---------------------------------------------------------------------+
 | **Add New Puzzle**     | Click this button to add a new puzzle to the current collection.    |
-|                        | Clicking this button will clear whatever may be displayed and start |
-|                        | you with a clean slate for creating a new puzzle.                   |
+|                        | Clicking this button will activate the **Puzzle Editor** panel, if  |
+|                        | necessary, or clear whatever may be displayed there to start you    |
+|                        | with a clean slate for creating a new puzzle. Once clicked it will  |
+|                        | be disabled until the new puzzle is saved, or the Cancel Puzzle     |
+|                        | button is clicked.                                                  |
 +------------------------+---------------------------------------------------------------------+
 | **Puzzle Selector**    | This combo box contains the names of existing puzzles, if any, and  |
 |                        | can be used to select a puzzle to work on.  When adding a new       |
-|                        | puzzle this is blank until the Store Puzzle button is pressed.      |
+|                        | puzzle this is blank until the **Save Puzzle** button is pressed.   |
 +------------------------+---------------------------------------------------------------------+
 | **Puzzle Name**        | Type the desired name of the puzzle into this box or keep the       |
 |                        | default which is Puzzle n, where n is the next number at the end of |
@@ -29,9 +32,9 @@ The following chart outlines the use of the dialog box:
 |                        | have forgotten.  If there are gaps in the sequence you can fill     |
 |                        | them the same way.  If you do not use the Puzzle n format and you   |
 |                        | type the name of an existing puzzle you will be asked if you want   |
-|                        | to replace the existing puzzle when you press the **Store** button. |
-|                        | Every puzzle must have a name so if this  box is blank, none of the |
-|                        | rest of the controls will be activated                              |
+|                        | to replace the existing puzzle when you press the **Save Puzzle**   |
+|                        | button.  Every puzzle must have a name so if this  box is blank,    |
+|                        | none of the rest of the controls will be activated.                 |
 +------------------------+---------------------------------------------------------------------+
 | **Puzzle Code**        | Type the cryptogram itself into this box.  The characters you type  |
 |                        | will automatically be converted to upper case.  Every puzzle must   |
