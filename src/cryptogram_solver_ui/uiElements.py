@@ -398,14 +398,14 @@ class AddEditPuzzle(QDialog):
         self.hintEdit = CodeLineEdit()
 
         puzzleButtonBox = QDialogButtonBox()
-        puzzleButtonBox.addButton("Save Puzzle", QDialogButtonBox.AcceptRole)
-        deleteButton = puzzleButtonBox.addButton("Delete", QDialogButtonBox.DestructiveRole)
-        clearButton = puzzleButtonBox.addButton("Clear", QDialogButtonBox.AcceptRole)
-        puzzleButtonBox.addButton("Cancel Puzzle", QDialogButtonBox.RejectRole)
+        self.savePuzzleButton = puzzleButtonBox.addButton("Save Puzzle", QDialogButtonBox.AcceptRole)
+        self.deleteButton = puzzleButtonBox.addButton("Delete", QDialogButtonBox.DestructiveRole)
+        self.clearButton = puzzleButtonBox.addButton("Clear", QDialogButtonBox.ActionRole)
+        self.cancelPuzzleButton = puzzleButtonBox.addButton("Cancel New Puzzle", QDialogButtonBox.RejectRole)
 
         puzzleButtonBox.accepted.connect(self.acceptPuzzle)
-        deleteButton.clicked.connect(self.deletePuzzle)
-        clearButton.clicked.connect(self.clearPuzzle)
+        self.deleteButton.clicked.connect(self.deletePuzzle)
+        self.clearButton.clicked.connect(self.clearPuzzle)
         puzzleButtonBox.rejected.connect(self.cancelPuzzle)
 
         puzzleGrid = QGridLayout()
@@ -450,70 +450,39 @@ class AddEditPuzzle(QDialog):
         enables the corresponding controls
         :return: None
         """
-        print("updateUI self._currentPuzzleIndex: ", self._currentPuzzleIndex)
-        # if self._mode == "Edit":
-        #     currentCollection = self.currentCollection()
-        #     self.collectionNameEdit.setText(currentCollection.name())
-        #     self.authorEdit.setText(currentCollection.author())
-        #     self.addPuzzleButton.setEnabled(True)
-        #     # ToDo
-        #     """correct this routine so that it handles all cases:
-        #         --  when adding a new collection
-        #         --  when adding a puzzle to an existing collection
-        #         --  when editing an old collection
-        #     """
-        #     print("currentCollection.puzzles(): ", currentCollection.puzzles())
-        #     print("self.currentPuzzleIndex(): ", self.currentPuzzleIndex())
-        #     if currentCollection.puzzles() and self.currentPuzzleIndex() != None:
-        #         self.puzzleEditControls.setEnabled(True)
-        #         self.puzzleSelector.blockSignals(True)
-        #         self.puzzleSelector.clear()
-        #         for puzzle in currentCollection.puzzles():
-        #             self.puzzleSelector.addItem(puzzle.puzzleTitle())
-        #         self.puzzleSelector.setCurrentIndex(self.currentPuzzleIndex())
-        #         self.puzzleSelector.blockSignals(False)
-        #         currentPuzzle = currentCollection.puzzles()[self.currentPuzzleIndex()]
-        #         self.puzzleTitleEdit.setText(currentPuzzle.puzzleTitle())
-        #         self.puzzleCodeEdit.setText(currentPuzzle.puzzleCode())
-        #         self.citationCodeEdit.setText(currentPuzzle.citationCode())
-        #         self.puzzleSolutionEdit.setText(currentPuzzle.puzzleSolution())
-        #         self.citationSolutionEdit.setText(currentPuzzle.citationSolution())
-        #         hintText = ""
-        #         for hint in currentPuzzle.hints():
-        #             hintText += hint + "; "
-        #         self.hintEdit.setText(hintText)
-        # else:
-        #     pass
+        print("self.currentPuzzleIndex() = ", self.currentPuzzleIndex())
+        if self.currentPuzzleIndex() != -1:         # if the index is -1 no puzzle is selected
+            currentCollection = self.collection()
+            self.puzzleEditControls.setEnabled(True)
+            self.cancelPuzzleButton.setEnabled(False)
+            self.savePuzzleButton.setEnabled(True)
+            self.puzzleSelector.blockSignals(True)
+            self.puzzleSelector.clear()
+            for puzzle in currentCollection.puzzles():
+                self.puzzleSelector.addItem(puzzle.puzzleTitle())
+            self.puzzleSelector.setCurrentIndex(self.currentPuzzleIndex())
+            self.puzzleSelector.blockSignals(False)
+            currentPuzzle = currentCollection.puzzles()[self.currentPuzzleIndex()]
+            self.puzzleTitleEdit.setText(currentPuzzle.puzzleTitle())
+            self.puzzleCodeEdit.setText(currentPuzzle.puzzleCode())
+            self.citationCodeEdit.setText(currentPuzzle.citationCode())
+            self.puzzleSolutionEdit.setText(currentPuzzle.puzzleSolution())
+            self.citationSolutionEdit.setText(currentPuzzle.citationSolution())
+            hintText = ""
+            for hint in currentPuzzle.hints():
+                hintText += hint + "; "
+            self.hintEdit.setText(hintText)
+        else:
+            self.savePuzzleButton.setEnabled(False)
 
     def createNewPuzzle(self):
 
         print("Got to createNewPuzzle")
 
         self.puzzleEditControls.setEnabled(True)
+        self.addPuzzleButton.setEnabled(False)
+        self.updateUI()
 
-
-#        dialogButtonBox = QDialogButtonBox()
-
-#
-#         buttonBox = QDialogButtonBox(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
-#         buttonBox.accepted.connect(self.accept)
-#         buttonBox.rejected.connect(self.reject)
-#
-#         gridLayout = QGridLayout()
-#         gridLayout.addWidget(titleLabel, 0, 0, Qt.AlignRight)
-#         gridLayout.addWidget(self.titleEdit, 0, 1)
-#         gridLayout.addWidget(puzzleCodeLabel, 1, 0, Qt.AlignRight)
-#         gridLayout.addWidget(self.puzzleCodeEdit, 1, 1)
-#         gridLayout.addWidget(citationCodeLabel, 2, 0, Qt.AlignRight)
-#         gridLayout.addWidget(self.citationCodeEdit, 2, 1)
-#         gridLayout.addWidget(puzzleSolutionLabel, 3, 0, Qt.AlignRight)
-#         gridLayout.addWidget(self.puzzleSolutionEdit, 3, 1)
-#         gridLayout.addWidget(citationSolutionLabel, 4, 0, Qt.AlignRight)
-#         gridLayout.addWidget(self.citationSolutionEdit, 4, 1)
-#         layout = QVBoxLayout(self)
-#         layout.addLayout(gridLayout)
-#         layout.addWidget(buttonBox)
-#
 #     def accept(self):
 #
 #         class TitleError(Exception):pass
@@ -563,6 +532,13 @@ class AddEditPuzzle(QDialog):
 
     def clearPuzzle(self):
         print("Got to clearPuzzle")
+        self.puzzleTitleEdit.setText("")
+        self.puzzleCodeEdit.setText("")
+        self.citationCodeEdit.setText("")
+        self.puzzleSolutionEdit.setText("")
+        self.citationSolutionEdit.setText("")
+        self.hintEdit.setText("")
+        self.updateUI()
 
     def cancelPuzzle(self):
         """

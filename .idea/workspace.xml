@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="cd7e35c9-6fc6-4969-8c5c-c3acf22add81" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/addeditpuzzles.rst" afterPath="$PROJECT_DIR$/docs/addeditpuzzles.rst" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py" afterPath="$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py" />
     </list>
     <ignored path="Cryptogram_Solver.iws" />
@@ -37,7 +36,7 @@
       <file leaf-file-name="addeditpuzzles.rst" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/docs/addeditpuzzles.rst">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
+            <state relative-caret-position="323">
               <caret line="19" column="96" selection-start-line="19" selection-start-column="96" selection-end-line="19" selection-end-column="96" />
               <folding />
             </state>
@@ -54,10 +53,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Cryptogram_Solver.pyw" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Cryptogram_Solver.pyw" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Cryptogram_Solver.pyw">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-85">
+            <state relative-caret-position="17">
               <caret line="14" column="116" selection-start-line="14" selection-start-column="116" selection-end-line="14" selection-end-column="116" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
@@ -76,11 +75,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="uiElements.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="uiElements.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="971">
-              <caret line="334" column="23" selection-start-line="334" selection-start-column="23" selection-end-line="334" selection-end-column="23" />
+            <state relative-caret-position="121">
+              <caret line="400" column="23" selection-start-line="400" selection-start-column="23" selection-end-line="400" selection-end-column="23" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -198,17 +197,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Problems" />
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -290,6 +278,17 @@
         </subPane>
       </pane>
       <pane id="Scratches" />
+      <pane id="Scope">
+        <subPane subId="Problems" />
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -637,7 +636,14 @@
       <option name="project" value="LOCAL" />
       <updated>1472867890436</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Redesigned AddEditPuzzlesDialog and started its implementation">
+      <created>1472953997861</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1472953997861</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TodoView">
@@ -721,7 +727,8 @@
     <MESSAGE value="Updated the addcollection help file to reflect changes" />
     <MESSAGE value="Made Puzzle Editor visible and restructured it a little bit" />
     <MESSAGE value="Got rid of the ContextHelpHint button (the ?) in the AddCollection and AddEditPuzzle dialog boxes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Got rid of the ContextHelpHint button (the ?) in the AddCollection and AddEditPuzzle dialog boxes" />
+    <MESSAGE value="Redesigned AddEditPuzzlesDialog and started its implementation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Redesigned AddEditPuzzlesDialog and started its implementation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1007,14 +1014,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/data_structures.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docs/addcollection.rst">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="544">
@@ -1033,28 +1032,36 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/docs/addeditpuzzles.rst">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
+        <state relative-caret-position="323">
           <caret line="19" column="96" selection-start-line="19" selection-start-column="96" selection-end-line="19" selection-end-column="96" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Cryptogram_Solver.pyw">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="14" column="116" selection-start-line="14" selection-start-column="116" selection-end-line="14" selection-end-column="116" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/data_structures.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/cryptogram_solver_ui/uiElements.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="971">
-          <caret line="334" column="23" selection-start-line="334" selection-start-column="23" selection-end-line="334" selection-end-column="23" />
+        <state relative-caret-position="121">
+          <caret line="400" column="23" selection-start-line="400" selection-start-column="23" selection-end-line="400" selection-end-column="23" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Cryptogram_Solver.pyw">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-85">
-          <caret line="14" column="116" selection-start-line="14" selection-start-column="116" selection-end-line="14" selection-end-column="116" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
           </folding>
         </state>
       </provider>
