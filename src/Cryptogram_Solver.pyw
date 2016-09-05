@@ -63,7 +63,10 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
         print("Got to puzzleSelectorIndexChanged")
         self._currentPuzzleIndex = self.puzzleSelector.currentIndex()
         print("A")
-        code = self.collection().puzzles()[self._currentPuzzleIndex].puzzleCode()
+        if self.puzzleSelector.currentIndex() >= 0:
+            code = self.collection().puzzles()[self._currentPuzzleIndex].puzzleCode()
+        else:
+            code = ""
         print("B code = ", code)
         codeLength = len(code)
         print("C codeLength = ", codeLength)
@@ -214,7 +217,7 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
         self.puzzleSelector.clear()
         for puzzle in puzzles:
             self.puzzleSelector.addItem(puzzle.puzzleTitle())
-        if self.puzzleSelector.count() >= 0:
+        if len(puzzles) > 0:
             self._currentPuzzleIndex = 0
         else:
             self._currentPuzzleIndex = -1

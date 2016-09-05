@@ -340,23 +340,8 @@ class AddEditPuzzle(QDialog):
     def currentPuzzleIndex(self):
         return self._currentPuzzleIndex
 
-    def title(self):
-        return self._title
-
-    def puzzleCode(self):
-        return self._puzzleCode
-
-    def citationCode(self):
-        return self._citationCode
-
-    def puzzleSolution(self):
-        return self._puzzleSolution
-
-    def citationSolution(self):
-        return self._citationSolution
-
-    def hints(self):
-        return self._hints
+    def setCurrentPuzzleIndex(self, index):
+        self._currentPuzzleIndex = index
 
     def setupUI(self):
 
@@ -450,12 +435,13 @@ class AddEditPuzzle(QDialog):
         enables the corresponding controls
         :return: None
         """
+        print("In updateUI")
         print("self.currentPuzzleIndex() = ", self.currentPuzzleIndex())
-        if self.currentPuzzleIndex() != -1:         # if the index is -1 no puzzle is selected
+        if self.currentPuzzleIndex() >= 0:         # if the index is -1 no puzzle is selected
             currentCollection = self.collection()
             self.puzzleEditControls.setEnabled(True)
             self.cancelPuzzleButton.setEnabled(False)
-            self.savePuzzleButton.setEnabled(True)
+            self.savePuzzleButton.setEnabled(False)
             self.puzzleSelector.blockSignals(True)
             self.puzzleSelector.clear()
             for puzzle in currentCollection.puzzles():
@@ -473,15 +459,29 @@ class AddEditPuzzle(QDialog):
                 hintText += hint + "; "
             self.hintEdit.setText(hintText)
         else:
+            print("updateUI A")
             self.savePuzzleButton.setEnabled(False)
+            print("updateUI B")
 
     def createNewPuzzle(self):
+        """
+        If a puzzle is present (as indicated by a non-negative value of self.puzzleSelector.index)
+        The contents of the input boxes are cleared and a suggested title, "Puzzle n", where n is an integer
+        indicating the next available number, is placed in the puzzleTitleEdit control.
+        :return: None
+        """
 
         print("Got to createNewPuzzle")
-
         self.puzzleEditControls.setEnabled(True)
         self.addPuzzleButton.setEnabled(False)
-        self.updateUI()
+        # if self.puzzleSelector.currentIndex() >= 0:
+        self.clearPuzzle()
+        print("len(self.collection().puzzles()) = ", len(self.collection().puzzles()))
+        nextNumber = len(self.collection().puzzles()) + 1
+        self.setCurrentPuzzleIndex(nextNumber - 1)
+        self.puzzleTitleEdit.setText("Puzzle " + str(nextNumber))
+
+        #self.updateUI()
 
 #     def accept(self):
 #
@@ -538,7 +538,7 @@ class AddEditPuzzle(QDialog):
         self.puzzleSolutionEdit.setText("")
         self.citationSolutionEdit.setText("")
         self.hintEdit.setText("")
-        self.updateUI()
+        #self.updateUI()
 
     def cancelPuzzle(self):
         """
@@ -556,36 +556,28 @@ class AddEditPuzzle(QDialog):
     def cancelDialog(self):
         QDialog.reject(self)
 
-
-
-
     def addEditPuzzleSelectorChanged(self):
         print("Got to addEditPuzzleSelectorChanged")
-        self._currentPuzzleIndex = self.puzzleSelector.currentIndex()
-        # self.populatePuzzleEditor()
+        self.setCurrentPuzzleIndex(self.puzzleSelector.currentIndex())
+        self.populatePuzzleEditor()
+        self.updateUI()
 
-
-    def populatePuzzleEditor(self, index=0):
+    def populatePuzzleEditor(self):
         """
         When there is a current puzzle, this method is called to populate the widgets of the puzzle editor group
         with the values of the current puzzle
         :return: None
         """
-        # self._currentPuzzleIndex = self.puzzleSelector.currentIndex()
-        # self.puzzleSelector.blockSignals(True)
-        # self.puzzleSelector.clear()
-        # for puzzle in self._puzzles:
-        #     self.puzzleSelector.addItem(puzzle.puzzleTitle())
-        # if index != -1:
-        #     self.puzzleSelector.setCurrentIndex(self._currentPuzzleIndex)
-        # self.puzzleSelector.blockSignals(False)
-        # self.readFromCurrentPuzzle()        # reads the values of the instance variables from the current puzzle
-        # self.puzzleTitleEdit.setText(self._puzzleTitle)
-        # self.puzzleCodeEdit.setText(self._puzzleCode)
-        # self.citationCodeEdit.setText(self._citationCode)
-        # self.puzzleSolutionEdit.setText(self._puzzleSolution)
-        # self.citationSolutionEdit.setText(self._citationSolution)
-        # hintText = ""
-        # for hint in self._hints:
-        #     hintText += hint + "; "
-        # self.hintEdit.setText(hintText)
+        print("Got to populatePuzzleEditor")
+        index = self.currentPuzzleIndex()
+        self.setCurrentPuzzleIndex(index)
+        currentPuzzle = self.collection().puzzles()[index]
+        self.puzzleTitleEdit.setText(currentPuzzle.puzzleTitle())
+        self.puzzleCodeEdit.setText(currentPuzzle.puzzleCode())
+        self.citationCodeEdit.setText(currentPuzzle.citationCode())
+        self.puzzleSolutionEdit.setText(currentPuzzle.puzzleSolution())
+        self.citationSolutionEdit.setText(currentPuzzle.citationSolution())
+        hintText = ""
+        for hint in currentPuzzle.hints():
+            hintText += hint + "; "
+        self.hintEdit.setText(hintText)
