@@ -332,6 +332,9 @@ class AddEditPuzzle(QDialog):
         self._collection = collection
         self._currentPuzzleIndex = currentPuzzleIndex
         self.setupUI()
+        if self._currentPuzzleIndex >= 0:
+            self.setPuzzleSelector(0)
+        self._puzzleEdited = False
         self.updateUI()
 
     def collection(self):
@@ -362,25 +365,31 @@ class AddEditPuzzle(QDialog):
 
         puzzleTitleLabel = QLabel("Puzzle Name:")
         self.puzzleTitleEdit = QLineEdit()
+        self.puzzleTitleEdit.textChanged.connect(self.editBoxChanged)
 
         puzzleCodeLabel = QLabel("Puzzle Code:")
         self.puzzleCodeEdit = CodeTextEdit()
         self.puzzleCodeEdit.setTabChangesFocus(True)
         self.puzzleCodeEdit.setMaximumHeight(60)
+        self.puzzleCodeEdit.textChanged.connect(self.editBoxChanged)
 
         citationCodeLabel = QLabel("Citation Code (if any):")
         self.citationCodeEdit = CodeLineEdit()
+        self.citationCodeEdit.textChanged.connect(self.editBoxChanged)
 
         puzzleSolutionLabel = QLabel("Puzzle Solution (if any):")
         self.puzzleSolutionEdit = CodeTextEdit()
         self.puzzleSolutionEdit.setTabChangesFocus(True)
         self.puzzleSolutionEdit.setMaximumHeight(60)
+        self.puzzleSolutionEdit.textChanged.connect(self.editBoxChanged)
 
         citationSolutionLabel = QLabel("Citation Solution (if any):")
         self.citationSolutionEdit = CodeLineEdit()
+        self.citationSolutionEdit.textChanged.connect(self.editBoxChanged)
 
         hintLabel = QLabel("Hints (if any):")
         self.hintEdit = CodeLineEdit()
+        self.hintEdit.textChanged.connect(self.editBoxChanged)
 
         puzzleButtonBox = QDialogButtonBox()
         self.savePuzzleButton = puzzleButtonBox.addButton("Save Puzzle", QDialogButtonBox.AcceptRole)
@@ -429,39 +438,35 @@ class AddEditPuzzle(QDialog):
         dialogLayout.addLayout(cancelButtonLayout)
 
 
-    def updateUI(self):
+    def setPuzzleSelector(self, index):
         """
-        Displays the current puzzle in the dialog box, if any, and
-        enables the corresponding controls
+        Adds all the puzzles in the current collection to the puzzleSelector and sets the selector to the given index
         :return: None
         """
-        print("In updateUI")
-        print("self.currentPuzzleIndex() = ", self.currentPuzzleIndex())
-        if self.currentPuzzleIndex() >= 0:         # if the index is -1 no puzzle is selected
-            currentCollection = self.collection()
-            self.puzzleEditControls.setEnabled(True)
-            self.cancelPuzzleButton.setEnabled(False)
-            self.savePuzzleButton.setEnabled(False)
-            self.puzzleSelector.blockSignals(True)
-            self.puzzleSelector.clear()
-            for puzzle in currentCollection.puzzles():
-                self.puzzleSelector.addItem(puzzle.puzzleTitle())
-            self.puzzleSelector.setCurrentIndex(self.currentPuzzleIndex())
-            self.puzzleSelector.blockSignals(False)
-            currentPuzzle = currentCollection.puzzles()[self.currentPuzzleIndex()]
-            self.puzzleTitleEdit.setText(currentPuzzle.puzzleTitle())
-            self.puzzleCodeEdit.setText(currentPuzzle.puzzleCode())
-            self.citationCodeEdit.setText(currentPuzzle.citationCode())
-            self.puzzleSolutionEdit.setText(currentPuzzle.puzzleSolution())
-            self.citationSolutionEdit.setText(currentPuzzle.citationSolution())
-            hintText = ""
-            for hint in currentPuzzle.hints():
-                hintText += hint + "; "
-            self.hintEdit.setText(hintText)
+        print("In setPuzzleSelector")
+        currentCollection = self.collection()
+        self.puzzleEditControls.setEnabled(True)
+        self.cancelPuzzleButton.setEnabled(False)
+        self.savePuzzleButton.setEnabled(False)
+        self.puzzleSelector.blockSignals(True)
+        self.puzzleSelector.clear()
+        for puzzle in currentCollection.puzzles():
+            self.puzzleSelector.addItem(puzzle.puzzleTitle())
+        #self.puzzleSelector.setCurrentIndex(self.currentPuzzleIndex())
+        self.puzzleSelector.blockSignals(False)
+        print("self.puzzleSelector.currentIndex() = ", self.puzzleSelector.currentIndex(), " just before being set to ", index)
+        self.displayPuzzle(index)
+
+
+    def updateUI(self):
+        """
+        Sets the availability of the dialog box's controls according to its present state
+        :return: None
+        """
+        if self._puzzleEdited:
+            self.savePuzzleButton.setEnabled(True)
         else:
-            print("updateUI A")
             self.savePuzzleButton.setEnabled(False)
-            print("updateUI B")
 
     def createNewPuzzle(self):
         """
@@ -474,12 +479,15 @@ class AddEditPuzzle(QDialog):
         print("Got to createNewPuzzle")
         self.puzzleEditControls.setEnabled(True)
         self.addPuzzleButton.setEnabled(False)
-        # if self.puzzleSelector.currentIndex() >= 0:
+        self.puzzleSelector.setEnabled(False)
+        self.deleteButton.setEnabled(False)
+        self.cancelPuzzleButton.setEnabled(True)
         self.clearPuzzle()
-        print("len(self.collection().puzzles()) = ", len(self.collection().puzzles()))
         nextNumber = len(self.collection().puzzles()) + 1
-        self.setCurrentPuzzleIndex(nextNumber - 1)
+        self._oldPuzzleIndex = self._currentPuzzleIndex
+        self._currentPuzzleIndex = nextNumber - 1
         self.puzzleTitleEdit.setText("Puzzle " + str(nextNumber))
+        self.puzzleTitleEdit.selectAll()
 
         #self.updateUI()
 
@@ -549,6 +557,11 @@ class AddEditPuzzle(QDialog):
         print("Got to cancelPuzzle")
         self.addPuzzleButton.setEnabled(True)
         self.clearPuzzle()
+        if self._oldPuzzleIndex >= 0:
+            self.setPuzzleSelector(self._oldPuzzleIndex)
+            self.puzzleSelector.setEnabled(True)
+        else:
+            self.puzzleEditControls.setEnabled(False)
 
     def acceptPuzzle(self):
         print("Got to acceptPuzzle")
@@ -558,19 +571,30 @@ class AddEditPuzzle(QDialog):
 
     def addEditPuzzleSelectorChanged(self):
         print("Got to addEditPuzzleSelectorChanged")
-        self.setCurrentPuzzleIndex(self.puzzleSelector.currentIndex())
-        self.populatePuzzleEditor()
-        self.updateUI()
+        self._currentPuzzleIndex = self.puzzleSelector.currentIndex()
+        self.displayPuzzle(self._currentPuzzleIndex)
 
-    def populatePuzzleEditor(self):
+    def editBoxChanged(self):
+        """
+        Manages the availability of the Save Puzzle button when any of the edit boxes are changed.
+        The Save Puzzle button is turned off if either puzzleTitleEdit or puzzleCodeEdit are empty.
+        :return: None
+        """
+        print("Got to editBoxChanged")
+        if self.puzzleTitleEdit.text() == "" or self.puzzleCodeEdit.toPlainText() == "":
+            self.savePuzzleButton.setEnabled(False)
+        else:
+            self.savePuzzleButton.setEnabled(True)
+
+    def displayPuzzle(self, index):
         """
         When there is a current puzzle, this method is called to populate the widgets of the puzzle editor group
         with the values of the current puzzle
         :return: None
         """
-        print("Got to populatePuzzleEditor")
-        index = self.currentPuzzleIndex()
-        self.setCurrentPuzzleIndex(index)
+        print("Got to displayPuzzle")
+        # index = self.currentPuzzleIndex()
+        # self.setCurrentPuzzleIndex(index)
         currentPuzzle = self.collection().puzzles()[index]
         self.puzzleTitleEdit.setText(currentPuzzle.puzzleTitle())
         self.puzzleCodeEdit.setText(currentPuzzle.puzzleCode())
