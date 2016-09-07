@@ -392,15 +392,17 @@ class AddEditPuzzle(QDialog):
         self.hintEdit.textChanged.connect(self.editBoxChanged)
 
         puzzleButtonBox = QDialogButtonBox()
-        self.savePuzzleButton = puzzleButtonBox.addButton("Save Puzzle", QDialogButtonBox.AcceptRole)
+        self.savePuzzleButton = puzzleButtonBox.addButton("Store Puzzle", QDialogButtonBox.ActionRole)
         self.deleteButton = puzzleButtonBox.addButton("Delete", QDialogButtonBox.DestructiveRole)
         self.clearButton = puzzleButtonBox.addButton("Clear", QDialogButtonBox.ActionRole)
         self.cancelPuzzleButton = puzzleButtonBox.addButton("Cancel New Puzzle", QDialogButtonBox.RejectRole)
 
-        puzzleButtonBox.accepted.connect(self.acceptPuzzle)
+        self.savePuzzleButton.clicked.connect(self.storePuzzle)
         self.deleteButton.clicked.connect(self.deletePuzzle)
         self.clearButton.clicked.connect(self.clearPuzzle)
         puzzleButtonBox.rejected.connect(self.cancelPuzzle)
+
+        # ToDo: create a puzzleButton box with a Finished (accept) button and a Cancel (reject) button below the puzzle edit frame
 
         puzzleGrid = QGridLayout()
         puzzleGrid.addWidget(puzzleSelectorLabel, 0, 0, Qt.AlignRight)
@@ -457,6 +459,25 @@ class AddEditPuzzle(QDialog):
         print("self.puzzleSelector.currentIndex() = ", self.puzzleSelector.currentIndex(), " just before being set to ", index)
         self.displayPuzzle(index)
 
+    def displayPuzzle(self, index):
+        """
+        When there is a current puzzle, this method is called to populate the widgets of the puzzle editor group
+        with the values of the current puzzle
+        :return: None
+        """
+        print("Got to displayPuzzle")
+        # index = self.currentPuzzleIndex()
+        # self.setCurrentPuzzleIndex(index)
+        currentPuzzle = self.collection().puzzles()[index]
+        self.puzzleTitleEdit.setText(currentPuzzle.puzzleTitle())
+        self.puzzleCodeEdit.setText(currentPuzzle.puzzleCode())
+        self.citationCodeEdit.setText(currentPuzzle.citationCode())
+        self.puzzleSolutionEdit.setText(currentPuzzle.puzzleSolution())
+        self.citationSolutionEdit.setText(currentPuzzle.citationSolution())
+        hintText = ""
+        for hint in currentPuzzle.hints():
+            hintText += hint + "; "
+        self.hintEdit.setText(hintText)
 
     def updateUI(self):
         """
@@ -489,44 +510,44 @@ class AddEditPuzzle(QDialog):
         self.puzzleTitleEdit.setText("Puzzle " + str(nextNumber))
         self.puzzleTitleEdit.selectAll()
 
-        #self.updateUI()
-
-#     def accept(self):
-#
-#         class TitleError(Exception):pass
-#         class CodeError(Exception):pass
-#
-#         title = self.titleEdit.text()
-#         puzzleCode = self.puzzleCodeEdit.toPlainText().upper()
-#         citationCode = self.citationCodeEdit.text().upper()
-#         puzzleSolution = self.puzzleSolutionEdit.toPlainText().upper()
-#         citationSolution = self.citationSolutionEdit.text().upper()
-#
-#         try:
-#             if len(title.strip()) == 0:
-#                 raise TitleError("You must enter a title for this Puzzle.")
-#
-#             if len(puzzleCode.strip()) == 0:
-#                 raise CodeError("You must at least enter the puzzle's code.")
-#         except TitleError as e:
-#             QMessageBox.warning(self, "Title Error", str(e))
-#             self.titleEdit.selectAll()
-#             self.titleEdit.setFocus()
-#             return
-#         except CodeError as e:
-#             QMessageBox.warning(self, "Code Error", str(e))
-#             self.puzzleCodeEdit.selectAll()
-#             self.puzzleCodeEdit.setFocus()
-#             return
-#
-#         self._title = title
-#         self._puzzleCode = puzzleCode
-#         self._citationCode = citationCode
-#         self._puzzleSolution = puzzleSolution
-#         self._citationSolution = citationSolution
-#
-#         print("just after setting properties")
-#         QDialog.accept(self)
+    # def accept(self):
+    #
+    #     class TitleError(Exception):pass
+    #     class CodeError(Exception):pass
+    #
+    #     title = self.titleEdit.text()
+    #     puzzleCode = self.puzzleCodeEdit.toPlainText().upper()
+    #     citationCode = self.citationCodeEdit.text().upper()
+    #     puzzleSolution = self.puzzleSolutionEdit.toPlainText().upper()
+    #     citationSolution = self.citationSolutionEdit.text().upper()
+    #     hints = self.hintEdit.text().split(";")
+    #
+    #     try:
+    #         if len(title.strip()) == 0:
+    #             raise TitleError("You must enter a title for this Puzzle.")
+    #
+    #         if len(puzzleCode.strip()) == 0:
+    #             raise CodeError("You must at least enter the puzzle's code.")
+    #     except TitleError as e:
+    #         QMessageBox.warning(self, "Title Error", str(e))
+    #         self.titleEdit.selectAll()
+    #         self.titleEdit.setFocus()
+    #         return
+    #     except CodeError as e:
+    #         QMessageBox.warning(self, "Code Error", str(e))
+    #         self.puzzleCodeEdit.selectAll()
+    #         self.puzzleCodeEdit.setFocus()
+    #         return
+    #
+    #     self._title = title
+    #     self._puzzleCode = puzzleCode
+    #     self._citationCode = citationCode
+    #     self._puzzleSolution = puzzleSolution
+    #     self._citationSolution = citationSolution
+    #     self._hints = hints
+    #
+    #     print("just after setting properties")
+    #     QDialog.accept(self)
 #
 #     def reject(self):
 #         print("Got to CollectionDialog's reject() routine")
@@ -563,8 +584,38 @@ class AddEditPuzzle(QDialog):
         else:
             self.puzzleEditControls.setEnabled(False)
 
-    def acceptPuzzle(self):
-        print("Got to acceptPuzzle")
+    def storePuzzle(self):
+        """
+        Checks the edited puzzle for errors and, if there are none stores the puzzle in the collection and updates
+        the user interface according to whether the puzzle was a new one being added or an old one being edited.
+        If there are errors, prints an error message and returns focus to its best guess as to where the problem is.
+        :return: None
+        """
+        print("Got to storePuzzle")
+
+        class LengthMismatchError(Exception):pass
+        class InconsistentCodeError(Exception):pass
+        class BadHintFormatError(Exception):pass
+
+        title = self.puzzleTitleEdit.text()
+        puzzleCode = self.puzzleCodeEdit.toPlainText().upper()
+        citationCode = self.citationCodeEdit.text().upper()
+        puzzleSolution = self.puzzleSolutionEdit.toPlainText().upper()
+        citationSolution = self.citationSolutionEdit.text().upper()
+        hints = self.hintEdit.text().split(";")
+        try:
+            if len(puzzleSolution) != 0 and len(puzzleCode) != len(puzzleSolution):
+                raise LengthMismatchError("The puzzle's code and its solution are not the same length.")
+
+            if len(citationSolution) != 0 and len(citationCode) != len(citationSolution):
+                raise LengthMismatchError("The citation's code and its solution are not the same length.")
+
+        except LengthMismatchError as e:
+            QMessageBox.warning(self, "Length Mismatch Error", str(e))
+            if "puzzle" in str(e):
+                self.puzzleCodeEdit.setFocus()
+            else:
+                self.citationCodeEdit.setFocus()
 
     def cancelDialog(self):
         QDialog.reject(self)
@@ -585,23 +636,3 @@ class AddEditPuzzle(QDialog):
             self.savePuzzleButton.setEnabled(False)
         else:
             self.savePuzzleButton.setEnabled(True)
-
-    def displayPuzzle(self, index):
-        """
-        When there is a current puzzle, this method is called to populate the widgets of the puzzle editor group
-        with the values of the current puzzle
-        :return: None
-        """
-        print("Got to displayPuzzle")
-        # index = self.currentPuzzleIndex()
-        # self.setCurrentPuzzleIndex(index)
-        currentPuzzle = self.collection().puzzles()[index]
-        self.puzzleTitleEdit.setText(currentPuzzle.puzzleTitle())
-        self.puzzleCodeEdit.setText(currentPuzzle.puzzleCode())
-        self.citationCodeEdit.setText(currentPuzzle.citationCode())
-        self.puzzleSolutionEdit.setText(currentPuzzle.puzzleSolution())
-        self.citationSolutionEdit.setText(currentPuzzle.citationSolution())
-        hintText = ""
-        for hint in currentPuzzle.hints():
-            hintText += hint + "; "
-        self.hintEdit.setText(hintText)
