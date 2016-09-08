@@ -733,8 +733,16 @@ class AddEditPuzzle(QDialog):
         """
         print("Got to editBoxChanged")
         if self.puzzleTitleEdit.text() == "" or self.puzzleCodeEdit.toPlainText() == "":
+            self.puzzleSolutionEdit.setEnabled(False)
+            self.citationCodeEdit.setEnabled(False)
+            self.citationSolutionEdit.setEnabled(False)
+            self.hintEdit.setEnabled(False)
             self.storePuzzleButton.setEnabled(False)
         else:
+            self.puzzleSolutionEdit.setEnabled(True)
+            self.citationCodeEdit.setEnabled(True)
+            self.citationSolutionEdit.setEnabled(True)
+            self.hintEdit.setEnabled(True)
             self.storePuzzleButton.setEnabled(True)
 
     def cleanHints(self, hintstring):
