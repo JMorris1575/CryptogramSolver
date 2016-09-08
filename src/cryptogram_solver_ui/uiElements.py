@@ -325,7 +325,7 @@ class HintLineEdit(CodeLineEdit):
         super(HintLineEdit, self).__init__()
 
     def keyPressEvent(self, e):
-        if e.text().upper() not in "ABCDEFGHIJKLMNOPQRSTUVWXYZ=; ":
+        if e.text().upper() not in "ABCDEFGHIJKLMNOPQRSTUVWXYZ=; " and e.key() != Qt.Key_Backspace:
             return
         else:
             return super(HintLineEdit, self).keyPressEvent(e)
@@ -611,13 +611,14 @@ class AddEditPuzzle(QDialog):
         class LengthMismatchError(Exception):pass
         class InconsistentCodeError(Exception):pass
         class BadHintFormatError(Exception):pass
+        class BadHintError(Exception):pass
 
         title = self.puzzleTitleEdit.text()
         puzzleCode = self.puzzleCodeEdit.toPlainText().upper()
         citationCode = self.citationCodeEdit.text().upper()
         puzzleSolution = self.puzzleSolutionEdit.toPlainText().upper()
         citationSolution = self.citationSolutionEdit.text().upper()
-        hints = self.hintEdit.text().split(";")
+        hints = self.cleanHints(self.hintEdit.text())
         try:
             # LengthMismatchError tests
             if puzzleSolution != "" and len(puzzleCode) != len(puzzleSolution):
@@ -627,50 +628,62 @@ class AddEditPuzzle(QDialog):
                 raise LengthMismatchError("The citation's code and its solution are not the same length.")
 
             # InconsistentCodeError tests
-            codeDict = {}
-            solutionDict = {}
-            solutionIndex = 0
-            for codeChar in puzzleCode:
-                solutionChar = puzzleSolution[solutionIndex]
-                if codeChar in codeDict.keys():
-                    if codeDict[codeChar] != solutionChar:
-                        msg = "The code letter, " + codeChar + " in the puzzle code, cannot represent both "
-                        msg += codeDict[codeChar] + " and " + solutionChar + " in the solution.\n\n"
-                        msg += "Check position " + str(solutionIndex + 1) + "."
-                        raise InconsistentCodeError(msg)
-                elif solutionChar in solutionDict.keys():
-                    if solutionDict[solutionChar] != codeChar:
-                        msg = "The solution letter, " + solutionChar + " in the puzzle solution,"
-                        msg += " cannot be represented by both " + solutionDict[solutionChar] + " and "
-                        msg += codeChar + " in the puzzle code.\n\n"
-                        msg += "Check position " + str(solutionIndex +1) + "."
-                        raise InconsistentCodeError(msg)
-                else:
-                    codeDict[codeChar] = solutionChar
-                    solutionDict[solutionChar] = codeChar
-                    solutionIndex += 1
-            solutionIndex = 0
-            for codeChar in citationCode:
-                solutionChar = citationSolution[solutionIndex]
-                if codeChar in codeDict.keys():
-                    if codeDict[codeChar] != solutionChar:
-                        msg = "The letter, " + codeChar + " in the citation code, cannot represent both "
-                        msg += codeDict[codeChar] + " and " + solutionChar + " in the solution.\n\n"
-                        msg += "Check position " + str(solutionIndex + 1) + "."
-                        raise InconsistentCodeError(msg)
-                elif solutionChar in solutionDict.keys():
-                    if solutionDict[solutionChar] != codeChar:
-                        msg = "The solution letter, " + solutionChar + " in the citation solution, "
-                        msg += "cannot be represented by both " + solutionDict[solutionChar] + " and "
-                        msg += codeChar + " in the citation code.\n\n"
-                        msg += "Check position " + str(solutionIndex + 1) + "."
-                        raise InconsistentCodeError(msg)
-                else:
-                    codeDict[codeChar] = solutionChar
-                    solutionDict[solutionChar] = codeChar
-                    solutionIndex += 1
+            if puzzleSolution != "":
+                codeDict = {}
+                solutionDict = {}
+                solutionIndex = 0
+                for codeChar in puzzleCode:
+                    solutionChar = puzzleSolution[solutionIndex]
+                    if codeChar in codeDict.keys():
+                        if codeDict[codeChar] != solutionChar:
+                            msg = "The code letter, " + codeChar + " in the puzzle code, cannot represent both "
+                            msg += codeDict[codeChar] + " and " + solutionChar + " in the solution.\n\n"
+                            msg += "Check position " + str(solutionIndex + 1) + "."
+                            raise InconsistentCodeError(msg)
+                    elif solutionChar in solutionDict.keys():
+                        if solutionDict[solutionChar] != codeChar:
+                            msg = "The solution letter, " + solutionChar + " in the puzzle solution,"
+                            msg += " cannot be represented by both " + solutionDict[solutionChar] + " and "
+                            msg += codeChar + " in the puzzle code.\n\n"
+                            msg += "Check position " + str(solutionIndex +1) + "."
+                            raise InconsistentCodeError(msg)
+                    else:
+                        codeDict[codeChar] = solutionChar
+                        solutionDict[solutionChar] = codeChar
+                        solutionIndex += 1
+                solutionIndex = 0
+                for codeChar in citationCode:
+                    solutionChar = citationSolution[solutionIndex]
+                    if codeChar in codeDict.keys():
+                        if codeDict[codeChar] != solutionChar:
+                            msg = "The letter, " + codeChar + " in the citation code, cannot represent both "
+                            msg += codeDict[codeChar] + " and " + solutionChar + " in the solution.\n\n"
+                            msg += "Check position " + str(solutionIndex + 1) + "."
+                            raise InconsistentCodeError(msg)
+                    elif solutionChar in solutionDict.keys():
+                        if solutionDict[solutionChar] != codeChar:
+                            msg = "The solution letter, " + solutionChar + " in the citation solution, "
+                            msg += "cannot be represented by both " + solutionDict[solutionChar] + " and "
+                            msg += codeChar + " in the citation code.\n\n"
+                            msg += "Check position " + str(solutionIndex + 1) + "."
+                            raise InconsistentCodeError(msg)
+                    else:
+                        codeDict[codeChar] = solutionChar
+                        solutionDict[solutionChar] = codeChar
+                        solutionIndex += 1
 
-
+            # BadHintFormatError Tests
+            print("Got to BadHintFormatError Tests with hints = ", hints)
+            if hints != "":
+                print("A")
+                for hint in hints:
+                    print(hint)
+                    if (len(hint.strip()) != 3) or (hint[1] != '='):
+                        print("C")
+                        msg = "Hints must have the format '<code letter 1>=<solution letter 1>; "
+                        msg += "<code letter 2> = <solution letter 2>;' etc.  For example:  A=C; H=W;"
+                        msg += "See the help files for further information."
+                        raise BadHintFormatError(msg)
 
         except LengthMismatchError as e:
             QMessageBox.warning(self, "Length Mismatch Error", str(e))
@@ -686,6 +699,11 @@ class AddEditPuzzle(QDialog):
             else:
                 self.citationCodeEdit.setFocus()
 
+        except BadHintFormatError as e:
+            QMessageBox.warning(self, "Bad Hint Format Error", str(e))
+            self.hintEdit.setFocus()
+
+        print("Got past the tests.")
         if self._mode == "Add":
             # new puzzle is added to the collection
             # puzzle selector gets new title
@@ -718,3 +736,37 @@ class AddEditPuzzle(QDialog):
             self.storePuzzleButton.setEnabled(False)
         else:
             self.storePuzzleButton.setEnabled(True)
+
+    def cleanHints(self, hintstring):
+        """
+        cleans a hint string that may contain extra spaces or a trailing semicolon and converts it to a list of
+        untested "hints" that do not contain spaces
+        :param hintstring: string
+        :return: list of strings
+        """
+        hintstring = hintstring.rstrip(";")
+        hintlist = hintstring.split(";")
+        newhintlist = []
+        for hint in hintlist:
+            newhint = ""
+            for char in hint:
+                if char != " ":
+                    newhint += char
+            newhintlist.append(newhint)
+        return newhintlist
+
+    def parseHints(self, hintlist):
+        """
+        Takes a list of hints, for instance, ['A=B', 'N=H'] and parses it
+        into a list of tuples
+        :param hints: list
+        :return: list of lists with the format (code letter, solution letter)
+        """
+        print("Got to self.parseHints with hints = ", hints)
+        print("ph A")
+        parsed = []
+        for hint in hintlist:
+            print("ph B Hint: ", hint)
+            parsed.append(hint.split('='))
+        return parsed
+
