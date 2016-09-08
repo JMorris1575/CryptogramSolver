@@ -334,6 +334,9 @@ class AddEditPuzzle(QDialog):
         self.setupUI()
         if self._currentPuzzleIndex >= 0:
             self.setPuzzleSelector(0)
+            self._mode = "Edit"
+        else:
+            self._mode = None
         self._puzzleEdited = False
         self.updateUI()
 
@@ -392,12 +395,12 @@ class AddEditPuzzle(QDialog):
         self.hintEdit.textChanged.connect(self.editBoxChanged)
 
         puzzleButtonBox = QDialogButtonBox()
-        self.savePuzzleButton = puzzleButtonBox.addButton("Store Puzzle", QDialogButtonBox.ActionRole)
+        self.storePuzzleButton = puzzleButtonBox.addButton("Store Puzzle", QDialogButtonBox.ActionRole)
         self.deleteButton = puzzleButtonBox.addButton("Delete", QDialogButtonBox.DestructiveRole)
         self.clearButton = puzzleButtonBox.addButton("Clear", QDialogButtonBox.ActionRole)
         self.cancelPuzzleButton = puzzleButtonBox.addButton("Cancel New Puzzle", QDialogButtonBox.RejectRole)
 
-        self.savePuzzleButton.clicked.connect(self.storePuzzle)
+        self.storePuzzleButton.clicked.connect(self.storePuzzle)
         self.deleteButton.clicked.connect(self.deletePuzzle)
         self.clearButton.clicked.connect(self.clearPuzzle)
         puzzleButtonBox.rejected.connect(self.cancelPuzzle)
@@ -449,7 +452,7 @@ class AddEditPuzzle(QDialog):
         currentCollection = self.collection()
         self.puzzleEditControls.setEnabled(True)
         self.cancelPuzzleButton.setEnabled(False)
-        self.savePuzzleButton.setEnabled(False)
+        self.storePuzzleButton.setEnabled(False)
         self.puzzleSelector.blockSignals(True)
         self.puzzleSelector.clear()
         for puzzle in currentCollection.puzzles():
@@ -485,9 +488,9 @@ class AddEditPuzzle(QDialog):
         :return: None
         """
         if self._puzzleEdited:
-            self.savePuzzleButton.setEnabled(True)
+            self.storePuzzleButton.setEnabled(True)
         else:
-            self.savePuzzleButton.setEnabled(False)
+            self.storePuzzleButton.setEnabled(False)
 
     def createNewPuzzle(self):
         """
@@ -509,6 +512,7 @@ class AddEditPuzzle(QDialog):
         self._currentPuzzleIndex = nextNumber - 1
         self.puzzleTitleEdit.setText("Puzzle " + str(nextNumber))
         self.puzzleTitleEdit.selectAll()
+        self._mode = "Add"
 
     # def accept(self):
     #
@@ -610,12 +614,56 @@ class AddEditPuzzle(QDialog):
             if len(citationSolution) != 0 and len(citationCode) != len(citationSolution):
                 raise LengthMismatchError("The citation's code and its solution are not the same length.")
 
+            if len(puzzleSolution) != 0:
+                codeDict = {}
+                solutionDict = {}
+                solutionIndex = 0
+                for codeChar in puzzleCode:
+                    solutionChar = puzzleSolution[solutionIndex]
+                    if codeChar in codeDict.keys():
+                        if codeDict[codeChar] != solutionChar:
+                            msg = "The code letter, " + codeChar + " cannot represent both " + codeDict[codeChar]
+                            msg += " and " + solutionChar + " in the solution.\n\n"
+                            msg += "Check position " + str(solutionIndex + 1) + "."
+                            raise InconsistentCodeError(msg)
+                    elif solutionChar in solutionDict.keys():
+                        if solutionDict[solutionChar] != codeChar:
+                            msg = "The solution letter, " + solutionChar + " cannot be represented by both "
+                            msg += solutionDict[solutionChar] + " and " + codeChar + " in the code.\n\n"
+                            msg += "Check position " + str(solutionIndex +1) + "."
+                            raise InconsistentCodeError(msg)
+                    else:
+                        codeDict[codeChar] = solutionChar
+                        solutionDict[solutionChar] = codeChar
+                        solutionIndex += 1
+
+
+
         except LengthMismatchError as e:
             QMessageBox.warning(self, "Length Mismatch Error", str(e))
             if "puzzle" in str(e):
                 self.puzzleCodeEdit.setFocus()
             else:
                 self.citationCodeEdit.setFocus()
+
+        except InconsistentCodeError as e:
+            QMessageBox.warning(self, "Insonsistent Code Error", str(e))
+            if "puzzle" in str(e):
+                self.puzzleCodeEdit.setFocus()
+            else:
+                self.citationCodeEdit.setFocus()
+
+        if self._mode == "Add":
+            # new puzzle is added to the collection
+            # puzzle selector gets new title
+            # puzzle editor cleared
+            # Puzzle Title set to Puzzle n where n indicates next puzzle
+            self.storePuzzleButton.setEnabled(False)
+            self.deleteButton.setEnabled(False)
+        else:
+            # updated puzzle is altered in the collection
+            # puzzle selector is updated if the puzzle title changed
+            self.storePuzzleButton.setEnabled(False)
 
     def cancelDialog(self):
         QDialog.reject(self)
@@ -624,6 +672,7 @@ class AddEditPuzzle(QDialog):
         print("Got to addEditPuzzleSelectorChanged")
         self._currentPuzzleIndex = self.puzzleSelector.currentIndex()
         self.displayPuzzle(self._currentPuzzleIndex)
+        self._mode = "Edit"
 
     def editBoxChanged(self):
         """
@@ -633,6 +682,6 @@ class AddEditPuzzle(QDialog):
         """
         print("Got to editBoxChanged")
         if self.puzzleTitleEdit.text() == "" or self.puzzleCodeEdit.toPlainText() == "":
-            self.savePuzzleButton.setEnabled(False)
+            self.storePuzzleButton.setEnabled(False)
         else:
-            self.savePuzzleButton.setEnabled(True)
+            self.storePuzzleButton.setEnabled(True)
