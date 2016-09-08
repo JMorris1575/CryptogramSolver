@@ -673,17 +673,33 @@ class AddEditPuzzle(QDialog):
                         solutionIndex += 1
 
             # BadHintFormatError Tests
-            print("Got to BadHintFormatError Tests with hints = ", hints)
             if hints != "":
-                print("A")
                 for hint in hints:
                     print(hint)
                     if (len(hint.strip()) != 3) or (hint[1] != '='):
-                        print("C")
                         msg = "Hints must have the format '<code letter 1>=<solution letter 1>; "
                         msg += "<code letter 2> = <solution letter 2>;' etc.  For example:  A=C; H=W;"
                         msg += "See the help files for further information."
                         raise BadHintFormatError(msg)
+
+            # BadHintError Tests
+            print("Got to BadHintError Tests with hints = ", hints)
+            parsedHints = self.parseHints(hints)
+            print("parsedHints = ", parsedHints)
+            for hintpair in parsedHints:
+                print("codeDict: ", codeDict, " solutionDict: ", solutionDict, " hintpair: ", hintpair)
+                if hintpair[0] not in codeDict.keys():
+                    print("B")
+                    msg = "The hint for letter " + hintpair[0] + " does not help since it is not in the puzzle code."
+                    raise BadHintError(msg)
+                elif hintpair[1] not in solutionDict.keys():
+                    msg = "The hint that " + hintpair[0] + "=" + hintpair[1] + " makes no sense since " + hintpair[1]
+                    msg += " does not appear in the solution."
+                    raise BadHintError(msg)
+                elif codeDict[hintpair[0]] != hintpair[1]:
+                    msg = "In the puzzle, " + hintpair[0] + " represents " + codeDict[hintpair[0]] + ".  "
+                    msg += "The hint says it represents " + hintpair[1] + "."
+                    raise BadHintError(msg)
 
         except LengthMismatchError as e:
             QMessageBox.warning(self, "Length Mismatch Error", str(e))
@@ -701,6 +717,10 @@ class AddEditPuzzle(QDialog):
 
         except BadHintFormatError as e:
             QMessageBox.warning(self, "Bad Hint Format Error", str(e))
+            self.hintEdit.setFocus()
+
+        except BadHintError as e:
+            QMessageBox.warning(self, "Bad Hint Error", str(e))
             self.hintEdit.setFocus()
 
         print("Got past the tests.")
@@ -770,11 +790,10 @@ class AddEditPuzzle(QDialog):
         :param hints: list
         :return: list of lists with the format (code letter, solution letter)
         """
-        print("Got to self.parseHints with hints = ", hints)
-        print("ph A")
+        print("Got to self.parseHints with hints = ", hintlist)
         parsed = []
         for hint in hintlist:
-            print("ph B Hint: ", hint)
             parsed.append(hint.split('='))
+
         return parsed
 
