@@ -138,26 +138,6 @@ class LetterUnit(QWidget):
         print("uA D")
 
 
-class CodeTextEdit(QTextEdit):
-
-    def __init__(self):
-        super(CodeTextEdit, self).__init__()
-
-    def keyPressEvent(self, e):
-        newEvent = QKeyEvent(QEvent.KeyPress, e.key(), e.modifiers(), text=e.text().upper())
-        return super(CodeTextEdit, self).keyPressEvent(newEvent)
-
-
-class CodeLineEdit(QLineEdit):
-
-    def __init__(self):
-        super(CodeLineEdit, self).__init__()
-
-    def keyPressEvent(self, e):
-        newEvent = QKeyEvent(QEvent.KeyPress, e.key(), e.modifiers(), text=e.text().upper())
-        return super(CodeLineEdit, self).keyPressEvent(newEvent)
-
-
 class AddCollection(QDialog):
 
     """
@@ -320,6 +300,37 @@ class AddCollection(QDialog):
 
 #======================================================================================================================
 
+class CodeTextEdit(QTextEdit):
+
+    def __init__(self):
+        super(CodeTextEdit, self).__init__()
+
+    def keyPressEvent(self, e):
+        newEvent = QKeyEvent(QEvent.KeyPress, e.key(), e.modifiers(), text=e.text().upper())
+        return super(CodeTextEdit, self).keyPressEvent(newEvent)
+
+
+class CodeLineEdit(QLineEdit):
+
+    def __init__(self):
+        super(CodeLineEdit, self).__init__()
+
+    def keyPressEvent(self, e):
+        newEvent = QKeyEvent(QEvent.KeyPress, e.key(), e.modifiers(), text=e.text().upper())
+        return super(CodeLineEdit, self).keyPressEvent(newEvent)
+
+
+class HintLineEdit(CodeLineEdit):
+    def __init__(self):
+        super(HintLineEdit, self).__init__()
+
+    def keyPressEvent(self, e):
+        if e.text().upper() not in "ABCDEFGHIJKLMNOPQRSTUVWXYZ=; ":
+            return
+        else:
+            return super(HintLineEdit, self).keyPressEvent(e)
+
+
 class AddEditPuzzle(QDialog):
 
     def __init__(self, collection=None, currentPuzzleIndex=None, parent=None):
@@ -391,7 +402,7 @@ class AddEditPuzzle(QDialog):
         self.citationSolutionEdit.textChanged.connect(self.editBoxChanged)
 
         hintLabel = QLabel("Hints (if any):")
-        self.hintEdit = CodeLineEdit()
+        self.hintEdit = HintLineEdit()
         self.hintEdit.textChanged.connect(self.editBoxChanged)
 
         puzzleButtonBox = QDialogButtonBox()
@@ -608,55 +619,56 @@ class AddEditPuzzle(QDialog):
         citationSolution = self.citationSolutionEdit.text().upper()
         hints = self.hintEdit.text().split(";")
         try:
-            if len(puzzleSolution) != 0 and len(puzzleCode) != len(puzzleSolution):
+            # LengthMismatchError tests
+            if puzzleSolution != "" and len(puzzleCode) != len(puzzleSolution):
                 raise LengthMismatchError("The puzzle's code and its solution are not the same length.")
 
-            if len(citationSolution) != 0 and len(citationCode) != len(citationSolution):
+            if citationSolution != "" and len(citationCode) != len(citationSolution):
                 raise LengthMismatchError("The citation's code and its solution are not the same length.")
 
-            if len(puzzleSolution) != 0:
-                codeDict = {}
-                solutionDict = {}
-                solutionIndex = 0
-                for codeChar in puzzleCode:
-                    solutionChar = puzzleSolution[solutionIndex]
-                    if codeChar in codeDict.keys():
-                        if codeDict[codeChar] != solutionChar:
-                            msg = "The code letter, " + codeChar + " in the puzzle code, cannot represent both "
-                            msg += codeDict[codeChar] + " and " + solutionChar + " in the solution.\n\n"
-                            msg += "Check position " + str(solutionIndex + 1) + "."
-                            raise InconsistentCodeError(msg)
-                    elif solutionChar in solutionDict.keys():
-                        if solutionDict[solutionChar] != codeChar:
-                            msg = "The solution letter, " + solutionChar + " in the puzzle solution,"
-                            msg += " cannot be represented by both " + solutionDict[solutionChar] + " and "
-                            msg += codeChar + " in the puzzle code.\n\n"
-                            msg += "Check position " + str(solutionIndex +1) + "."
-                            raise InconsistentCodeError(msg)
-                    else:
-                        codeDict[codeChar] = solutionChar
-                        solutionDict[solutionChar] = codeChar
-                        solutionIndex += 1
-                solutionIndex = 0
-                for codeChar in citationCode:
-                    solutionChar = citationSolution[solutionIndex]
-                    if codeChar in codeDict.keys():
-                        if codeDict[codeChar] != solutionChar:
-                            msg = "The letter, " + codeChar + " in the citation code, cannot represent both "
-                            msg += codeDict[codeChar] + " and " + solutionChar + " in the solution.\n\n"
-                            msg += "Check position " + str(solutionIndex + 1) + "."
-                            raise InconsistentCodeError(msg)
-                    elif solutionChar in solutionDict.keys():
-                        if solutionDict[solutionChar] != codeChar:
-                            msg = "The solution letter, " + solutionChar + " in the citation solution, "
-                            msg += "cannot be represented by both " + solutionDict[solutionChar] + " and "
-                            msg += codeChar + " in the citation code.\n\n"
-                            msg += "Check position " + str(solutionIndex + 1) + "."
-                            raise InconsistentCodeError(msg)
-                    else:
-                        codeDict[codeChar] = solutionChar
-                        solutionDict[solutionChar] = codeChar
-                        solutionIndex += 1
+            # InconsistentCodeError tests
+            codeDict = {}
+            solutionDict = {}
+            solutionIndex = 0
+            for codeChar in puzzleCode:
+                solutionChar = puzzleSolution[solutionIndex]
+                if codeChar in codeDict.keys():
+                    if codeDict[codeChar] != solutionChar:
+                        msg = "The code letter, " + codeChar + " in the puzzle code, cannot represent both "
+                        msg += codeDict[codeChar] + " and " + solutionChar + " in the solution.\n\n"
+                        msg += "Check position " + str(solutionIndex + 1) + "."
+                        raise InconsistentCodeError(msg)
+                elif solutionChar in solutionDict.keys():
+                    if solutionDict[solutionChar] != codeChar:
+                        msg = "The solution letter, " + solutionChar + " in the puzzle solution,"
+                        msg += " cannot be represented by both " + solutionDict[solutionChar] + " and "
+                        msg += codeChar + " in the puzzle code.\n\n"
+                        msg += "Check position " + str(solutionIndex +1) + "."
+                        raise InconsistentCodeError(msg)
+                else:
+                    codeDict[codeChar] = solutionChar
+                    solutionDict[solutionChar] = codeChar
+                    solutionIndex += 1
+            solutionIndex = 0
+            for codeChar in citationCode:
+                solutionChar = citationSolution[solutionIndex]
+                if codeChar in codeDict.keys():
+                    if codeDict[codeChar] != solutionChar:
+                        msg = "The letter, " + codeChar + " in the citation code, cannot represent both "
+                        msg += codeDict[codeChar] + " and " + solutionChar + " in the solution.\n\n"
+                        msg += "Check position " + str(solutionIndex + 1) + "."
+                        raise InconsistentCodeError(msg)
+                elif solutionChar in solutionDict.keys():
+                    if solutionDict[solutionChar] != codeChar:
+                        msg = "The solution letter, " + solutionChar + " in the citation solution, "
+                        msg += "cannot be represented by both " + solutionDict[solutionChar] + " and "
+                        msg += codeChar + " in the citation code.\n\n"
+                        msg += "Check position " + str(solutionIndex + 1) + "."
+                        raise InconsistentCodeError(msg)
+                else:
+                    codeDict[codeChar] = solutionChar
+                    solutionDict[solutionChar] = codeChar
+                    solutionIndex += 1
 
 
 
