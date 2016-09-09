@@ -414,7 +414,7 @@ class AddEditPuzzle(QDialog):
         self.storePuzzleButton.clicked.connect(self.storePuzzle)
         self.deleteButton.clicked.connect(self.deletePuzzle)
         self.clearButton.clicked.connect(self.clearPuzzle)
-        puzzleButtonBox.rejected.connect(self.cancelPuzzle)
+        self.cancelPuzzleButton.clicked.connect(self.cancelPuzzle)
 
         # ToDo: create a puzzleButton box with a Finished (accept) button and a Cancel (reject) button below the puzzle edit frame
 
@@ -452,7 +452,6 @@ class AddEditPuzzle(QDialog):
         dialogLayout.addLayout(addButtonLayout)
         dialogLayout.addWidget(self.puzzleEditControls)
         dialogLayout.addLayout(cancelButtonLayout)
-
 
     def setPuzzleSelector(self, index):
         """
@@ -522,7 +521,7 @@ class AddEditPuzzle(QDialog):
         self._oldPuzzleIndex = self._currentPuzzleIndex
         self._currentPuzzleIndex = nextNumber - 1
         self.puzzleTitleEdit.setText("Puzzle " + str(nextNumber))
-        self.puzzleTitleEdit.selectAll()
+        self.puzzleCodeEdit.setFocus()
         self._mode = "Add"
 
     # def accept(self):
@@ -614,6 +613,7 @@ class AddEditPuzzle(QDialog):
         class BadHintError(Exception):pass
 
         title = self.puzzleTitleEdit.text()
+        puzzleTitle = self.puzzleTitleEdit.text()
         puzzleCode = self.puzzleCodeEdit.toPlainText().upper()
         citationCode = self.citationCodeEdit.text().upper()
         puzzleSolution = self.puzzleSolutionEdit.toPlainText().upper()
@@ -672,34 +672,35 @@ class AddEditPuzzle(QDialog):
                         solutionDict[solutionChar] = codeChar
                         solutionIndex += 1
 
-            # BadHintFormatError Tests
-            if hints != "":
+            # BadHintFormatError Tests'
+            print("hints = ", hints)
+            if len(hints) != 0:
                 for hint in hints:
                     print(hint)
                     if (len(hint.strip()) != 3) or (hint[1] != '='):
-                        msg = "Hints must have the format '<code letter 1>=<solution letter 1>; "
-                        msg += "<code letter 2> = <solution letter 2>;' etc.  For example:  A=C; H=W;"
+                        msg = "Hints must have the format '(code letter 1)=(solution letter 1); "
+                        msg += "(code letter 2) = (solution letter 2)' etc.  For example:  A=C; H=W"
                         msg += "See the help files for further information."
                         raise BadHintFormatError(msg)
 
-            # BadHintError Tests
-            print("Got to BadHintError Tests with hints = ", hints)
-            parsedHints = self.parseHints(hints)
-            print("parsedHints = ", parsedHints)
-            for hintpair in parsedHints:
-                print("codeDict: ", codeDict, " solutionDict: ", solutionDict, " hintpair: ", hintpair)
-                if hintpair[0] not in codeDict.keys():
-                    print("B")
-                    msg = "The hint for letter " + hintpair[0] + " does not help since it is not in the puzzle code."
-                    raise BadHintError(msg)
-                elif hintpair[1] not in solutionDict.keys():
-                    msg = "The hint that " + hintpair[0] + "=" + hintpair[1] + " makes no sense since " + hintpair[1]
-                    msg += " does not appear in the solution."
-                    raise BadHintError(msg)
-                elif codeDict[hintpair[0]] != hintpair[1]:
-                    msg = "In the puzzle, " + hintpair[0] + " represents " + codeDict[hintpair[0]] + ".  "
-                    msg += "The hint says it represents " + hintpair[1] + "."
-                    raise BadHintError(msg)
+                # BadHintError Tests
+                print("Got to BadHintError Tests with hints = ", hints)
+                parsedHints = self.parseHints(hints)
+                print("parsedHints = ", parsedHints)
+                for hintpair in parsedHints:
+                    print("codeDict: ", codeDict, " solutionDict: ", solutionDict, " hintpair: ", hintpair)
+                    if hintpair[0] not in codeDict.keys():
+                        print("B")
+                        msg = "The hint for letter " + hintpair[0] + " does not help since it is not in the puzzle code."
+                        raise BadHintError(msg)
+                    elif hintpair[1] not in solutionDict.keys():
+                        msg = "The hint that " + hintpair[0] + "=" + hintpair[1] + " makes no sense since " + hintpair[1]
+                        msg += " does not appear in the solution."
+                        raise BadHintError(msg)
+                    elif codeDict[hintpair[0]] != hintpair[1]:
+                        msg = "In the puzzle, " + hintpair[0] + " represents " + codeDict[hintpair[0]] + ".  "
+                        msg += "The hint says it represents " + hintpair[1] + "."
+                        raise BadHintError(msg)
 
         except LengthMismatchError as e:
             QMessageBox.warning(self, "Length Mismatch Error", str(e))
@@ -726,6 +727,11 @@ class AddEditPuzzle(QDialog):
         print("Got past the tests.")
         if self._mode == "Add":
             # new puzzle is added to the collection
+            newpuzzle = data_structures.Puzzle(puzzleTitle, puzzleCode, citationCode, puzzleSolution, citationSolution, hints)
+            self._collection.addPuzzle(newpuzzle)
+            self.setPuzzleSelector(-1)
+            self.createNewPuzzle()
+
             # puzzle selector gets new title
             # puzzle editor cleared
             # Puzzle Title set to Puzzle n where n indicates next puzzle
@@ -772,6 +778,8 @@ class AddEditPuzzle(QDialog):
         :param hintstring: string
         :return: list of strings
         """
+        if hintstring == "":
+            return []
         hintstring = hintstring.rstrip(";")
         hintlist = hintstring.split(";")
         newhintlist = []
