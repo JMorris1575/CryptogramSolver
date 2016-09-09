@@ -467,9 +467,9 @@ class AddEditPuzzle(QDialog):
         self.puzzleSelector.clear()
         for puzzle in currentCollection.puzzles():
             self.puzzleSelector.addItem(puzzle.puzzleTitle())
-        #self.puzzleSelector.setCurrentIndex(self.currentPuzzleIndex())
-        self.puzzleSelector.blockSignals(False)
         print("self.puzzleSelector.currentIndex() = ", self.puzzleSelector.currentIndex(), " just before being set to ", index)
+        self.puzzleSelector.blockSignals(False)
+        self.puzzleSelector.setCurrentIndex(self.currentPuzzleIndex())
         self.displayPuzzle(index)
 
     def displayPuzzle(self, index):
@@ -524,7 +524,13 @@ class AddEditPuzzle(QDialog):
         self.puzzleCodeEdit.setFocus()
         self._mode = "Add"
 
-    # def accept(self):
+    def addEditPuzzleSelectorChanged(self):
+        print("Got to addEditPuzzleSelectorChanged")
+        self._currentPuzzleIndex = self.puzzleSelector.currentIndex()
+        self.displayPuzzle(self._currentPuzzleIndex)
+        self._mode = "Edit"
+
+            # def accept(self):
     #
     #     class TitleError(Exception):pass
     #     class CodeError(Exception):pass
@@ -581,7 +587,6 @@ class AddEditPuzzle(QDialog):
         self.puzzleSolutionEdit.setText("")
         self.citationSolutionEdit.setText("")
         self.hintEdit.setText("")
-        #self.updateUI()
 
     def cancelPuzzle(self):
         """
@@ -727,29 +732,24 @@ class AddEditPuzzle(QDialog):
         print("Got past the tests.")
         if self._mode == "Add":
             # new puzzle is added to the collection
-            newpuzzle = data_structures.Puzzle(puzzleTitle, puzzleCode, citationCode, puzzleSolution, citationSolution, hints)
+            newpuzzle = data_structures.Puzzle(puzzleTitle, puzzleCode, citationCode,
+                                               puzzleSolution, citationSolution, hints)
             self._collection.addPuzzle(newpuzzle)
             self.setPuzzleSelector(-1)
             self.createNewPuzzle()
-
-            # puzzle selector gets new title
-            # puzzle editor cleared
-            # Puzzle Title set to Puzzle n where n indicates next puzzle
             self.storePuzzleButton.setEnabled(False)
             self.deleteButton.setEnabled(False)
         else:
             # updated puzzle is altered in the collection
+            correctedpuzzle = data_structures.Puzzle(puzzleTitle, puzzleCode, citationCode,
+                                                     puzzleSolution, citationSolution, hints)
+            self._collection.correctPuzzle(correctedpuzzle, self._currentPuzzleIndex)
+            self.setPuzzleSelector(self._currentPuzzleIndex)
             # puzzle selector is updated if the puzzle title changed
             self.storePuzzleButton.setEnabled(False)
 
     def cancelDialog(self):
         QDialog.reject(self)
-
-    def addEditPuzzleSelectorChanged(self):
-        print("Got to addEditPuzzleSelectorChanged")
-        self._currentPuzzleIndex = self.puzzleSelector.currentIndex()
-        self.displayPuzzle(self._currentPuzzleIndex)
-        self._mode = "Edit"
 
     def editBoxChanged(self):
         """
