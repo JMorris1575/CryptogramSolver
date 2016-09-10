@@ -138,26 +138,6 @@ class LetterUnit(QWidget):
         print("uA D")
 
 
-class CodeTextEdit(QTextEdit):
-
-    def __init__(self):
-        super(CodeTextEdit, self).__init__()
-
-    def keyPressEvent(self, e):
-        newEvent = QKeyEvent(QEvent.KeyPress, e.key(), e.modifiers(), text=e.text().upper())
-        return super(CodeTextEdit, self).keyPressEvent(newEvent)
-
-
-class CodeLineEdit(QLineEdit):
-
-    def __init__(self):
-        super(CodeLineEdit, self).__init__()
-
-    def keyPressEvent(self, e):
-        newEvent = QKeyEvent(QEvent.KeyPress, e.key(), e.modifiers(), text=e.text().upper())
-        return super(CodeLineEdit, self).keyPressEvent(newEvent)
-
-
 class AddCollection(QDialog):
 
     """
@@ -320,6 +300,37 @@ class AddCollection(QDialog):
 
 #======================================================================================================================
 
+class CodeTextEdit(QTextEdit):
+
+    def __init__(self):
+        super(CodeTextEdit, self).__init__()
+
+    def keyPressEvent(self, e):
+        newEvent = QKeyEvent(QEvent.KeyPress, e.key(), e.modifiers(), text=e.text().upper())
+        return super(CodeTextEdit, self).keyPressEvent(newEvent)
+
+
+class CodeLineEdit(QLineEdit):
+
+    def __init__(self):
+        super(CodeLineEdit, self).__init__()
+
+    def keyPressEvent(self, e):
+        newEvent = QKeyEvent(QEvent.KeyPress, e.key(), e.modifiers(), text=e.text().upper())
+        return super(CodeLineEdit, self).keyPressEvent(newEvent)
+
+
+class HintLineEdit(CodeLineEdit):
+    def __init__(self):
+        super(HintLineEdit, self).__init__()
+
+    def keyPressEvent(self, e):
+        if e.text().upper() not in "ABCDEFGHIJKLMNOPQRSTUVWXYZ=; " and e.key() != Qt.Key_Backspace:
+            return
+        else:
+            return super(HintLineEdit, self).keyPressEvent(e)
+
+
 class AddEditPuzzle(QDialog):
 
     def __init__(self, collection=None, currentPuzzleIndex=None, parent=None):
@@ -334,6 +345,9 @@ class AddEditPuzzle(QDialog):
         self.setupUI()
         if self._currentPuzzleIndex >= 0:
             self.setPuzzleSelector(0)
+            self._mode = "Edit"
+        else:
+            self._mode = None
         self._puzzleEdited = False
         self.updateUI()
 
@@ -388,19 +402,19 @@ class AddEditPuzzle(QDialog):
         self.citationSolutionEdit.textChanged.connect(self.editBoxChanged)
 
         hintLabel = QLabel("Hints (if any):")
-        self.hintEdit = CodeLineEdit()
+        self.hintEdit = HintLineEdit()
         self.hintEdit.textChanged.connect(self.editBoxChanged)
 
         puzzleButtonBox = QDialogButtonBox()
-        self.savePuzzleButton = puzzleButtonBox.addButton("Store Puzzle", QDialogButtonBox.ActionRole)
+        self.storePuzzleButton = puzzleButtonBox.addButton("Store Puzzle", QDialogButtonBox.ActionRole)
         self.deleteButton = puzzleButtonBox.addButton("Delete", QDialogButtonBox.DestructiveRole)
         self.clearButton = puzzleButtonBox.addButton("Clear", QDialogButtonBox.ActionRole)
         self.cancelPuzzleButton = puzzleButtonBox.addButton("Cancel New Puzzle", QDialogButtonBox.RejectRole)
 
-        self.savePuzzleButton.clicked.connect(self.storePuzzle)
+        self.storePuzzleButton.clicked.connect(self.storePuzzle)
         self.deleteButton.clicked.connect(self.deletePuzzle)
         self.clearButton.clicked.connect(self.clearPuzzle)
-        puzzleButtonBox.rejected.connect(self.cancelPuzzle)
+        self.cancelPuzzleButton.clicked.connect(self.cancelPuzzle)
 
         # ToDo: create a puzzleButton box with a Finished (accept) button and a Cancel (reject) button below the puzzle edit frame
 
@@ -439,7 +453,6 @@ class AddEditPuzzle(QDialog):
         dialogLayout.addWidget(self.puzzleEditControls)
         dialogLayout.addLayout(cancelButtonLayout)
 
-
     def setPuzzleSelector(self, index):
         """
         Adds all the puzzles in the current collection to the puzzleSelector and sets the selector to the given index
@@ -449,14 +462,14 @@ class AddEditPuzzle(QDialog):
         currentCollection = self.collection()
         self.puzzleEditControls.setEnabled(True)
         self.cancelPuzzleButton.setEnabled(False)
-        self.savePuzzleButton.setEnabled(False)
+        self.storePuzzleButton.setEnabled(False)
         self.puzzleSelector.blockSignals(True)
         self.puzzleSelector.clear()
         for puzzle in currentCollection.puzzles():
             self.puzzleSelector.addItem(puzzle.puzzleTitle())
-        #self.puzzleSelector.setCurrentIndex(self.currentPuzzleIndex())
-        self.puzzleSelector.blockSignals(False)
         print("self.puzzleSelector.currentIndex() = ", self.puzzleSelector.currentIndex(), " just before being set to ", index)
+        self.puzzleSelector.blockSignals(False)
+        self.puzzleSelector.setCurrentIndex(self.currentPuzzleIndex())
         self.displayPuzzle(index)
 
     def displayPuzzle(self, index):
@@ -485,9 +498,9 @@ class AddEditPuzzle(QDialog):
         :return: None
         """
         if self._puzzleEdited:
-            self.savePuzzleButton.setEnabled(True)
+            self.storePuzzleButton.setEnabled(True)
         else:
-            self.savePuzzleButton.setEnabled(False)
+            self.storePuzzleButton.setEnabled(False)
 
     def createNewPuzzle(self):
         """
@@ -508,9 +521,16 @@ class AddEditPuzzle(QDialog):
         self._oldPuzzleIndex = self._currentPuzzleIndex
         self._currentPuzzleIndex = nextNumber - 1
         self.puzzleTitleEdit.setText("Puzzle " + str(nextNumber))
-        self.puzzleTitleEdit.selectAll()
+        self.puzzleCodeEdit.setFocus()
+        self._mode = "Add"
 
-    # def accept(self):
+    def addEditPuzzleSelectorChanged(self):
+        print("Got to addEditPuzzleSelectorChanged")
+        self._currentPuzzleIndex = self.puzzleSelector.currentIndex()
+        self.displayPuzzle(self._currentPuzzleIndex)
+        self._mode = "Edit"
+
+            # def accept(self):
     #
     #     class TitleError(Exception):pass
     #     class CodeError(Exception):pass
@@ -567,7 +587,6 @@ class AddEditPuzzle(QDialog):
         self.puzzleSolutionEdit.setText("")
         self.citationSolutionEdit.setText("")
         self.hintEdit.setText("")
-        #self.updateUI()
 
     def cancelPuzzle(self):
         """
@@ -596,19 +615,97 @@ class AddEditPuzzle(QDialog):
         class LengthMismatchError(Exception):pass
         class InconsistentCodeError(Exception):pass
         class BadHintFormatError(Exception):pass
+        class BadHintError(Exception):pass
 
         title = self.puzzleTitleEdit.text()
+        puzzleTitle = self.puzzleTitleEdit.text()
         puzzleCode = self.puzzleCodeEdit.toPlainText().upper()
         citationCode = self.citationCodeEdit.text().upper()
         puzzleSolution = self.puzzleSolutionEdit.toPlainText().upper()
         citationSolution = self.citationSolutionEdit.text().upper()
-        hints = self.hintEdit.text().split(";")
+        hints = self.cleanHints(self.hintEdit.text())
         try:
-            if len(puzzleSolution) != 0 and len(puzzleCode) != len(puzzleSolution):
+            # LengthMismatchError tests
+            if puzzleSolution != "" and len(puzzleCode) != len(puzzleSolution):
                 raise LengthMismatchError("The puzzle's code and its solution are not the same length.")
 
-            if len(citationSolution) != 0 and len(citationCode) != len(citationSolution):
+            if citationSolution != "" and len(citationCode) != len(citationSolution):
                 raise LengthMismatchError("The citation's code and its solution are not the same length.")
+
+            # InconsistentCodeError tests
+            if puzzleSolution != "":
+                codeDict = {}
+                solutionDict = {}
+                solutionIndex = 0
+                for codeChar in puzzleCode:
+                    solutionChar = puzzleSolution[solutionIndex]
+                    if codeChar in codeDict.keys():
+                        if codeDict[codeChar] != solutionChar:
+                            msg = "The code letter, " + codeChar + " in the puzzle code, cannot represent both "
+                            msg += codeDict[codeChar] + " and " + solutionChar + " in the solution.\n\n"
+                            msg += "Check position " + str(solutionIndex + 1) + "."
+                            raise InconsistentCodeError(msg)
+                    elif solutionChar in solutionDict.keys():
+                        if solutionDict[solutionChar] != codeChar:
+                            msg = "The solution letter, " + solutionChar + " in the puzzle solution,"
+                            msg += " cannot be represented by both " + solutionDict[solutionChar] + " and "
+                            msg += codeChar + " in the puzzle code.\n\n"
+                            msg += "Check position " + str(solutionIndex +1) + "."
+                            raise InconsistentCodeError(msg)
+                    else:
+                        codeDict[codeChar] = solutionChar
+                        solutionDict[solutionChar] = codeChar
+                        solutionIndex += 1
+                solutionIndex = 0
+                for codeChar in citationCode:
+                    solutionChar = citationSolution[solutionIndex]
+                    if codeChar in codeDict.keys():
+                        if codeDict[codeChar] != solutionChar:
+                            msg = "The letter, " + codeChar + " in the citation code, cannot represent both "
+                            msg += codeDict[codeChar] + " and " + solutionChar + " in the solution.\n\n"
+                            msg += "Check position " + str(solutionIndex + 1) + "."
+                            raise InconsistentCodeError(msg)
+                    elif solutionChar in solutionDict.keys():
+                        if solutionDict[solutionChar] != codeChar:
+                            msg = "The solution letter, " + solutionChar + " in the citation solution, "
+                            msg += "cannot be represented by both " + solutionDict[solutionChar] + " and "
+                            msg += codeChar + " in the citation code.\n\n"
+                            msg += "Check position " + str(solutionIndex + 1) + "."
+                            raise InconsistentCodeError(msg)
+                    else:
+                        codeDict[codeChar] = solutionChar
+                        solutionDict[solutionChar] = codeChar
+                        solutionIndex += 1
+
+            # BadHintFormatError Tests'
+            print("hints = ", hints)
+            if len(hints) != 0:
+                for hint in hints:
+                    print(hint)
+                    if (len(hint.strip()) != 3) or (hint[1] != '='):
+                        msg = "Hints must have the format '(code letter 1)=(solution letter 1); "
+                        msg += "(code letter 2) = (solution letter 2)' etc.  For example:  A=C; H=W"
+                        msg += "See the help files for further information."
+                        raise BadHintFormatError(msg)
+
+                # BadHintError Tests
+                print("Got to BadHintError Tests with hints = ", hints)
+                parsedHints = self.parseHints(hints)
+                print("parsedHints = ", parsedHints)
+                for hintpair in parsedHints:
+                    print("codeDict: ", codeDict, " solutionDict: ", solutionDict, " hintpair: ", hintpair)
+                    if hintpair[0] not in codeDict.keys():
+                        print("B")
+                        msg = "The hint for letter " + hintpair[0] + " does not help since it is not in the puzzle code."
+                        raise BadHintError(msg)
+                    elif hintpair[1] not in solutionDict.keys():
+                        msg = "The hint that " + hintpair[0] + "=" + hintpair[1] + " makes no sense since " + hintpair[1]
+                        msg += " does not appear in the solution."
+                        raise BadHintError(msg)
+                    elif codeDict[hintpair[0]] != hintpair[1]:
+                        msg = "In the puzzle, " + hintpair[0] + " represents " + codeDict[hintpair[0]] + ".  "
+                        msg += "The hint says it represents " + hintpair[1] + "."
+                        raise BadHintError(msg)
 
         except LengthMismatchError as e:
             QMessageBox.warning(self, "Length Mismatch Error", str(e))
@@ -617,13 +714,42 @@ class AddEditPuzzle(QDialog):
             else:
                 self.citationCodeEdit.setFocus()
 
+        except InconsistentCodeError as e:
+            QMessageBox.warning(self, "Insonsistent Code Error", str(e))
+            if "puzzle" in str(e):
+                self.puzzleCodeEdit.setFocus()
+            else:
+                self.citationCodeEdit.setFocus()
+
+        except BadHintFormatError as e:
+            QMessageBox.warning(self, "Bad Hint Format Error", str(e))
+            self.hintEdit.setFocus()
+
+        except BadHintError as e:
+            QMessageBox.warning(self, "Bad Hint Error", str(e))
+            self.hintEdit.setFocus()
+
+        print("Got past the tests.")
+        if self._mode == "Add":
+            # new puzzle is added to the collection
+            newpuzzle = data_structures.Puzzle(puzzleTitle, puzzleCode, citationCode,
+                                               puzzleSolution, citationSolution, hints)
+            self._collection.addPuzzle(newpuzzle)
+            self.setPuzzleSelector(-1)
+            self.createNewPuzzle()
+            self.storePuzzleButton.setEnabled(False)
+            self.deleteButton.setEnabled(False)
+        else:
+            # updated puzzle is altered in the collection
+            correctedpuzzle = data_structures.Puzzle(puzzleTitle, puzzleCode, citationCode,
+                                                     puzzleSolution, citationSolution, hints)
+            self._collection.correctPuzzle(correctedpuzzle, self._currentPuzzleIndex)
+            self.setPuzzleSelector(self._currentPuzzleIndex)
+            # puzzle selector is updated if the puzzle title changed
+            self.storePuzzleButton.setEnabled(False)
+
     def cancelDialog(self):
         QDialog.reject(self)
-
-    def addEditPuzzleSelectorChanged(self):
-        print("Got to addEditPuzzleSelectorChanged")
-        self._currentPuzzleIndex = self.puzzleSelector.currentIndex()
-        self.displayPuzzle(self._currentPuzzleIndex)
 
     def editBoxChanged(self):
         """
@@ -633,6 +759,49 @@ class AddEditPuzzle(QDialog):
         """
         print("Got to editBoxChanged")
         if self.puzzleTitleEdit.text() == "" or self.puzzleCodeEdit.toPlainText() == "":
-            self.savePuzzleButton.setEnabled(False)
+            self.puzzleSolutionEdit.setEnabled(False)
+            self.citationCodeEdit.setEnabled(False)
+            self.citationSolutionEdit.setEnabled(False)
+            self.hintEdit.setEnabled(False)
+            self.storePuzzleButton.setEnabled(False)
         else:
-            self.savePuzzleButton.setEnabled(True)
+            self.puzzleSolutionEdit.setEnabled(True)
+            self.citationCodeEdit.setEnabled(True)
+            self.citationSolutionEdit.setEnabled(True)
+            self.hintEdit.setEnabled(True)
+            self.storePuzzleButton.setEnabled(True)
+
+    def cleanHints(self, hintstring):
+        """
+        cleans a hint string that may contain extra spaces or a trailing semicolon and converts it to a list of
+        untested "hints" that do not contain spaces
+        :param hintstring: string
+        :return: list of strings
+        """
+        if hintstring == "":
+            return []
+        hintstring = hintstring.rstrip(";")
+        hintlist = hintstring.split(";")
+        newhintlist = []
+        for hint in hintlist:
+            newhint = ""
+            for char in hint:
+                if char != " ":
+                    newhint += char
+            newhintlist.append(newhint)
+        return newhintlist
+
+    def parseHints(self, hintlist):
+        """
+        Takes a list of hints, for instance, ['A=B', 'N=H'] and parses it
+        into a list of tuples
+        :param hints: list
+        :return: list of lists with the format (code letter, solution letter)
+        """
+        print("Got to self.parseHints with hints = ", hintlist)
+        parsed = []
+        for hint in hintlist:
+            parsed.append(hint.split('='))
+
+        return parsed
+

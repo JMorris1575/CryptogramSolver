@@ -26,6 +26,9 @@ class Collection():
     def setPuzzles(self, puzzles):
         self._puzzles = puzzles
 
+    def correctPuzzle(self, puzzle, index):
+        self._puzzles[index] = puzzle
+
     def addPuzzle(self, puzzle):
         print("Got to Collection.addPuzzle()")
         self._puzzles.append(puzzle)

@@ -120,11 +120,12 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
             print('self._currentPuzzleIndex', self._currentPuzzleIndex)
             dialog = uiElements.AddEditPuzzle(self._collection, self._currentPuzzleIndex)
             if dialog.exec():
-                collection = src.data_structures.Collection(dialog.name(), dialog.author(), dialog.puzzles())
-                self.setCollection(collection)
-                src.file_handler.saveCollection(collection)
-                self.updatePuzzleSelector(collection.puzzles())
-                self.updateGameInfo(self.panel)
+                pass
+                # collection = src.data_structures.Collection(dialog.name(), dialog.author(), dialog.puzzles())
+                # self.setCollection(collection)
+                # src.file_handler.saveCollection(collection)
+                # self.updatePuzzleSelector(collection.puzzles())
+                # self.updateGameInfo(self.panel)
 
     def deleteCollection(self):
         print("Got to deleteCollection")
