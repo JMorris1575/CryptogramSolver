@@ -364,7 +364,6 @@ class AddEditPuzzle(QDialog):
 
     def puzzles(self):
         return self._puzzles
-    #ToDo:  IMPORTANT -- Correct all alterations of self._collection.puzzles or self.collection().puzzles to use the internal copy of the puzzles.
 
     def setPuzzles(self, puzzles):
         self._puzzles = puzzles
@@ -375,7 +374,7 @@ class AddEditPuzzle(QDialog):
     def insertPuzzle(self, index, puzzle):
         self._puzzles.insert(index, puzzle)
         # this function has not yet been used in the code below
-        # ToDo: Make it possible to insert a puzzle someplace in the middle of the list
+        # ToDo: Alter the code to use insertPuzzle when needed
 
 
     def setupUI(self):
