@@ -120,12 +120,15 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
             print('self._currentPuzzleIndex', self._currentPuzzleIndex)
             dialog = uiElements.AddEditPuzzle(self._collection, self._currentPuzzleIndex)
             if dialog.exec():
-                pass
-                # collection = src.data_structures.Collection(dialog.name(), dialog.author(), dialog.puzzles())
-                # self.setCollection(collection)
-                # src.file_handler.saveCollection(collection)
-                # self.updatePuzzleSelector(collection.puzzles())
-                # self.updateGameInfo(self.panel)
+                print("A")
+                self.collection().setPuzzles(dialog.puzzles())
+                print("B")
+                src.file_handler.saveCollection(self._collection)
+                print("C")
+                self.updatePuzzleSelector(self._collection._puzzles)
+                print("D")
+                self.updateGameInfo(self.panel)
+                print("E")
 
     def deleteCollection(self):
         print("Got to deleteCollection")
@@ -170,48 +173,49 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
         print('Got to displayAbout')
 
     def updateGameInfo(self, panel):
-        self.collectionLabel.setText(self.collection().name())
-        self.collectionLabel.resize(self.largeMetrics.width(self.collectionLabel.text()), self.largeMetrics.height())
+        if self._collection:
+            self.collectionLabel.setText(self.collection().name())
+            self.collectionLabel.resize(self.largeMetrics.width(self.collectionLabel.text()), self.largeMetrics.height())
 
-        if self.collection().author():
-            self.authorLabel.setText("by " + self.collection().author())
-        self.authorLabel.resize(self.largeItalicMetrics.width(self.authorLabel.text()), self.largeItalicMetrics.height())
-        self.authorLabel.move(2 * self.MARGIN + self.collectionLabel.width(), 0)
+            if self.collection().author():
+                self.authorLabel.setText("by " + self.collection().author())
+            self.authorLabel.resize(self.largeItalicMetrics.width(self.authorLabel.text()), self.largeItalicMetrics.height())
+            self.authorLabel.move(2 * self.MARGIN + self.collectionLabel.width(), 0)
 
-        puzzleCount = len(self.collection().puzzles())
-        if puzzleCount == 0:
-            countText = "There are no puzzles in this collection.  An administrator needs to add some."
-            self.puzzleSelector.setEnabled(False)
-        elif puzzleCount == 1:
-            countText = "There is " + str(puzzleCount) + " puzzle in the collection."
-            self.puzzleSelector.setEnabled(True)
-        else:
-            countText = "There are " + str(puzzleCount) + " puzzles in the collection."
-            self.puzzleSelector.setEnabled(True)
+            puzzleCount = len(self.collection().puzzles())
+            if puzzleCount == 0:
+                countText = "There are no puzzles in this collection.  An administrator needs to add some."
+                self.puzzleSelector.setEnabled(False)
+            elif puzzleCount == 1:
+                countText = "There is " + str(puzzleCount) + " puzzle in the collection."
+                self.puzzleSelector.setEnabled(True)
+            else:
+                countText = "There are " + str(puzzleCount) + " puzzles in the collection."
+                self.puzzleSelector.setEnabled(True)
 
-        self.puzzleCountLabel.setText(countText)
-        self.puzzleCountLabel.resize(self.smallMetrics.width(self.puzzleCountLabel.text()), self.smallMetrics.height())
-        self.puzzleCountLabel.move(self.MARGIN, self.MARGIN + self.smallMetrics.height())
+            self.puzzleCountLabel.setText(countText)
+            self.puzzleCountLabel.resize(self.smallMetrics.width(self.puzzleCountLabel.text()), self.smallMetrics.height())
+            self.puzzleCountLabel.move(self.MARGIN, self.MARGIN + self.smallMetrics.height())
 
-        self.playerLabel.setText("Current Player: " + "Jim")
-        self.playerLabel.resize(self.smallMetrics.width(self.playerLabel.text()), self.smallMetrics.height())
-        self.playerLabel.move(panel.width() - self.smallMetrics.width(self.playerLabel.text()) - self.MARGIN, 0)
+            self.playerLabel.setText("Current Player: " + "Jim")
+            self.playerLabel.resize(self.smallMetrics.width(self.playerLabel.text()), self.smallMetrics.height())
+            self.playerLabel.move(panel.width() - self.smallMetrics.width(self.playerLabel.text()) - self.MARGIN, 0)
 
-        solved = 3          # Eventually this information will be held in player files
-        started = 1
-        infoText = ""
-        if solved == 1:
-            infoText += str(solved) + " Puzzle Solved"
-        elif solved > 1:
-            infoText += str(solved) + " Puzzles Solved"
-        if started == 1:
-            infoText += ", " + str(started) + " Puzzle Started"
-        elif started > 1:
-            infoText += ", " + str(solved) + " Puzzles Started"
-        self.infoLabel.setText(infoText)
-        self.infoLabel.resize(self.smallMetrics.width(self.infoLabel.text()), self.smallMetrics.height())
-        self.infoLabel.move(panel.width() - self.smallMetrics.width(self.infoLabel.text()) - self.MARGIN,
-                            self.MARGIN + self.playerLabel.height())
+            solved = 3          # Eventually this information will be held in player files
+            started = 1
+            infoText = ""
+            if solved == 1:
+                infoText += str(solved) + " Puzzle Solved"
+            elif solved > 1:
+                infoText += str(solved) + " Puzzles Solved"
+            if started == 1:
+                infoText += ", " + str(started) + " Puzzle Started"
+            elif started > 1:
+                infoText += ", " + str(solved) + " Puzzles Started"
+            self.infoLabel.setText(infoText)
+            self.infoLabel.resize(self.smallMetrics.width(self.infoLabel.text()), self.smallMetrics.height())
+            self.infoLabel.move(panel.width() - self.smallMetrics.width(self.infoLabel.text()) - self.MARGIN,
+                                self.MARGIN + self.playerLabel.height())
 
     def updatePuzzleSelector(self, puzzles):
 

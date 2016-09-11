@@ -56,7 +56,7 @@ def saveCollection(collection):
         data.extend(pack_string(collection.name()))
         data.extend(pack_string(collection.author()))
         for puzzle in collection.puzzles():
-            data.extend(pack_string(puzzle.title()))
+            data.extend(pack_string(puzzle.puzzleTitle()))
             data.extend(pack_string(puzzle.puzzleCode()))
             data.extend(pack_string(puzzle.citationCode()))
             data.extend(pack_string(puzzle.puzzleSolution()))

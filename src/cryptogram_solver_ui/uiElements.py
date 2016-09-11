@@ -342,6 +342,8 @@ class AddEditPuzzle(QDialog):
 
         self._collection = collection
         self._currentPuzzleIndex = currentPuzzleIndex
+        self._puzzles = collection.puzzles()
+
         self.setupUI()
         if self._currentPuzzleIndex >= 0:
             self.setPuzzleSelector(0)
@@ -360,6 +362,22 @@ class AddEditPuzzle(QDialog):
     def setCurrentPuzzleIndex(self, index):
         self._currentPuzzleIndex = index
 
+    def puzzles(self):
+        return self._puzzles
+    #ToDo:  IMPORTANT -- Correct all alterations of self._collection.puzzles or self.collection().puzzles to use the internal copy of the puzzles.
+
+    def setPuzzles(self, puzzles):
+        self._puzzles = puzzles
+
+    def addPuzzle(self, puzzle):
+        self._puzzles.append(puzzle)
+
+    def insertPuzzle(self, index, puzzle):
+        self._puzzles.insert(index, puzzle)
+        # this function has not yet been used in the code below
+        # ToDo: Make it possible to insert a puzzle someplace in the middle of the list
+
+
     def setupUI(self):
 
         print('in setupUI')
@@ -370,7 +388,7 @@ class AddEditPuzzle(QDialog):
         self.addPuzzleButton = QPushButton("Add New Puzzle")
         self.addPuzzleButton.clicked.connect(self.createNewPuzzle)
         addButtonLayout = QHBoxLayout()
-        addButtonLayout.addSpacing(250)
+        addButtonLayout.addSpacing(220)
         addButtonLayout.addWidget(self.addPuzzleButton)
 
         puzzleSelectorLabel = QLabel("Puzzle Selector:")
@@ -416,8 +434,6 @@ class AddEditPuzzle(QDialog):
         self.clearButton.clicked.connect(self.clearPuzzle)
         self.cancelPuzzleButton.clicked.connect(self.cancelPuzzle)
 
-        # ToDo: create a puzzleButton box with a Finished (accept) button and a Cancel (reject) button below the puzzle edit frame
-
         puzzleGrid = QGridLayout()
         puzzleGrid.addWidget(puzzleSelectorLabel, 0, 0, Qt.AlignRight)
         puzzleGrid.addWidget(self.puzzleSelector, 0, 1)
@@ -444,14 +460,20 @@ class AddEditPuzzle(QDialog):
 
         cancelButton = QPushButton("Cancel")
         cancelButton.clicked.connect(self.cancelDialog)
-        cancelButtonLayout = QHBoxLayout()
-        cancelButtonLayout.addSpacing(250)
-        cancelButtonLayout.addWidget(cancelButton)
+
+        self.acceptButton = QPushButton("Accept Changes")
+        self.acceptButton.setEnabled(False)
+        self.acceptButton.clicked.connect(self.accept)
+
+        dialogButtonLayout = QHBoxLayout()
+        dialogButtonLayout.addSpacing(220)
+        dialogButtonLayout.addWidget(self.acceptButton)
+        dialogButtonLayout.addWidget(cancelButton)
 
         dialogLayout = QVBoxLayout(self)
         dialogLayout.addLayout(addButtonLayout)
         dialogLayout.addWidget(self.puzzleEditControls)
-        dialogLayout.addLayout(cancelButtonLayout)
+        dialogLayout.addLayout(dialogButtonLayout)
 
     def setPuzzleSelector(self, index):
         """
@@ -481,7 +503,7 @@ class AddEditPuzzle(QDialog):
         print("Got to displayPuzzle")
         # index = self.currentPuzzleIndex()
         # self.setCurrentPuzzleIndex(index)
-        currentPuzzle = self.collection().puzzles()[index]
+        currentPuzzle = self._puzzles[index]
         self.puzzleTitleEdit.setText(currentPuzzle.puzzleTitle())
         self.puzzleCodeEdit.setText(currentPuzzle.puzzleCode())
         self.citationCodeEdit.setText(currentPuzzle.citationCode())
@@ -517,7 +539,7 @@ class AddEditPuzzle(QDialog):
         self.deleteButton.setEnabled(False)
         self.cancelPuzzleButton.setEnabled(True)
         self.clearPuzzle()
-        nextNumber = len(self.collection().puzzles()) + 1
+        nextNumber = len(self._puzzles) + 1
         self._oldPuzzleIndex = self._currentPuzzleIndex
         self._currentPuzzleIndex = nextNumber - 1
         self.puzzleTitleEdit.setText("Puzzle " + str(nextNumber))
@@ -529,52 +551,6 @@ class AddEditPuzzle(QDialog):
         self._currentPuzzleIndex = self.puzzleSelector.currentIndex()
         self.displayPuzzle(self._currentPuzzleIndex)
         self._mode = "Edit"
-
-            # def accept(self):
-    #
-    #     class TitleError(Exception):pass
-    #     class CodeError(Exception):pass
-    #
-    #     title = self.titleEdit.text()
-    #     puzzleCode = self.puzzleCodeEdit.toPlainText().upper()
-    #     citationCode = self.citationCodeEdit.text().upper()
-    #     puzzleSolution = self.puzzleSolutionEdit.toPlainText().upper()
-    #     citationSolution = self.citationSolutionEdit.text().upper()
-    #     hints = self.hintEdit.text().split(";")
-    #
-    #     try:
-    #         if len(title.strip()) == 0:
-    #             raise TitleError("You must enter a title for this Puzzle.")
-    #
-    #         if len(puzzleCode.strip()) == 0:
-    #             raise CodeError("You must at least enter the puzzle's code.")
-    #     except TitleError as e:
-    #         QMessageBox.warning(self, "Title Error", str(e))
-    #         self.titleEdit.selectAll()
-    #         self.titleEdit.setFocus()
-    #         return
-    #     except CodeError as e:
-    #         QMessageBox.warning(self, "Code Error", str(e))
-    #         self.puzzleCodeEdit.selectAll()
-    #         self.puzzleCodeEdit.setFocus()
-    #         return
-    #
-    #     self._title = title
-    #     self._puzzleCode = puzzleCode
-    #     self._citationCode = citationCode
-    #     self._puzzleSolution = puzzleSolution
-    #     self._citationSolution = citationSolution
-    #     self._hints = hints
-    #
-    #     print("just after setting properties")
-    #     QDialog.accept(self)
-#
-#     def reject(self):
-#         print("Got to CollectionDialog's reject() routine")
-#         QDialog.reject(self)
-#
-#
-#
 
     def deletePuzzle(self):
         print("Got to deletePuzzle")
@@ -730,6 +706,7 @@ class AddEditPuzzle(QDialog):
             self.hintEdit.setFocus()
 
         print("Got past the tests.")
+        self.acceptButton.setEnabled(True)
         if self._mode == "Add":
             # new puzzle is added to the collection
             newpuzzle = data_structures.Puzzle(puzzleTitle, puzzleCode, citationCode,
@@ -747,6 +724,10 @@ class AddEditPuzzle(QDialog):
             self.setPuzzleSelector(self._currentPuzzleIndex)
             # puzzle selector is updated if the puzzle title changed
             self.storePuzzleButton.setEnabled(False)
+
+    def accept(self):
+        print("got to accept")
+        QDialog.accept(self)
 
     def cancelDialog(self):
         QDialog.reject(self)
