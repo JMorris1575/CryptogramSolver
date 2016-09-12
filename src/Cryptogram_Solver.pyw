@@ -1,9 +1,9 @@
-import src.file_handler
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
 import src.data_structures
+import src.file_handler
 from src.cryptogram_solver_ui import uiElements, SetupUI
 
 
@@ -15,6 +15,9 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
         self._collection = src.file_handler.readCollection("../Collections/test.col")  # temporary - for development
         self.uiSetup(self)      # this is located in the file SetupUI.py
         self._currentPuzzleIndex = -1
+
+        self.updatePuzzleSelector(self._collection.puzzles()) # temporary - for development?
+        self.updateGameInfo(self.panel) # temporary = for development?
 
     def collection(self):
         return self._collection
@@ -120,15 +123,10 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
             print('self._currentPuzzleIndex', self._currentPuzzleIndex)
             dialog = uiElements.AddEditPuzzle(self._collection, self._currentPuzzleIndex)
             if dialog.exec():
-                print("A")
                 self.collection().setPuzzles(dialog.puzzles())
-                print("B")
                 src.file_handler.saveCollection(self._collection)
-                print("C")
                 self.updatePuzzleSelector(self._collection._puzzles)
-                print("D")
                 self.updateGameInfo(self.panel)
-                print("E")
 
     def deleteCollection(self):
         print("Got to deleteCollection")

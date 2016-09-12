@@ -333,7 +333,7 @@ class HintLineEdit(CodeLineEdit):
 
 class AddEditPuzzle(QDialog):
 
-    def __init__(self, collection=None, currentPuzzleIndex=None, parent=None):
+    def __init__(self, collection=None, currentPuzzleIndex=-1, parent=None):
         print('Initializing AddEditPuzzle')
         super(AddEditPuzzle, self).__init__(parent)
 
@@ -346,7 +346,7 @@ class AddEditPuzzle(QDialog):
 
         self.setupUI()
         if self._currentPuzzleIndex >= 0:
-            self.setPuzzleSelector(0)
+            self.setPuzzleSelector(self._currentPuzzleIndex)
             self._mode = "Edit"
         else:
             self._mode = None
@@ -479,6 +479,7 @@ class AddEditPuzzle(QDialog):
         Adds all the puzzles in the current collection to the puzzleSelector and sets the selector to the given index
         :return: None
         """
+        # ToDo: Make sure puzzleSelector is properly set upon entry under all circumstances
         print("In setPuzzleSelector")
         currentCollection = self.collection()
         self.puzzleEditControls.setEnabled(True)
@@ -599,6 +600,8 @@ class AddEditPuzzle(QDialog):
         puzzleSolution = self.puzzleSolutionEdit.toPlainText().upper()
         citationSolution = self.citationSolutionEdit.text().upper()
         hints = self.cleanHints(self.hintEdit.text())
+        # ToDo: Make behaviors after exceptions more sensible
+        # ToDo: Find ways to help the user find the errors: ccharacteer position counts, character highlighting, etc.
         try:
             # LengthMismatchError tests
             if puzzleSolution != "" and len(puzzleCode) != len(puzzleSolution):
@@ -620,13 +623,17 @@ class AddEditPuzzle(QDialog):
                             msg += codeDict[codeChar] + " and " + solutionChar + " in the solution.\n\n"
                             msg += "Check position " + str(solutionIndex + 1) + "."
                             raise InconsistentCodeError(msg)
+                        else:
+                            solutionIndex += 1
                     elif solutionChar in solutionDict.keys():
                         if solutionDict[solutionChar] != codeChar:
                             msg = "The solution letter, " + solutionChar + " in the puzzle solution,"
                             msg += " cannot be represented by both " + solutionDict[solutionChar] + " and "
                             msg += codeChar + " in the puzzle code.\n\n"
-                            msg += "Check position " + str(solutionIndex +1) + "."
+                            msg += "Check position " + str(solutionIndex+1) + "."
                             raise InconsistentCodeError(msg)
+                        else:
+                            solutionIndex += 1
                     else:
                         codeDict[codeChar] = solutionChar
                         solutionDict[solutionChar] = codeChar
@@ -640,6 +647,8 @@ class AddEditPuzzle(QDialog):
                             msg += codeDict[codeChar] + " and " + solutionChar + " in the solution.\n\n"
                             msg += "Check position " + str(solutionIndex + 1) + "."
                             raise InconsistentCodeError(msg)
+                        else:
+                            solutionIndex += 1
                     elif solutionChar in solutionDict.keys():
                         if solutionDict[solutionChar] != codeChar:
                             msg = "The solution letter, " + solutionChar + " in the citation solution, "
@@ -647,6 +656,8 @@ class AddEditPuzzle(QDialog):
                             msg += codeChar + " in the citation code.\n\n"
                             msg += "Check position " + str(solutionIndex + 1) + "."
                             raise InconsistentCodeError(msg)
+                        else:
+                            solutionIndex += 1
                     else:
                         codeDict[codeChar] = solutionChar
                         solutionDict[solutionChar] = codeChar
