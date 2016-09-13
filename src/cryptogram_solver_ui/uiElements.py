@@ -270,6 +270,7 @@ class AddCollection(QDialog):
 
         except BadNameError as e:
             QMessageBox.warning(self, "Filename Notice", str(e))
+            return
 
         self._name = name
         self._author = author
@@ -600,8 +601,7 @@ class AddEditPuzzle(QDialog):
         puzzleSolution = self.puzzleSolutionEdit.toPlainText().upper()
         citationSolution = self.citationSolutionEdit.text().upper()
         hints = self.cleanHints(self.hintEdit.text())
-        # ToDo: Make behaviors after exceptions more sensible
-        # ToDo: Find ways to help the user find the errors: ccharacteer position counts, character highlighting, etc.
+        # ToDo: Find ways to help the user find the errors: characteer position counts, character highlighting, etc.
         try:
             # LengthMismatchError tests
             if puzzleSolution != "" and len(puzzleCode) != len(puzzleSolution):
@@ -699,6 +699,7 @@ class AddEditPuzzle(QDialog):
                 self.puzzleCodeEdit.setFocus()
             else:
                 self.citationCodeEdit.setFocus()
+            return
 
         except InconsistentCodeError as e:
             QMessageBox.warning(self, "Insonsistent Code Error", str(e))
@@ -706,6 +707,7 @@ class AddEditPuzzle(QDialog):
                 self.puzzleCodeEdit.setFocus()
             else:
                 self.citationCodeEdit.setFocus()
+            return
 
         except BadHintFormatError as e:
             QMessageBox.warning(self, "Bad Hint Format Error", str(e))
@@ -714,6 +716,7 @@ class AddEditPuzzle(QDialog):
         except BadHintError as e:
             QMessageBox.warning(self, "Bad Hint Error", str(e))
             self.hintEdit.setFocus()
+            return
 
         print("Got past the tests.")
         self.acceptButton.setEnabled(True)
