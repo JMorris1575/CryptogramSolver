@@ -603,12 +603,9 @@ class AddEditPuzzle(QDialog):
         hints = self.cleanHints(self.hintEdit.text())
         # ToDo: Find ways to help the user find the errors: characteer position counts, character highlighting, etc.
         try:
-            # LengthMismatchError tests
-            if puzzleSolution != "" and len(puzzleCode) != len(puzzleSolution):
-                raise LengthMismatchError("The puzzle's code and its solution are not the same length.")
-
-            if citationSolution != "" and len(citationCode) != len(citationSolution):
-                raise LengthMismatchError("The citation's code and its solution are not the same length.")
+            results = self.lengthMismatchErrorTests(puzzleCode, puzzleSolution, citationCode, citationSolution)
+            if not results[0]:
+                raise LengthMismatchError(results[1])
 
             # InconsistentCodeError tests
             if puzzleSolution != "":
@@ -696,6 +693,27 @@ class AddEditPuzzle(QDialog):
         except LengthMismatchError as e:
             QMessageBox.warning(self, "Length Mismatch Error", str(e))
             if "puzzle" in str(e):
+                codeWords = puzzleCode.split()
+                solutionWords = puzzleSolution.split()
+                if len(codeWords) == len(solutionWords):
+                    index = 0
+                    for word in codeWords:
+                        if len(word) != len(solutionWords[index]):
+                            codeWords[index] = '<font color="red">' + word + '</font>'
+                            solutionWords[index] = '<font color="red".' + solutionWords[index] + '</font>'
+                         index += 1
+                    else:
+                        # figure out what to do if not the same number of words
+                        pass
+                    replacement = ""
+                    for word in codeWords:
+                        replacement += word + " "
+                    self.puzzleCodeEdit.setHtml(replacement.strip())
+                    replacement = ""
+                    for word in solutionWords:
+                        replacement += word + " "
+                    self.puzzleSolutionEdit.setHtml(replacement.strip())
+
                 self.puzzleCodeEdit.setFocus()
             else:
                 self.citationCodeEdit.setFocus()
@@ -741,6 +759,17 @@ class AddEditPuzzle(QDialog):
     def accept(self):
         print("got to accept")
         QDialog.accept(self)
+
+    def lengthMismatchErrorTests(self, puzzleCode, puzzleSolution, citationCode, citationSolution):
+        print("Got to lengthMismatchErrorTests")
+
+        if puzzleSolution != "" and len(puzzleCode) != len(puzzleSolution):
+            return False, "The puzzle's code and its solution are not the same length."
+
+        if citationSolution != "" and len(citationCode) != len(citationSolution):
+            return False, "The citation's code and its solution are not the same length."
+
+        return True, ""
 
     def cancelDialog(self):
         QDialog.reject(self)
