@@ -391,6 +391,17 @@ class AddEditPuzzle(QDialog):
         addButtonLayout.addSpacing(220)
         addButtonLayout.addWidget(self.addPuzzleButton)
 
+        errorLabel = QLabel("Error Display")
+        self.errorDisplayWindow = QLabel('')
+        self.errorDisplayWindow.setFrameStyle(QFrame.Panel | QFrame.Sunken)
+        self.errorDisplayWindow.setMinimumHeight(50)
+        self.errorDisplayWindow.setStyleSheet("QLabel { background-color : QColor(240, 240, 240; }")
+        self.errorDisplayWindow.setEnabled(False)
+
+        errorDisplayLayout = QVBoxLayout()
+        errorDisplayLayout.addWidget(errorLabel)
+        errorDisplayLayout.addWidget(self.errorDisplayWindow)
+
         puzzleSelectorLabel = QLabel("Puzzle Selector:")
         self.puzzleSelector = QComboBox()
         self.puzzleSelector.currentIndexChanged.connect(self.addEditPuzzleSelectorChanged)
@@ -451,6 +462,7 @@ class AddEditPuzzle(QDialog):
         puzzleGrid.addWidget(self.hintEdit, 6, 1)
 
         puzzleEditLayout = QVBoxLayout()
+        puzzleEditLayout.addLayout(errorDisplayLayout)
         puzzleEditLayout.addLayout(puzzleGrid)
         puzzleEditLayout.addWidget(puzzleButtonBox)
 
@@ -701,7 +713,7 @@ class AddEditPuzzle(QDialog):
                         if len(word) != len(solutionWords[index]):
                             codeWords[index] = '<font color="red">' + word + '</font>'
                             solutionWords[index] = '<font color="red".' + solutionWords[index] + '</font>'
-                         index += 1
+                        index += 1
                     else:
                         # figure out what to do if not the same number of words
                         pass
