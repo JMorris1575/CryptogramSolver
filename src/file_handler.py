@@ -45,7 +45,7 @@ def saveCollection(collection):
         format = "<H{0}s".format(len(data))
         return struct.pack(format, len(data), data)
 
-    filename = "../collections/" + clean(collection.name()) + ".col"
+    filename = "collections/" + clean(collection.name()) + ".col"
 
     fh = None
     try:

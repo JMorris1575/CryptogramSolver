@@ -35,14 +35,14 @@ class UserInterfaceSetup(object):
         fileMenu.setToolTipsVisible(True)
         menuBar.addMenu(fileMenu)
 
-        newPlayerAction = QAction(QIcon("../images/detectiveHat.png"), "&New Player...", self)
+        newPlayerAction = QAction(QIcon("images/detectiveHat.png"), "&New Player...", self)
         newPlayerAction.setShortcuts(QKeySequence.New)
         newPlayerAction.setToolTip("Enroll as a new player.")
         newPlayerAction.triggered.connect(self.enrollNewPlayer)
         fileMenu.addAction(newPlayerAction)
         toolBar.addAction(newPlayerAction)
 
-        loginAction = QAction(QIcon("../images/fingerprint.png"), "&Login...", self)
+        loginAction = QAction(QIcon("images/fingerprint.png"), "&Login...", self)
         loginAction.setToolTip("Login to play.")
         loginAction.triggered.connect(self.login)
         fileMenu.addAction(loginAction)
@@ -50,14 +50,14 @@ class UserInterfaceSetup(object):
 
         fileMenu.addSeparator()
 
-        openAction = QAction(QIcon("../images/OpenCollection.png"), "&Open Collection...", self)
+        openAction = QAction(QIcon("images/OpenCollection.png"), "&Open Collection...", self)
         openAction.setShortcut(QKeySequence.Open)
         openAction.setToolTip("Open a set of puzzles to solve.")
         openAction.triggered.connect(self.openCollection)
         fileMenu.addAction(openAction)
         toolBar.addAction(openAction)
 
-        saveAction = QAction(QIcon("../images/SaveIcon.png"), "&Save Progress", self)
+        saveAction = QAction(QIcon("images/SaveIcon.png"), "&Save Progress", self)
         saveAction.setShortcut(QKeySequence.Save)
         saveAction.setToolTip("Save your current puzzle solving progress.")
         saveAction.triggered.connect(self.saveProgress)
@@ -66,7 +66,7 @@ class UserInterfaceSetup(object):
 
         fileMenu.addSeparator()
 
-        exitAction = QAction(QIcon("../images/underConstruction.png"), "E&xit", self)
+        exitAction = QAction(QIcon("images/underConstruction.png"), "E&xit", self)
         exitAction.setToolTip("Exit this program.")
         exitAction.triggered.connect(self.exitGame)
         fileMenu.addAction(exitAction)
@@ -81,11 +81,11 @@ class UserInterfaceSetup(object):
         puzzleMenu.setToolTipsVisible(True)
         menuBar.addMenu(puzzleMenu)
 
-        selectAction = QAction(QIcon("../images/underConstruction.png"), "&Select Puzzle...", self)
+        selectAction = QAction(QIcon("images/underConstruction.png"), "&Select Puzzle...", self)
         selectAction.triggered.connect(self.selectPuzzle)
         puzzleMenu.addAction(selectAction)
 
-        previousAction = QAction(QIcon("../images/PreviousIcon.png"), "&Previous Puzzle", self)
+        previousAction = QAction(QIcon("images/PreviousIcon.png"), "&Previous Puzzle", self)
         previousAction.setShortcut(QKeySequence.MoveToPreviousPage)
         previousAction.setToolTip("Go to the previous puzzle in the collection.")
         previousAction.triggered.connect(self.previousPuzzle)
@@ -97,7 +97,7 @@ class UserInterfaceSetup(object):
         self.puzzleSelector.currentIndexChanged.connect(self.puzzleSelectorIndexChanged)
         toolBar.addWidget(self.puzzleSelector)
 
-        nextAction = QAction(QIcon("../images/NextIcon.png"), "&Next Puzzle", self)
+        nextAction = QAction(QIcon("images/NextIcon.png"), "&Next Puzzle", self)
         nextAction.setShortcut(QKeySequence.MoveToNextPage)
         nextAction.setToolTip("Go to the next puzzle in the collection.")
         nextAction.triggered.connect(self.nextPuzzle)
@@ -107,19 +107,19 @@ class UserInterfaceSetup(object):
         puzzleMenu.addSeparator()
         toolBar.addSeparator()
 
-        hintAction = QAction(QIcon("../images/underConstruction.png"), "Get &Hint", self)
+        hintAction = QAction(QIcon("images/underConstruction.png"), "Get &Hint", self)
         hintAction.setToolTip("Get a hint for this puzzle.")
         hintAction.triggered.connect(self.giveHint)
         puzzleMenu.addAction(hintAction)
         toolBar.addAction(hintAction)
 
-        clearAction = QAction(QIcon("../images/EraserIcon.png"), "&Clear Puzzle", self)
+        clearAction = QAction(QIcon("images/EraserIcon.png"), "&Clear Puzzle", self)
         clearAction.setToolTip("Clear your current solution and start over.")
         clearAction.triggered.connect(self.clearPuzzle)
         puzzleMenu.addAction(clearAction)
         toolBar.addAction(clearAction)
 
-        giveUpAction = QAction(QIcon("../images/Give-upIcon.png"), "&Give Up", self)
+        giveUpAction = QAction(QIcon("images/Give-upIcon.png"), "&Give Up", self)
         giveUpAction.setToolTip("Give up on this puzzle and see the solution.")
         giveUpAction.triggered.connect(self.giveUp)
         puzzleMenu.addAction(giveUpAction)
@@ -127,7 +127,7 @@ class UserInterfaceSetup(object):
 
         puzzleMenu.addSeparator()
 
-        checkAction = QAction(QIcon("../images/underConstruction.png"), "&Check Solution", self)
+        checkAction = QAction(QIcon("images/underConstruction.png"), "&Check Solution", self)
         checkAction.setToolTip("Check your answer to see if you are right.")
         checkAction.triggered.connect(self.checkSolution)
         puzzleMenu.addAction(checkAction)
@@ -144,7 +144,7 @@ class UserInterfaceSetup(object):
         self.adminAction = menuBar.addMenu(adminMenu)
         self.adminAction.setToolTip("Add or edit puzzles and collections of puzzles.")
 
-        self.createAction = QAction(QIcon("../images/addCollectionIcon.png"), "&Create Collection...", self)
+        self.createAction = QAction(QIcon("images/addCollectionIcon.png"), "&Create Collection...", self)
         self.createAction.setShortcut(QKeySequence("Alt+Ctrl+C"))
         self.createAction.setShortcutContext(Qt.WidgetShortcut)
         self.createAction.setToolTip("Create and edit a new puzzle collection.")
@@ -152,7 +152,7 @@ class UserInterfaceSetup(object):
         adminMenu.addAction(self.createAction)
         toolBar.addAction(self.createAction)
 
-        self.editAction = QAction(QIcon("../images/editpuzzleicon-2.png"), "Add/&Edit Puzzles...", self)
+        self.editAction = QAction(QIcon("images/editpuzzleicon-2.png"), "Add/&Edit Puzzles...", self)
         self.editAction.setShortcut(QKeySequence("Alt+Ctrl+E"))
         self.editAction.setShortcutContext(Qt.WidgetShortcut)
         self.editAction.setToolTip("Add, edit or delete puzzles in the current collection.")
@@ -160,7 +160,7 @@ class UserInterfaceSetup(object):
         adminMenu.addAction(self.editAction)
         toolBar.addAction(self.editAction)
 
-        self.deleteAction = QAction(QIcon("../images/underConstruction.png"), "&Delete Collection...", self)
+        self.deleteAction = QAction(QIcon("images/underConstruction.png"), "&Delete Collection...", self)
         self.deleteAction.setShortcut(QKeySequence("Alt+Ctrl+X"))
         self.deleteAction.setShortcutContext(Qt.WidgetShortcut)
         self.deleteAction.setToolTip("Delete the current collection.")
@@ -168,7 +168,7 @@ class UserInterfaceSetup(object):
         adminMenu.addAction(self.deleteAction)
         toolBar.addAction(self.deleteAction)
 
-        self.saveSolutionAction = QAction(QIcon("../images/underConstruction.png"), "&Save Solution", self)
+        self.saveSolutionAction = QAction(QIcon("images/underConstruction.png"), "&Save Solution", self)
         self.saveSolutionAction.setShortcut(QKeySequence("Alt+Ctrl+S"))
         self.saveSolutionAction.setShortcutContext(Qt.WidgetShortcut)
         self.saveSolutionAction.setToolTip("Save the current solution as the correct solution of this puzzle.")
@@ -188,7 +188,7 @@ class UserInterfaceSetup(object):
 
         toolBar.addSeparator()
 
-        helpAction = QAction(QIcon("../images/helpicon512.png"), "&Help", self)
+        helpAction = QAction(QIcon("images/helpicon512.png"), "&Help", self)
         helpAction.setShortcuts(QKeySequence.HelpContents)
         helpAction.setToolTip("Display help for Cryptogram Solver")
         helpAction.triggered.connect(self.startHelp)
@@ -197,7 +197,7 @@ class UserInterfaceSetup(object):
 
         helpMenu.addSeparator()
 
-        aboutAction = QAction(QIcon("../images/underConstruction.png"), "&About", self)
+        aboutAction = QAction(QIcon("images/underConstruction.png"), "&About", self)
         aboutAction.triggered.connect(self.displayAbout)
         helpMenu.addAction(aboutAction)
 

@@ -12,7 +12,7 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
 
-        self._collection = src.file_handler.readCollection("../Collections/test.col")  # temporary - for development
+        self._collection = src.file_handler.readCollection("Collections/test.col")  # temporary - for development
         self.uiSetup(self)      # this is located in the file SetupUI.py
         self._currentPuzzleIndex = -1
 
@@ -37,7 +37,7 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
     def openCollection(self):
         # open a file dialog box and select a .col file from the Collections directory
         fileInfo = QFileDialog.getOpenFileName(self, "Open Collection",
-                                               "../Collections", "Collections (*.col)")
+                                               "Collections", "Collections (*.col)")
         filename = fileInfo[0]
         self.setCollection(src.file_handler.readCollection(filename))
         self.updatePuzzleSelector(self._collection.puzzles())

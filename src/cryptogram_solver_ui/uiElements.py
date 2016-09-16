@@ -158,11 +158,11 @@ class AddCollection(QDialog):
 
         if self._currentCollection:     # collection present means edit mode, otherwise we are adding a new collection
             self._mode = "Edit"
-            self.setWindowIcon(QIcon("../images/editpuzzleicon-2.png"))
+            self.setWindowIcon(QIcon("images/editpuzzleicon-2.png"))
             self.setWindowTitle("Edit Collection")
         else:
             self._mode = "New"
-            self.setWindowIcon(QIcon("../images/addCollectionIcon.png"))
+            self.setWindowIcon(QIcon("images/addCollectionIcon.png"))
             self.setWindowTitle("Create New Collection")
         self.setupUI()
 
@@ -347,7 +347,7 @@ class AddEditPuzzle(QDialog):
         self._puzzles = collection.puzzles()
         self._puzzleWords = {}                  # used to compare lengths of words puzzleCode and puzzleSolution
         self._codeKeys = {}                     # used to make sure the code is consistent throughout the puzzle
-        self._errorSound = QSound('../sounds/error-01.wav')
+        self._errorSound = QSound('sounds/error-01.wav')
 
         self.setupUI()
         self.codeKeys = {}
@@ -388,7 +388,7 @@ class AddEditPuzzle(QDialog):
 
         print('in setupUI')
 
-        self.setWindowIcon(QIcon("../images/editpuzzleicon-2.png"))
+        self.setWindowIcon(QIcon("images/editpuzzleicon-2.png"))
         self.setWindowTitle("Add or Edit Puzzles")
 
         self.addPuzzleButton = QPushButton("Add New Puzzle")
