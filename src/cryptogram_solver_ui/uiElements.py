@@ -1,5 +1,6 @@
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
+from PyQt5.QtMultimedia import QSound
 from PyQt5.QtWidgets import *
 
 import string, unicodedata
@@ -344,8 +345,13 @@ class AddEditPuzzle(QDialog):
         self._collection = collection
         self._currentPuzzleIndex = currentPuzzleIndex
         self._puzzles = collection.puzzles()
+        self._puzzleWords = {}                  # used to compare lengths of words puzzleCode and puzzleSolution
+        self._codeKeys = {}                     # used to make sure the code is consistent throughout the puzzle
+        self._errorSound = QSound('../sounds/error-01.wav')
 
         self.setupUI()
+        self.codeKeys = {}
+        self.puzzleWords = {}
         if self._currentPuzzleIndex >= 0:
             self.setPuzzleSelector(self._currentPuzzleIndex)
             self._mode = "Edit"
@@ -395,8 +401,8 @@ class AddEditPuzzle(QDialog):
         self.errorDisplayWindow = QLabel('')
         self.errorDisplayWindow.setFrameStyle(QFrame.Panel | QFrame.Sunken)
         self.errorDisplayWindow.setMinimumHeight(50)
-        self.errorDisplayWindow.setStyleSheet("QLabel { background-color : QColor(240, 240, 240; }")
-        self.errorDisplayWindow.setEnabled(False)
+        self.errorDisplayWindow.setAlignment(Qt.AlignTop)
+        self.errorDisplayWindow.setStyleSheet("QLabel { background-color : rgb(240, 240, 240); }")
 
         errorDisplayLayout = QVBoxLayout()
         errorDisplayLayout.addWidget(errorLabel)
@@ -517,15 +523,28 @@ class AddEditPuzzle(QDialog):
         # index = self.currentPuzzleIndex()
         # self.setCurrentPuzzleIndex(index)
         currentPuzzle = self._puzzles[index]
+        self.puzzleTitleEdit.blockSignals(True)
         self.puzzleTitleEdit.setText(currentPuzzle.puzzleTitle())
+        self.puzzleTitleEdit.blockSignals(False)
+        self.puzzleCodeEdit.blockSignals(True)
         self.puzzleCodeEdit.setText(currentPuzzle.puzzleCode())
+        self.puzzleCodeEdit.blockSignals(False)
+        self.citationCodeEdit.blockSignals(True)
         self.citationCodeEdit.setText(currentPuzzle.citationCode())
+        self.citationCodeEdit.blockSignals(False)
+        self.puzzleSolutionEdit.blockSignals(True)
         self.puzzleSolutionEdit.setText(currentPuzzle.puzzleSolution())
+        self.puzzleSolutionEdit.blockSignals(False)
+        self.citationSolutionEdit.blockSignals(True)
         self.citationSolutionEdit.setText(currentPuzzle.citationSolution())
+        self.citationSolutionEdit.blockSignals(False)
         hintText = ""
         for hint in currentPuzzle.hints():
             hintText += hint + "; "
+        self.hintEdit.blockSignals(True)
         self.hintEdit.setText(hintText)
+        self.hintEdit.blockSignals(False)
+        print("Got to end of displayPuzzle")
 
     def updateUI(self):
         """
@@ -569,6 +588,13 @@ class AddEditPuzzle(QDialog):
         print("Got to deletePuzzle")
 
     def clearPuzzle(self):
+        """
+        Clears the current puzzle out of the puzzle editor and creates the puzzleWords and codeKeys dictionaries
+        to assist in the spontaneous checking of the puzzle entry.  See the various error checking routines called
+        by editBoxChanged to see how these are used.
+
+        :return: None
+        """
         print("Got to clearPuzzle")
         self.puzzleTitleEdit.setText("")
         self.puzzleCodeEdit.setText("")
@@ -576,6 +602,8 @@ class AddEditPuzzle(QDialog):
         self.puzzleSolutionEdit.setText("")
         self.citationSolutionEdit.setText("")
         self.hintEdit.setText("")
+        self._puzzleWords = {}
+        self._codeKeys = {}
 
     def cancelPuzzle(self):
         """
@@ -790,9 +818,13 @@ class AddEditPuzzle(QDialog):
         """
         Manages the availability of the Save Puzzle button when any of the edit boxes are changed.
         The Save Puzzle button is turned off if either puzzleTitleEdit or puzzleCodeEdit are empty.
+
+        Also does manages the initial check for errors while the user is typing.
+
         :return: None
         """
-        print("Got to editBoxChanged")
+        widget = self.focusWidget()
+        print("Got to editBoxChanged from " + str(widget))
         if self.puzzleTitleEdit.text() == "" or self.puzzleCodeEdit.toPlainText() == "":
             self.puzzleSolutionEdit.setEnabled(False)
             self.citationCodeEdit.setEnabled(False)
@@ -805,6 +837,39 @@ class AddEditPuzzle(QDialog):
             self.citationSolutionEdit.setEnabled(True)
             self.hintEdit.setEnabled(True)
             self.storePuzzleButton.setEnabled(True)
+        # ToDo: Find out why backspacing to empty text crashes the program
+        if widget == self.puzzleCodeEdit:
+            print("puzzleCodeEdit")
+        elif widget == self.citationCodeEdit:
+            print("citationCodeEdit")
+        elif widget == self.puzzleSolutionEdit:
+            inputText = self.puzzleSolutionEdit.toPlainText()
+            if inputText[-1] == ' ':
+                if self.lengthMismatch(inputText, self.puzzleCodeEdit.toPlainText()):
+                    return
+        elif widget == self.citationSolutionEdit:
+            print("citationSolutionEdit")
+        elif widget == self.hintEdit:
+            print("hintEdit")
+
+    def lengthMismatch(self, text1, text2):
+        """
+        Checks the length of each word in text1 and text2 and alerts the user if they are not the same.
+        This routine is called when a space is typed into the given widget or if it has lost focus.
+        :return: True if error found, False otherwise
+        """
+        if len(text1) != 0:
+            wordList1 = text1.split()
+            wordList2 = text2.split()
+            if len(wordList1[-1]) != len(wordList2[-1]):
+                self._errorSound.play()
+                self.errorDisplayWindow.setStyleSheet("QLabel { background-color : white; }")
+                self.errorDisplayWindow.setText("You Goofed!")
+                return True
+
+        self.errorDisplayWindow.setText('')
+        self.errorDisplayWindow.setStyleSheet("QLabel { background-color : rgb(240, 240, 240); }")
+        return False
 
     def cleanHints(self, hintstring):
         """
