@@ -837,16 +837,16 @@ class AddEditPuzzle(QDialog):
             self.citationSolutionEdit.setEnabled(True)
             self.hintEdit.setEnabled(True)
             self.storePuzzleButton.setEnabled(True)
-        # ToDo: Find out why backspacing to empty text crashes the program
         if widget == self.puzzleCodeEdit:
             print("puzzleCodeEdit")
         elif widget == self.citationCodeEdit:
             print("citationCodeEdit")
         elif widget == self.puzzleSolutionEdit:
             inputText = self.puzzleSolutionEdit.toPlainText()
-            if inputText[-1] == ' ':
-                if self.lengthMismatch(inputText, self.puzzleCodeEdit.toPlainText()):
-                    return
+            if inputText != '':
+                if inputText[-1] == ' ':
+                    if self.lengthMismatch(inputText, self.puzzleCodeEdit.toPlainText()):
+                        return
         elif widget == self.citationSolutionEdit:
             print("citationSolutionEdit")
         elif widget == self.hintEdit:
@@ -855,17 +855,27 @@ class AddEditPuzzle(QDialog):
     def lengthMismatch(self, text1, text2):
         """
         Checks the length of each word in text1 and text2 and alerts the user if they are not the same.
-        This routine is called when a space is typed into the given widget or if it has lost focus.
+        This routine is called when a space has been typed or an Edit widget has lost focus.
         :return: True if error found, False otherwise
         """
+        # ToDo: Think the lengthMismatch routine through carefully and make it work!
+        print("Checking for lengthMismatch")
         if len(text1) != 0:
             wordList1 = text1.split()
             wordList2 = text2.split()
-            if len(wordList1[-1]) != len(wordList2[-1]):
-                self._errorSound.play()
-                self.errorDisplayWindow.setStyleSheet("QLabel { background-color : white; }")
-                self.errorDisplayWindow.setText("You Goofed!")
-                return True
+            for index in range(min(len(wordList1), len(wordList2))):
+                if len(wordList1[index]) != len(wordList2[index]):
+                    self._errorSound.play()
+                    self.errorDisplayWindow.setStyleSheet("QLabel { background-color : white; }")
+                    msg = "The length of " + wordList1[-1] + " does not match " + wordList2[-1] + "."
+                    self.errorDisplayWindow.setText(msg)
+                    return True
+        if len(text1) != len(text2):
+            self._errorSound.play()
+            self.errorDisplayWindow.setStyleSheet("QLabel { background-color : white; }")
+            msg = "The length of " + text1 + " does not match the length of " + text2 + "."
+            self.errorDisplayWindow.setText(msg)
+            return True
 
         self.errorDisplayWindow.setText('')
         self.errorDisplayWindow.setStyleSheet("QLabel { background-color : rgb(240, 240, 240); }")
