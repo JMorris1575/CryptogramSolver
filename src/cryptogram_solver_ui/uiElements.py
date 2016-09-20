@@ -311,7 +311,6 @@ class CodeTextEdit(QTextEdit):
         newEvent = QKeyEvent(QEvent.KeyPress, e.key(), e.modifiers(), text=e.text().upper())
         return super(CodeTextEdit, self).keyPressEvent(newEvent)
 
-
 class CodeLineEdit(QLineEdit):
 
     def __init__(self):
@@ -348,10 +347,15 @@ class AddEditPuzzle(QDialog):
         self._puzzleWords = {}                  # used to compare lengths of words puzzleCode and puzzleSolution
         self._codeKeys = {}                     # used to make sure the code is consistent throughout the puzzle
         self._errorSound = QSound('sounds/error-01.wav')
-
-        self.setupUI()
         self.codeKeys = {}
         self.puzzleWords = {}
+
+        self.setupUI()
+        self.puzzleCodeEdit.installEventFilter(self)
+        self.citationCodeEdit.installEventFilter(self)
+        self.puzzleSolutionEdit.installEventFilter(self)
+        self.citationSolutionEdit.installEventFilter(self)
+
         if self._currentPuzzleIndex >= 0:
             self.setPuzzleSelector(self._currentPuzzleIndex)
             self._mode = "Edit"
@@ -359,6 +363,26 @@ class AddEditPuzzle(QDialog):
             self._mode = None
         self._puzzleEdited = False
         self.updateUI()
+
+    def eventFilter(self, source, event):
+
+        if (event.type() == QEvent.FocusOut):
+            if source is self.puzzleCodeEdit:
+                if self.puzzleCodeEdit.toPlainText() and self.puzzleSolutionEdit.toPlainText():
+                    self.compareWordLengths(self.puzzleCodeEdit.toPlainText(), self.puzzleSolutionEdit.toPlainText())
+            if source is self.citationCodeEdit:
+                if self.citationCodeEdit.text() and self.citationSolutionEdit.text():
+                    self.compareWordLengths(self.citationCodeEdit.text(), self.citationSolutionEdit.text())
+            if source is self.puzzleSolutionEdit:
+                if self.puzzleSolutionEdit.toPlainText() and self.puzzleCodeEdit.toPlainText():
+                    self.compareWordLengths(self.puzzleSolutionEdit.toPlainText(), self.puzzleCodeEdit.toPlainText())
+            if source is self.citationSolutionEdit:
+                if self.citationSolutionEdit.text() and self.citationCodeEdit.text():
+                    self.compareWordLengths(self.citationSolutionEdit.text(), self.citationCodeEdit.text())
+        return super(AddEditPuzzle, self).eventFilter(source, event)
+
+    def compareWordLengths(self, text1, text2):
+        print("got to compareWordLengths with text1 =", text1, " and text2 =", text2)
 
     def collection(self):
         return self._collection
@@ -421,6 +445,10 @@ class AddEditPuzzle(QDialog):
         self.puzzleCodeEdit.setTabChangesFocus(True)
         self.puzzleCodeEdit.setMaximumHeight(60)
         self.puzzleCodeEdit.textChanged.connect(self.editBoxChanged)
+        # self.puzzleCodeEdit.focusOutEvent = self.editBoxFocusOut
+        # ToDo: Create an event filter in this dialog box to catch focus out events for the various edit boxes
+        #  See http://stackoverflow.com/questions/26021808/how-can-i-intercept-when-a-widget-loses-its-focus
+        #  end of answer 1
 
         citationCodeLabel = QLabel("Citation Code (if any):")
         self.citationCodeEdit = CodeLineEdit()
@@ -852,6 +880,12 @@ class AddEditPuzzle(QDialog):
         elif widget == self.hintEdit:
             print("hintEdit")
 
+    def editBoxFocusOut(self, event):
+        print("Got to editBoxFocusOut with event = ", event)
+        widget = self.focusWidget()
+        print("widget = ", widget)
+
+
     def lengthMismatch(self, text1, text2):
         """
         Checks the length of each word in text1 and text2 and alerts the user if they are not the same.
@@ -870,12 +904,6 @@ class AddEditPuzzle(QDialog):
                     msg = "The length of " + wordList1[-1] + " does not match " + wordList2[-1] + "."
                     self.errorDisplayWindow.setText(msg)
                     return True
-        if len(text1) != len(text2):
-            self._errorSound.play()
-            self.errorDisplayWindow.setStyleSheet("QLabel { background-color : white; }")
-            msg = "The length of " + text1 + " does not match the length of " + text2 + "."
-            self.errorDisplayWindow.setText(msg)
-            return True
 
         self.errorDisplayWindow.setText('')
         self.errorDisplayWindow.setStyleSheet("QLabel { background-color : rgb(240, 240, 240); }")
