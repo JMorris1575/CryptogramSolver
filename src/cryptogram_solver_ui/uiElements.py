@@ -366,23 +366,75 @@ class AddEditPuzzle(QDialog):
 
     def eventFilter(self, source, event):
 
+        # ToDo: Add checkCitation()
+        # ToDo: Add explanation text to eventFilter, checkPuzzle, and checkSolution (which doesn't yet exist).
+
         if (event.type() == QEvent.FocusOut):
             if source is self.puzzleCodeEdit:
                 if self.puzzleCodeEdit.toPlainText() and self.puzzleSolutionEdit.toPlainText():
-                    self.compareWordLengths(self.puzzleCodeEdit.toPlainText(), self.puzzleSolutionEdit.toPlainText())
+                    self.checkPuzzle()
             if source is self.citationCodeEdit:
                 if self.citationCodeEdit.text() and self.citationSolutionEdit.text():
                     self.compareWordLengths(self.citationCodeEdit.text(), self.citationSolutionEdit.text())
             if source is self.puzzleSolutionEdit:
                 if self.puzzleSolutionEdit.toPlainText() and self.puzzleCodeEdit.toPlainText():
-                    self.compareWordLengths(self.puzzleSolutionEdit.toPlainText(), self.puzzleCodeEdit.toPlainText())
+                    self.checkPuzzle()
             if source is self.citationSolutionEdit:
                 if self.citationSolutionEdit.text() and self.citationCodeEdit.text():
                     self.compareWordLengths(self.citationSolutionEdit.text(), self.citationCodeEdit.text())
         return super(AddEditPuzzle, self).eventFilter(source, event)
 
+    def checkPuzzle(self):
+        # ToDo: Find out why not all red text gets reset to black when errors are corrected
+        wordLengthsCompare, text1, text2 = self.compareWordLengths(self.puzzleCodeEdit.toPlainText(),
+                                                                   self.puzzleSolutionEdit.toPlainText())
+        if not wordLengthsCompare:
+            msg = "There are problems between the puzzle code and its solution."
+            self.inputError(msg)
+        else:
+            self.resetErrorBox()
+        self.puzzleCodeEdit.setText(text1)
+        self.puzzleSolutionEdit.setText(text2)
+
+    def inputError(self, msg):
+        self._errorSound.play()
+        self.errorDisplayWindow.setStyleSheet("QLabel { background-color : white; }")
+        self.errorDisplayWindow.setText(msg)
+
+    def resetErrorBox(self):
+        self.errorDisplayWindow.setStyleSheet("QLabel { background-color: rgb(240, 240, 240) }")
+        self.errorDisplayWindow.setText("")
+
     def compareWordLengths(self, text1, text2):
         print("got to compareWordLengths with text1 =", text1, " and text2 =", text2)
+        result = True
+        msg = ""
+        if len(text1) != len(text2):
+            result = False
+        index = 0
+        wordList1 = text1.split()
+        wordList2 = text2.split()
+        newText1 = ""
+        newText2 = ""
+        for word in wordList1:
+            if index < len(wordList2):
+                if len(word) != len(wordList2[index]):
+                    result = False
+                    newText1 += "<font color=red>" + word + "</font> "
+                    newText2 += "<font color=red>" + wordList2[index] + "</font> "
+                else:
+                    newText1 += word + " "
+                    newText2 += wordList2[index] + " "
+            else:
+                result = False
+                newText1 += "<font color=red>" + word + "</font> "
+            index += 1
+        while index < len(wordList2):
+            result = False
+            newText2 += "<font color=red>" + wordList2[index] + "</font> "
+            index += 1
+
+        return result, newText1.strip(), newText2.strip()
 
     def collection(self):
         return self._collection
@@ -445,10 +497,6 @@ class AddEditPuzzle(QDialog):
         self.puzzleCodeEdit.setTabChangesFocus(True)
         self.puzzleCodeEdit.setMaximumHeight(60)
         self.puzzleCodeEdit.textChanged.connect(self.editBoxChanged)
-        # self.puzzleCodeEdit.focusOutEvent = self.editBoxFocusOut
-        # ToDo: Create an event filter in this dialog box to catch focus out events for the various edit boxes
-        #  See http://stackoverflow.com/questions/26021808/how-can-i-intercept-when-a-widget-loses-its-focus
-        #  end of answer 1
 
         citationCodeLabel = QLabel("Citation Code (if any):")
         self.citationCodeEdit = CodeLineEdit()
@@ -851,6 +899,7 @@ class AddEditPuzzle(QDialog):
 
         :return: None
         """
+        # ToDo: modify or remove editBoxChanged routine and the connections to it in light of the new eventFilter
         widget = self.focusWidget()
         print("Got to editBoxChanged from " + str(widget))
         if self.puzzleTitleEdit.text() == "" or self.puzzleCodeEdit.toPlainText() == "":
