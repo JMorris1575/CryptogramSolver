@@ -361,17 +361,22 @@ class AddEditPuzzle(QDialog):
             self._mode = "Edit"
         else:
             self._mode = None
-        self._puzzleEdited = False
-        self.updateUI()
+        # Commented out 9-22-2016
+        # self._puzzleEdited = False
+        # self.updateUI()
+            # ToDo: Eliminate code that has been commented out for a while
 
     def eventFilter(self, source, event):
 
-        # ToDo: Add checkCitation()
-        # ToDo: Add explanation text to eventFilter, checkPuzzle, and checkSolution (which doesn't yet exist).
+        # ToDo: Add explanation text to eventFilter, checkPuzzle, and checkCitation.
+        # ToDo: Include code consistency checking to the eventFilter
+        # ToDo: change function names to lower case as you work on each one - not eventFilter
 
         if (event.type() == QEvent.FocusOut):
-            self.blockSignals(True)
+            if source is self.puzzleTitleEdit:
+                self.set_editing_access()
             if source is self.puzzleCodeEdit:
+                self.set_editing_access()
                 if self.puzzleCodeEdit.toPlainText() and self.puzzleSolutionEdit.toPlainText():
                     self.checkPuzzle()
             if source is self.citationCodeEdit:
@@ -386,11 +391,32 @@ class AddEditPuzzle(QDialog):
             self.blockSignals(False)
         return super(AddEditPuzzle, self).eventFilter(source, event)
 
+    def set_editing_access(self):
+        """
+        Manages the availability of the Save Puzzle button
+        The Save Puzzle button is turned off if either puzzleTitleEdit or puzzleCodeEdit are empty.
+        :return: None
+        """
+        # ToDo: modify or remove editBoxChanged routine and the connections to it in light of the new eventFilter
+        if self.puzzleTitleEdit.text() == "" or self.puzzleCodeEdit.toPlainText() == "":
+            self.puzzleSolutionEdit.setEnabled(False)
+            self.citationCodeEdit.setEnabled(False)
+            self.citationSolutionEdit.setEnabled(False)
+            self.hintEdit.setEnabled(False)
+            self.storePuzzleButton.setEnabled(False)
+        else:
+            self.puzzleSolutionEdit.setEnabled(True)
+            self.citationCodeEdit.setEnabled(True)
+            self.citationSolutionEdit.setEnabled(True)
+            self.hintEdit.setEnabled(True)
+            self.storePuzzleButton.setEnabled(True)
+
     def checkPuzzle(self):
         wordLengthsEqual, text1, text2 = self.compareWordLengths(self.puzzleCodeEdit.toPlainText(),
                                                                    self.puzzleSolutionEdit.toPlainText())
         if not wordLengthsEqual:
-            msg = "There are problems between the puzzle code and its solution."
+            msg = "There are problems between the puzzle code and its solution.<br>"
+            msg += "See below."
             self.inputError(msg)
         else:
             self.resetErrorBox()
@@ -470,7 +496,6 @@ class AddEditPuzzle(QDialog):
         # this function has not yet been used in the code below
         # ToDo: Alter the code to use insertPuzzle when needed
 
-
     def setupUI(self):
 
         print('in setupUI')
@@ -502,31 +527,31 @@ class AddEditPuzzle(QDialog):
 
         puzzleTitleLabel = QLabel("Puzzle Name:")
         self.puzzleTitleEdit = QLineEdit()
-        self.puzzleTitleEdit.textChanged.connect(self.editBoxChanged)
+        # self.puzzleTitleEdit.textChanged.connect(self.editBoxChanged)
 
         puzzleCodeLabel = QLabel("Puzzle Code:")
         self.puzzleCodeEdit = CodeTextEdit()
         self.puzzleCodeEdit.setTabChangesFocus(True)
         self.puzzleCodeEdit.setMaximumHeight(60)
-        self.puzzleCodeEdit.textChanged.connect(self.editBoxChanged)
+        # self.puzzleCodeEdit.textChanged.connect(self.editBoxChanged)
 
         citationCodeLabel = QLabel("Citation Code (if any):")
         self.citationCodeEdit = CodeLineEdit()
-        self.citationCodeEdit.textChanged.connect(self.editBoxChanged)
+        # self.citationCodeEdit.textChanged.connect(self.editBoxChanged)
 
         puzzleSolutionLabel = QLabel("Puzzle Solution (if any):")
         self.puzzleSolutionEdit = CodeTextEdit()
         self.puzzleSolutionEdit.setTabChangesFocus(True)
         self.puzzleSolutionEdit.setMaximumHeight(60)
-        self.puzzleSolutionEdit.textChanged.connect(self.editBoxChanged)
+        # self.puzzleSolutionEdit.textChanged.connect(self.editBoxChanged)
 
         citationSolutionLabel = QLabel("Citation Solution (if any):")
         self.citationSolutionEdit = CodeLineEdit()
-        self.citationSolutionEdit.textChanged.connect(self.editBoxChanged)
+        # self.citationSolutionEdit.textChanged.connect(self.editBoxChanged)
 
         hintLabel = QLabel("Hints (if any):")
         self.hintEdit = HintLineEdit()
-        self.hintEdit.textChanged.connect(self.editBoxChanged)
+        # self.hintEdit.textChanged.connect(self.editBoxChanged)
 
         puzzleButtonBox = QDialogButtonBox()
         self.storePuzzleButton = puzzleButtonBox.addButton("Store Puzzle", QDialogButtonBox.ActionRole)
@@ -634,15 +659,16 @@ class AddEditPuzzle(QDialog):
         self.hintEdit.blockSignals(False)
         print("Got to end of displayPuzzle")
 
-    def updateUI(self):
-        """
-        Sets the availability of the dialog box's controls according to its present state
-        :return: None
-        """
-        if self._puzzleEdited:
-            self.storePuzzleButton.setEnabled(True)
-        else:
-            self.storePuzzleButton.setEnabled(False)
+    # Commented Out 9-22-2016
+    # def updateUI(self):
+    #     """
+    #     Sets the availability of the dialog box's controls according to its present state
+    #     :return: None
+    #     """
+    #     if self._puzzleEdited:
+    #         self.storePuzzleButton.setEnabled(True)
+    #     else:
+    #         self.storePuzzleButton.setEnabled(False)
 
     def createNewPuzzle(self):
         """
@@ -717,7 +743,7 @@ class AddEditPuzzle(QDialog):
         """
         print("Got to storePuzzle")
 
-        class LengthMismatchError(Exception):pass
+        # class LengthMismatchError(Exception):pass
         class InconsistentCodeError(Exception):pass
         class BadHintFormatError(Exception):pass
         class BadHintError(Exception):pass
@@ -731,9 +757,11 @@ class AddEditPuzzle(QDialog):
         hints = self.cleanHints(self.hintEdit.text())
         # ToDo: Find ways to help the user find the errors: characteer position counts, character highlighting, etc.
         try:
-            results = self.lengthMismatchErrorTests(puzzleCode, puzzleSolution, citationCode, citationSolution)
-            if not results[0]:
-                raise LengthMismatchError(results[1])
+            # Commented out 9-22-2016
+            # results = self.lengthMismatchErrorTests(puzzleCode, puzzleSolution, citationCode, citationSolution)
+            # if not results[0]:
+            #     raise LengthMismatchError(results[1])
+            #
 
             # InconsistentCodeError tests
             if puzzleSolution != "":
@@ -818,34 +846,35 @@ class AddEditPuzzle(QDialog):
                         msg += "The hint says it represents " + hintpair[1] + "."
                         raise BadHintError(msg)
 
-        except LengthMismatchError as e:
-            QMessageBox.warning(self, "Length Mismatch Error", str(e))
-            if "puzzle" in str(e):
-                codeWords = puzzleCode.split()
-                solutionWords = puzzleSolution.split()
-                if len(codeWords) == len(solutionWords):
-                    index = 0
-                    for word in codeWords:
-                        if len(word) != len(solutionWords[index]):
-                            codeWords[index] = '<font color="red">' + word + '</font>'
-                            solutionWords[index] = '<font color="red".' + solutionWords[index] + '</font>'
-                        index += 1
-                    else:
-                        # figure out what to do if not the same number of words
-                        pass
-                    replacement = ""
-                    for word in codeWords:
-                        replacement += word + " "
-                    self.puzzleCodeEdit.setHtml(replacement.strip())
-                    replacement = ""
-                    for word in solutionWords:
-                        replacement += word + " "
-                    self.puzzleSolutionEdit.setHtml(replacement.strip())
-
-                self.puzzleCodeEdit.setFocus()
-            else:
-                self.citationCodeEdit.setFocus()
-            return
+        # Commented out 9-22-2016
+        # except LengthMismatchError as e:
+        #     QMessageBox.warning(self, "Length Mismatch Error", str(e))
+        #     if "puzzle" in str(e):
+        #         codeWords = puzzleCode.split()
+        #         solutionWords = puzzleSolution.split()
+        #         if len(codeWords) == len(solutionWords):
+        #             index = 0
+        #             for word in codeWords:
+        #                 if len(word) != len(solutionWords[index]):
+        #                     codeWords[index] = '<font color="red">' + word + '</font>'
+        #                     solutionWords[index] = '<font color="red".' + solutionWords[index] + '</font>'
+        #                 index += 1
+        #             else:
+        #                 # figure out what to do if not the same number of words
+        #                 pass
+        #             replacement = ""
+        #             for word in codeWords:
+        #                 replacement += word + " "
+        #             self.puzzleCodeEdit.setHtml(replacement.strip())
+        #             replacement = ""
+        #             for word in solutionWords:
+        #                 replacement += word + " "
+        #             self.puzzleSolutionEdit.setHtml(replacement.strip())
+        #
+        #         self.puzzleCodeEdit.setFocus()
+        #     else:
+        #         self.citationCodeEdit.setFocus()
+        #     return
 
         except InconsistentCodeError as e:
             QMessageBox.warning(self, "Insonsistent Code Error", str(e))
@@ -888,73 +917,44 @@ class AddEditPuzzle(QDialog):
         print("got to accept")
         QDialog.accept(self)
 
-    def lengthMismatchErrorTests(self, puzzleCode, puzzleSolution, citationCode, citationSolution):
-        print("Got to lengthMismatchErrorTests")
-
-        if puzzleSolution != "" and len(puzzleCode) != len(puzzleSolution):
-            return False, "The puzzle's code and its solution are not the same length."
-
-        if citationSolution != "" and len(citationCode) != len(citationSolution):
-            return False, "The citation's code and its solution are not the same length."
-
-        return True, ""
+    # Commented out 9-22-2016
+    # def lengthMismatchErrorTests(self, puzzleCode, puzzleSolution, citationCode, citationSolution):
+    #     print("Got to lengthMismatchErrorTests")
+    #
+    #     if puzzleSolution != "" and len(puzzleCode) != len(puzzleSolution):
+    #         return False, "The puzzle's code and its solution are not the same length."
+    #
+    #     if citationSolution != "" and len(citationCode) != len(citationSolution):
+    #         return False, "The citation's code and its solution are not the same length."
+    #
+    #     return True, ""
 
     def cancelDialog(self):
         QDialog.reject(self)
 
-    def editBoxChanged(self):
-        """
-        Manages the availability of the Save Puzzle button when any of the edit boxes are changed.
-        The Save Puzzle button is turned off if either puzzleTitleEdit or puzzleCodeEdit are empty.
-
-        Also does manages the initial check for errors while the user is typing.
-
-        :return: None
-        """
-        # ToDo: modify or remove editBoxChanged routine and the connections to it in light of the new eventFilter
-        widget = self.focusWidget()
-        print("Got to editBoxChanged from " + str(widget))
-        if self.puzzleTitleEdit.text() == "" or self.puzzleCodeEdit.toPlainText() == "":
-            self.puzzleSolutionEdit.setEnabled(False)
-            self.citationCodeEdit.setEnabled(False)
-            self.citationSolutionEdit.setEnabled(False)
-            self.hintEdit.setEnabled(False)
-            self.storePuzzleButton.setEnabled(False)
-        else:
-            self.puzzleSolutionEdit.setEnabled(True)
-            self.citationCodeEdit.setEnabled(True)
-            self.citationSolutionEdit.setEnabled(True)
-            self.hintEdit.setEnabled(True)
-            self.storePuzzleButton.setEnabled(True)
-
-    # def editBoxFocusOut(self, event):
-    #     print("Got to editBoxFocusOut with event = ", event)
-    #     widget = self.focusWidget()
-    #     print("widget = ", widget)
     #
-
-    def lengthMismatch(self, text1, text2):
-        """
-        Checks the length of each word in text1 and text2 and alerts the user if they are not the same.
-        This routine is called when a space has been typed or an Edit widget has lost focus.
-        :return: True if error found, False otherwise
-        """
-        # ToDo: Think the lengthMismatch routine through carefully and make it work!
-        print("Checking for lengthMismatch")
-        if len(text1) != 0:
-            wordList1 = text1.split()
-            wordList2 = text2.split()
-            for index in range(min(len(wordList1), len(wordList2))):
-                if len(wordList1[index]) != len(wordList2[index]):
-                    self._errorSound.play()
-                    self.errorDisplayWindow.setStyleSheet("QLabel { background-color : white; }")
-                    msg = "The length of " + wordList1[-1] + " does not match " + wordList2[-1] + "."
-                    self.errorDisplayWindow.setText(msg)
-                    return True
-
-        self.errorDisplayWindow.setText('')
-        self.errorDisplayWindow.setStyleSheet("QLabel { background-color : rgb(240, 240, 240); }")
-        return False
+    # def lengthMismatch(self, text1, text2):
+    #     """
+    #     Checks the length of each word in text1 and text2 and alerts the user if they are not the same.
+    #     This routine is called when a space has been typed or an Edit widget has lost focus.
+    #     :return: True if error found, False otherwise
+    #     """
+    #     # ToDo: Think the lengthMismatch routine through carefully and make it work!
+    #     print("Checking for lengthMismatch")
+    #     if len(text1) != 0:
+    #         wordList1 = text1.split()
+    #         wordList2 = text2.split()
+    #         for index in range(min(len(wordList1), len(wordList2))):
+    #             if len(wordList1[index]) != len(wordList2[index]):
+    #                 self._errorSound.play()
+    #                 self.errorDisplayWindow.setStyleSheet("QLabel { background-color : white; }")
+    #                 msg = "The length of " + wordList1[-1] + " does not match " + wordList2[-1] + "."
+    #                 self.errorDisplayWindow.setText(msg)
+    #                 return True
+    #
+    #     self.errorDisplayWindow.setText('')
+    #     self.errorDisplayWindow.setStyleSheet("QLabel { background-color : rgb(240, 240, 240); }")
+    #     return False
 
     def cleanHints(self, hintstring):
         """
