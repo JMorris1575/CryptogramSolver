@@ -376,27 +376,36 @@ class AddEditPuzzle(QDialog):
                     self.checkPuzzle()
             if source is self.citationCodeEdit:
                 if self.citationCodeEdit.text() and self.citationSolutionEdit.text():
-                    self.compareWordLengths(self.citationCodeEdit.text(), self.citationSolutionEdit.text())
+                    self.checkCitation()
             if source is self.puzzleSolutionEdit:
                 if self.puzzleSolutionEdit.toPlainText() and self.puzzleCodeEdit.toPlainText():
                     self.checkPuzzle()
             if source is self.citationSolutionEdit:
                 if self.citationSolutionEdit.text() and self.citationCodeEdit.text():
-                    self.compareWordLengths(self.citationSolutionEdit.text(), self.citationCodeEdit.text())
+                    self.checkCitation()
             self.blockSignals(False)
         return super(AddEditPuzzle, self).eventFilter(source, event)
 
     def checkPuzzle(self):
-        # ToDo: Find out why not all red text gets reset to black when errors are corrected
-        wordLengthsCompare, text1, text2 = self.compareWordLengths(self.puzzleCodeEdit.toPlainText(),
+        wordLengthsEqual, text1, text2 = self.compareWordLengths(self.puzzleCodeEdit.toPlainText(),
                                                                    self.puzzleSolutionEdit.toPlainText())
-        if not wordLengthsCompare:
+        if not wordLengthsEqual:
             msg = "There are problems between the puzzle code and its solution."
             self.inputError(msg)
         else:
             self.resetErrorBox()
         self.puzzleCodeEdit.setText(text1)
         self.puzzleSolutionEdit.setText(text2)
+
+    def checkCitation(self):
+        wordLengthsEqual, text1, text2 = self.compareWordLengths(self.citationCodeEdit.text(),
+                                                                 self.citationSolutionEdit.text())
+        if not wordLengthsEqual:
+            msg = "Citation code structure does not match the solution:<br>"
+            msg += text1 + " does not match " + text2
+            self.inputError(msg)
+        else:
+            self.resetErrorBox()
 
     def inputError(self, msg):
         self._errorSound.play()
@@ -480,6 +489,7 @@ class AddEditPuzzle(QDialog):
         self.errorDisplayWindow.setFrameStyle(QFrame.Panel | QFrame.Sunken)
         self.errorDisplayWindow.setMinimumHeight(50)
         self.errorDisplayWindow.setAlignment(Qt.AlignTop)
+        self.errorDisplayWindow.setTextFormat(Qt.RichText)
         self.errorDisplayWindow.setStyleSheet("QLabel { background-color : rgb(240, 240, 240); }")
 
         errorDisplayLayout = QVBoxLayout()
