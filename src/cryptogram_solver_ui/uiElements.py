@@ -370,6 +370,7 @@ class AddEditPuzzle(QDialog):
         # ToDo: Add explanation text to eventFilter, checkPuzzle, and checkSolution (which doesn't yet exist).
 
         if (event.type() == QEvent.FocusOut):
+            self.blockSignals(True)
             if source is self.puzzleCodeEdit:
                 if self.puzzleCodeEdit.toPlainText() and self.puzzleSolutionEdit.toPlainText():
                     self.checkPuzzle()
@@ -382,6 +383,7 @@ class AddEditPuzzle(QDialog):
             if source is self.citationSolutionEdit:
                 if self.citationSolutionEdit.text() and self.citationCodeEdit.text():
                     self.compareWordLengths(self.citationSolutionEdit.text(), self.citationCodeEdit.text())
+            self.blockSignals(False)
         return super(AddEditPuzzle, self).eventFilter(source, event)
 
     def checkPuzzle(self):
@@ -423,15 +425,15 @@ class AddEditPuzzle(QDialog):
                     newText1 += "<font color=red>" + word + "</font> "
                     newText2 += "<font color=red>" + wordList2[index] + "</font> "
                 else:
-                    newText1 += word + " "
-                    newText2 += wordList2[index] + " "
+                    newText1 += "<font color=black>" + word + "</font> "
+                    newText2 += "<font color=black>" + wordList2[index] + "</font> "
             else:
                 result = False
-                newText1 += "<font color=red>" + word + "</font> "
+                newText1 += "<font color=pink>" + word + "</font> "
             index += 1
         while index < len(wordList2):
             result = False
-            newText2 += "<font color=red>" + wordList2[index] + "</font> "
+            newText2 += "<font color=blue>" + wordList2[index] + "</font> "
             index += 1
 
         return result, newText1.strip(), newText2.strip()
@@ -914,26 +916,12 @@ class AddEditPuzzle(QDialog):
             self.citationSolutionEdit.setEnabled(True)
             self.hintEdit.setEnabled(True)
             self.storePuzzleButton.setEnabled(True)
-        if widget == self.puzzleCodeEdit:
-            print("puzzleCodeEdit")
-        elif widget == self.citationCodeEdit:
-            print("citationCodeEdit")
-        elif widget == self.puzzleSolutionEdit:
-            inputText = self.puzzleSolutionEdit.toPlainText()
-            if inputText != '':
-                if inputText[-1] == ' ':
-                    if self.lengthMismatch(inputText, self.puzzleCodeEdit.toPlainText()):
-                        return
-        elif widget == self.citationSolutionEdit:
-            print("citationSolutionEdit")
-        elif widget == self.hintEdit:
-            print("hintEdit")
 
-    def editBoxFocusOut(self, event):
-        print("Got to editBoxFocusOut with event = ", event)
-        widget = self.focusWidget()
-        print("widget = ", widget)
-
+    # def editBoxFocusOut(self, event):
+    #     print("Got to editBoxFocusOut with event = ", event)
+    #     widget = self.focusWidget()
+    #     print("widget = ", widget)
+    #
 
     def lengthMismatch(self, text1, text2):
         """
