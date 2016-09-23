@@ -81,7 +81,6 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
         :param code:
         :return: None
         """
-        # ToDo: display citation appropriately
         words = code.split()
         row = 0
         column = 0

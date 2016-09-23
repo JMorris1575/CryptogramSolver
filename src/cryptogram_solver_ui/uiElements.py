@@ -27,6 +27,7 @@ class LetterUnit(QWidget):
         self._charIndex = 0
         self._clickSound = QSound('sounds/click.wav')
         self._timer = QTimer()
+        self._interval = 30
         self._timer.timeout.connect(self.advanceDial)
 
         self.setAppearance()
@@ -70,23 +71,23 @@ class LetterUnit(QWidget):
         :param letter:
         :return: None
         """
-        # ToDo: Find out why puzzle is being set twice:  once immediately and once clicking through letter by letter
-        # ToDo: Come up with a better way to click to the new puzzle
+        # ToDo: Consider implementing moveToCodeLetter as was your original plan
         self._codeLetter = letter
-        self._timer.start(10)
-        self.updateAppearance()
+        self.advanceDial()
 
     def advanceDial(self):
         if characters[self._charIndex] != self._codeLetter:
-            self._clickSound.play()
             self._charIndex += 1
             if self._charIndex >= len(characters):
                 self._charIndex = 0
-            self.codeLabel.setText(characters[self._charIndex])
+            # self.codeLabel.setText(characters[self._charIndex])
+            self.updateAppearance(characters[self._charIndex], ' ')
             if characters[self._charIndex] == self._codeLetter:
+                self.updateAppearance(self._codeLetter, ' ')
+                self._clickSound.play()
                 self._timer.stop()
             else:
-                self._timer.start(10)
+                self._timer.start(self._interval)
 
     def moveToCodeLetter(self, letter):
         """
@@ -136,15 +137,14 @@ class LetterUnit(QWidget):
             fontSize = 14
         return QFont("Arial", fontSize)
 
-    def updateAppearance(self):
+    def updateAppearance(self, code_letter, guess_letter):
 
-        self.guessLabel.setText(self._guessLetter)
-        self.codeLabel.setText(self._codeLetter)
-        if self._codeLetter not in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ':
-            print("it's punctuation")
+        self.guessLabel.setText(guess_letter)
+        self.codeLabel.setText(code_letter)
+        if code_letter not in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ':
+            self.guessLabel.setText(code_letter)
             self.guessLabel.setStyleSheet("QLabel { background-color : rgb(240, 240, 240); }")
         else:
-            print("it's in the alphabet")
             self.guessLabel.setStyleSheet("QLabel { background-color : white; }")
 
 
