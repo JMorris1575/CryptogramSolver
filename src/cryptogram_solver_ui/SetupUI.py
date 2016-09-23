@@ -18,6 +18,8 @@ class UserInterfaceSetup(object):
         self.setCentralWidget(self.panel)
         self.setupBars(menuBar, toolBar)
         self.panel.resize(self.width(), self.height() - menuBar.height() - toolBar.height())
+        self._rows = 5
+        self._columns = 40
         self.setupPlayPanel(self.panel)
 
     def setupBars(self, menuBar, toolBar):
@@ -257,8 +259,8 @@ class UserInterfaceSetup(object):
         letterWidth = 15
         letterHeight = 3 * letterWidth
         self.letterUnits = []
-        for row in range(5):
-            for column in range(40):
+        for row in range(self._rows):
+            for column in range(self._columns):
                 xpos = xbase + column * (letterWidth + 4)
                 ypos = ybase + row * (letterHeight + letterHeight/2)
                 letterUnit = uiElements.LetterUnit(' ', ' ', xpos, ypos,

@@ -5,9 +5,10 @@ from PyQt5.QtWidgets import *
 
 import string, unicodedata
 
-import data_structures
+import src.data_structures as data_structures
 
-alphabet = [' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+characters = [' ', '!', '&', '*', '(', ')', '-', '+' , ';', ':', "'", '"', '<', '>', ',', '.', '?', '/',
+              'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
             'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
 
@@ -23,7 +24,10 @@ class LetterUnit(QWidget):
         self._enabled = enabled
         self._letterFont = self.setLetterFont(self._size.width())
         self._active = False
+        self._charIndex = 0
+        self._clickSound = QSound('sounds/click.wav')
         self._timer = QTimer()
+        self._timer.timeout.connect(self.advanceDial)
 
         self.setAppearance()
         self.move(self._xpos, self._ypos)
@@ -66,14 +70,23 @@ class LetterUnit(QWidget):
         :param letter:
         :return: None
         """
-        if letter == ' ':
-            displayLetter = 'space'
-        else:
-            displayLetter = letter
-        print("Got to setCodeLetter with: ", displayLetter)
+        # ToDo: Find out why puzzle is being set twice:  once immediately and once clicking through letter by letter
+        # ToDo: Come up with a better way to click to the new puzzle
         self._codeLetter = letter
-        print("self._codeLetter = ", self._codeLetter)
+        self._timer.start(10)
         self.updateAppearance()
+
+    def advanceDial(self):
+        if characters[self._charIndex] != self._codeLetter:
+            self._clickSound.play()
+            self._charIndex += 1
+            if self._charIndex >= len(characters):
+                self._charIndex = 0
+            self.codeLabel.setText(characters[self._charIndex])
+            if characters[self._charIndex] == self._codeLetter:
+                self._timer.stop()
+            else:
+                self._timer.start(10)
 
     def moveToCodeLetter(self, letter):
         """
@@ -125,18 +138,14 @@ class LetterUnit(QWidget):
 
     def updateAppearance(self):
 
-        print("uA A")
         self.guessLabel.setText(self._guessLetter)
-        print("uA B")
         self.codeLabel.setText(self._codeLetter)
-        print("ua C")
         if self._codeLetter not in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ':
-            print("it's in the alphabet")
+            print("it's punctuation")
             self.guessLabel.setStyleSheet("QLabel { background-color : rgb(240, 240, 240); }")
         else:
-            print("it's a space")
+            print("it's in the alphabet")
             self.guessLabel.setStyleSheet("QLabel { background-color : white; }")
-        print("uA D")
 
 
 class AddCollection(QDialog):

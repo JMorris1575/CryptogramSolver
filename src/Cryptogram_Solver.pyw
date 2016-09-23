@@ -1,6 +1,7 @@
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+from PyQt5.QtMultimedia import QSound
 
 import src.data_structures
 import src.file_handler
@@ -65,33 +66,74 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
     def puzzleSelectorIndexChanged(self):
         print("Got to puzzleSelectorIndexChanged")
         self._currentPuzzleIndex = self.puzzleSelector.currentIndex()
-        print("A")
+        currentPuzzle = self.collection().puzzles()[self._currentPuzzleIndex]
         if self.puzzleSelector.currentIndex() >= 0:
-            code = self.collection().puzzles()[self._currentPuzzleIndex].puzzleCode()
+            code = currentPuzzle.puzzleCode()
+            citation = currentPuzzle.citationCode()
         else:
             code = ""
-        print("B code = ", code)
-        codeLength = len(code)
-        print("C codeLength = ", codeLength)
-        count = 0
-        print("D count = ", count)
-        for unit in self.letterUnits:
-            if count < codeLength:
-                unit.setCodeLetter(code[count])
-            else:
-                unit.setCodeLetter(' ')
-            count += 1
-        for unit in self.letterUnits:
-            print(unit.codeLetter())
+            citation = ""
+        self.display_puzzle(code, citation)
 
+    def display_puzzle(self, code, citation):
+        """
+        Displays the code in the puzzle area taking care of word wrap at the ends of the lines
+        :param code:
+        :return: None
+        """
+        # ToDo: display citation appropriately
+        words = code.split()
+        row = 0
+        column = 0
+        for word in words:
+            if column + len(word) <= self._columns:
+                column = self.display_word(word, row, column)
+            else:
+                row += 1
+                column = 0
+                column = self.display_word(word, row, column)
+        for index in range(row * self._columns + column, len(self.letterUnits)):
+            self.letterUnits[index].setCodeLetter(' ')
+        if citation:
+            if row + 1 < self._rows:
+                row += 1
+            column = self._columns - (len(citation) + 1)
+            citation = "-" + citation
+            words = citation.split()
+            for word in words:
+                column = self.display_word(word, row, column)
+
+    def display_word(self, word, row, column):
+        """
+        displays the given word in the puzzle panel
+        :param word: string
+        :param row: integer
+        :param column: integer
+        :return: new value of column
+        """
+        for char in word:
+            self.letterUnits[row * self._columns + column].setCodeLetter(char)
+            column += 1
+        if column < self._columns:
+            self.letterUnits[row * self._columns + column].setCodeLetter(' ')  # separate words with spaces
+            column += 1
+        return column
+
+            # Commented out 9-22-2016
+        # codeLength = len(code)
+        # count = 0
+        # for unit in self.letterUnits:
+        #     if count < codeLength:
+        #         unit.setCodeLetter(code[count])
+        #     else:
+        #         unit.setCodeLetter(' ')
+        #     count += 1
 
     def nextPuzzle(self, direction=None):
         print("Got to nextPuzzle.")
 
-
     def giveHint(self, direction=None):
         print("Got to giveHint.")
-
 
     def clearPuzzle(self, direction=None):
         print("Got to clearPuzzle.")
