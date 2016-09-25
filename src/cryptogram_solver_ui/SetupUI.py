@@ -266,6 +266,7 @@ class UserInterfaceSetup(object):
                 letterUnit = uiElements.LetterUnit(' ', ' ', xpos, ypos,
                                                    QSize(letterWidth, letterHeight), panel)
                 self.letterUnits.append(letterUnit)
+        self.letterUnits[0].setHighlight(True)
 
     def drawKeyboard(self, panel):
 

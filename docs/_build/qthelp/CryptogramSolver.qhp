@@ -14,6 +14,7 @@
                 <section title="Cryptogram Solver" ref="introduction.html">
                     <section title="Introduction" ref="introduction.html#introduction"/>
                 </section>
+                <section title="Solving Puzzles with Cryptogram Solver" ref="solving.html"/>
                 <section title="The File Menu" ref="filemenu.html">
                     <section title="New Player..." ref="filemenu.html#new-player"/>
                     <section title="Login..." ref="filemenu.html#login"/>
@@ -56,10 +57,10 @@
             <file>introduction.html</file>
             <file>puzzlemenu.html</file>
             <file>search.html</file>
-            <file>_images\AddCollectionDialog.png</file>
+            <file>solving.html</file>
+            <file>_images\addCollectionIcon.png</file>
             <file>_images\addCollectionSmall.png</file>
-            <file>_images\AddEditCollectionDialog.png</file>
-            <file>_images\AddEditPuzzleDialog.png</file>
+            <file>_images\AddEditDialog.png</file>
             <file>_images\AdminMenu.png</file>
             <file>_images\FileMenu.png</file>
             <file>_images\HelpMenu.png</file>

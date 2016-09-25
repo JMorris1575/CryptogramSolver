@@ -33,6 +33,16 @@ class LetterUnit(QWidget):
         self.setAppearance()
         self.move(self._xpos, self._ypos)
 
+        self._highlightFrame = QFrame(self)
+        self._highlightFrame.setFixedSize(self._size)
+        self._highlightFrame.setFrameStyle(QFrame.Panel)
+        self._highlightFrame.setLineWidth(2)
+        self._highlightFrame.setStyleSheet("QFrame { color : red; }")
+        self._highlightFrame.setVisible(False)
+
+        # ToDo: implement clicking on a LetterUnit to select it
+        # ToDo: implement moving from one LetterUnit to another with the arrow keys (maybe use shift-arrow to go to previous or next puzzle)
+
     def setAppearance(self):
         self.resize(self.size().width(), self._size.height())
 
@@ -46,7 +56,6 @@ class LetterUnit(QWidget):
             self.guessLabel.setStyleSheet("QLabel { background-color : white; }")
         else:
             self.guessLabel.setStyleSheet("QLabel { background-color : rgb(240, 240, 240); }")
-
             self.codeLabel = QLabel(self.codeLetter())
             self.codeLabel.setFont(self._letterFont)
             self.codeLabel.setStyleSheet("QLabel { background-color : ivory; }")
@@ -74,6 +83,14 @@ class LetterUnit(QWidget):
         # ToDo: Consider implementing moveToCodeLetter as was your original plan
         self._codeLetter = letter
         self.advanceDial()
+
+    def setHighlight(self, value):
+        """
+        Turns the highlight for this LetterUnit on or off
+        :param value:
+        :return: None
+        """
+        self._highlightFrame.setVisible(value)
 
     def advanceDial(self):
         if characters[self._charIndex] != self._codeLetter:

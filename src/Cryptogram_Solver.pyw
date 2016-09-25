@@ -63,7 +63,11 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
     def previousPuzzle(self):
         print("Got to previousPuzzle.")
 
+    def nextPuzzle(self):
+        print("Got to nextPuzzle")
+
     def puzzleSelectorIndexChanged(self):
+        # ToDo: implement the puzzle previousPuzzle and nextPuzzle functions
         print("Got to puzzleSelectorIndexChanged")
         self._currentPuzzleIndex = self.puzzleSelector.currentIndex()
         currentPuzzle = self.collection().puzzles()[self._currentPuzzleIndex]

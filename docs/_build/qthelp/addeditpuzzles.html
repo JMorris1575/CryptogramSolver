@@ -24,7 +24,7 @@
             
   <div class="section" id="adding-and-editing-puzzles-in-a-collection">
 <h1>Adding and Editing Puzzles in a Collection</h1>
-<img alt="_images/AddEditPuzzleDialog.png" src="_images/AddEditPuzzleDialog.png" />
+<img alt="../images/AddEditPuzzleDialog.png" src="../images/AddEditPuzzleDialog.png" />
 <p>Administrators of Cryptogram Solver can add puzzles, edit or delete existing puzzles in a collection.  The Add/Edit
 Collection dialog box appears when you have clicked the <strong>Add New Puzzle</strong> button, (See: <a class="reference internal" href="addcollection.html"><span class="doc">Adding a New Collection</span></a>.) when
 you have selected <strong>Edit Puzzles</strong> from the Admin menu, or when you have clicked the [] icon on the task bar.  When
@@ -39,13 +39,16 @@ enter it but that may be changed by use of the <strong>Puzzle Selector</strong>.
 <tbody valign="top">
 <tr class="row-odd"><td><strong>Add New Puzzle</strong></td>
 <td>Click this button to add a new puzzle to the current collection.
-Clicking this button will clear whatever may be displayed and start
-you with a clean slate for creating a new puzzle.</td>
+Clicking this button will activate the <strong>Puzzle Editor</strong> panel, if
+necessary, or clear whatever may be displayed there to start you
+with a clean slate for creating a new puzzle. Once clicked it will
+be disabled until the new puzzle is saved, or the Cancel Puzzle
+button is clicked.</td>
 </tr>
 <tr class="row-even"><td><strong>Puzzle Selector</strong></td>
 <td>This combo box contains the names of existing puzzles, if any, and
 can be used to select a puzzle to work on.  When adding a new
-puzzle this is blank until the Store Puzzle button is pressed.</td>
+puzzle this is blank until the <strong>Save Puzzle</strong> button is pressed.</td>
 </tr>
 <tr class="row-odd"><td><strong>Puzzle Name</strong></td>
 <td>Type the desired name of the puzzle into this box or keep the
@@ -57,9 +60,9 @@ This gives you the ability to, for instance, insert a puzzle you
 have forgotten.  If there are gaps in the sequence you can fill
 them the same way.  If you do not use the Puzzle n format and you
 type the name of an existing puzzle you will be asked if you want
-to replace the existing puzzle when you press the <strong>Store</strong> button.
-Every puzzle must have a name so if this  box is blank, none of the
-rest of the controls will be activated</td>
+to replace the existing puzzle when you press the <strong>Save Puzzle</strong>
+button.  Every puzzle must have a name so if this  box is blank,
+none of the rest of the controls will be activated.</td>
 </tr>
 <tr class="row-even"><td><strong>Puzzle Code</strong></td>
 <td>Type the cryptogram itself into this box.  The characters you type
@@ -138,7 +141,7 @@ session will, however, still be saved.</td>
       &copy;2016, James Morris.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
       
       |

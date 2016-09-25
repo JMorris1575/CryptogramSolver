@@ -12,6 +12,7 @@ Table of Contents:
    :maxdepth: 2
 
    introduction
+   solving
    filemenu
    puzzlemenu
    adminmenu
