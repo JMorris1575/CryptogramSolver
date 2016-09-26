@@ -78,6 +78,8 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
             code = ""
             citation = ""
         self.display_puzzle(code, citation)
+        self_currentLetterBox = 0
+        self.moveTo(self.letterUnits[0])
 
     def display_puzzle(self, code, citation):
         """

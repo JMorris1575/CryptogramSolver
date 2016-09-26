@@ -20,6 +20,8 @@ class UserInterfaceSetup(object):
         self.panel.resize(self.width(), self.height() - menuBar.height() - toolBar.height())
         self._rows = 5
         self._columns = 40
+        self._currentLetterBox = -1
+        self._activeUnits = []
         self.setupPlayPanel(self.panel)
 
     def setupBars(self, menuBar, toolBar):
@@ -265,8 +267,12 @@ class UserInterfaceSetup(object):
                 ypos = ybase + row * (letterHeight + letterHeight/2)
                 letterUnit = uiElements.LetterUnit(' ', ' ', xpos, ypos,
                                                    QSize(letterWidth, letterHeight), panel)
+                letterUnit.clicked.connect(self.letterUnitClicked)
+                # letterUnit.setIndex(len(self.letterUnits))   # the current length of self.letterUnits will be the index
                 self.letterUnits.append(letterUnit)
-        self.letterUnits[0].setHighlight(True)
+        # self.moveTo(self.letterUnits[0])
+        # # self.letterUnits[0].setRedFrame(True)
+        # self._currentLetterBox = 0
 
     def drawKeyboard(self, panel):
 
@@ -299,5 +305,36 @@ class UserInterfaceSetup(object):
         button.move(xpos, ypos)
         button.setFont(QFont("Arial", 14))
         return button
+
+    @pyqtSlot(QObject)
+    def letterUnitClicked(self, letter_unit):
+        print("Got to letterUnitClicked with letterUnit: ", letter_unit)
+        if letter_unit.enabled():
+            self._activeUnits = self.moveTo(letter_unit)
+
+    def moveTo(self, letter_unit):
+        # ToDo: Get the highlighting to work -- all the correct letters highlighted all of the time
+        """
+        Moves the focus to the given letterUnit by turning off the highlight on the previous unit, setting the
+        highlight on the current unit and marking all boxes in the puzzle with the same letter.
+        :param index:
+        :return: a list of letterUnits containing the same letter as the one at index
+        """
+        index = self.letterUnits.index(letter_unit)
+        self.letterUnits[self._currentLetterBox].setRedFrame(False)
+        self._currentLetterBox = index
+        letter_unit.setRedFrame(True)
+        codeLetter = letter_unit.codeLetter()
+        if codeLetter != ' ':
+            for unit in self._activeUnits:
+                unit.setHighlight(False)
+            activeUnits = []
+            for unit in self.letterUnits:
+                if unit.codeLetter() == codeLetter:
+                    activeUnits.append(unit)
+                    unit.setHighlight(True)
+            return activeUnits
+
+
 
 

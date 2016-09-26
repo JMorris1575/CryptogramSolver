@@ -14,10 +14,13 @@ characters = [' ', '!', '&', '*', '(', ')', '-', '+' , ';', ':', "'", '"', '<', 
 
 class LetterUnit(QWidget):
 
+    clicked = pyqtSignal(QObject)
+
     def __init__(self, codeLetter=" ", guessLetter=" ", xpos=0, ypos=0, size = QSize(20, 60), parent=None, enabled=False):
         super(LetterUnit, self).__init__(parent)
         self._codeLetter = codeLetter
         self._guessLetter = guessLetter
+        self._index = -1                # gives the index of this LetterUnit in the letterUnits list
         self._xpos = xpos
         self._ypos = ypos
         self._size = size
@@ -33,14 +36,28 @@ class LetterUnit(QWidget):
         self.setAppearance()
         self.move(self._xpos, self._ypos)
 
-        self._highlightFrame = QFrame(self)
-        self._highlightFrame.setFixedSize(self._size)
-        self._highlightFrame.setFrameStyle(QFrame.Panel)
-        self._highlightFrame.setLineWidth(2)
-        self._highlightFrame.setStyleSheet("QFrame { color : red; }")
-        self._highlightFrame.setVisible(False)
+        self._redFrame = QFrame(self)
+        self._redFrame.setFixedSize(self._size)
+        self._redFrame.setFrameStyle(QFrame.Panel)
+        self._redFrame.setLineWidth(2)
+        self._redFrame.setStyleSheet("QFrame { color : red; }")
+        self._redFrame.setVisible(False)
 
+        # self._highlightFrame = QFrame(self)
+        # self._highlightFrame.setFixedSize(self._size)
+        # self._highlightFrame.setFrameStyle(QFrame.StyledPanel)
+        # self._highlightFrame.setLineWidth(1)
+        # self._highlightFrame.setStyleSheet("QFrame { color : blue; }")
+        # self._highlightFrame.setVisible(False)
+
+    def mousePressEvent(self, event):
         # ToDo: implement clicking on a LetterUnit to select it
+        if event.button() != Qt.LeftButton:
+            event.ignore
+            return
+        self.clicked.emit(self)
+
+
         # ToDo: implement moving from one LetterUnit to another with the arrow keys (maybe use shift-arrow to go to previous or next puzzle)
 
     def setAppearance(self):
@@ -84,13 +101,39 @@ class LetterUnit(QWidget):
         self._codeLetter = letter
         self.advanceDial()
 
-    def setHighlight(self, value):
+    def enabled(self):
+        return self._enabled
+
+    def setRedFrame(self, value):
         """
         Turns the highlight for this LetterUnit on or off
         :param value:
         :return: None
         """
-        self._highlightFrame.setVisible(value)
+        self._redFrame.setVisible(value)
+
+    # def setHighlightFrame(self, value):
+    #     """
+    #     Turns the highlight for this LetterUnit on or off
+    #     The highlight indicates the LetterUnits that are currently active i.e. have the same codeLetter as the
+    #     selected LetterUnit
+    #     :param value:
+    #     :return: None
+    #     """
+    #     self._highlightFrame.setVisible(value)
+
+    def setHighlight(self, value):
+        """
+        Turns the highlight for this LetterUnit on or off
+        The highlight indicates the LetterUnits that are currently active i.e. have the same code Letter as the
+        selected LetterUnit
+        :param value:
+        :return: None
+        """
+        if value:
+            self.guessLabel.setStyleSheet("QLabel { background-color: rgb(208, 255, 208); }")
+        else:
+            self.guessLabel.setStyleSheet("QLabel { background-color : white; }")
 
     def advanceDial(self):
         if characters[self._charIndex] != self._codeLetter:
@@ -161,8 +204,10 @@ class LetterUnit(QWidget):
         if code_letter not in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ':
             self.guessLabel.setText(code_letter)
             self.guessLabel.setStyleSheet("QLabel { background-color : rgb(240, 240, 240); }")
+            self._enabled = False
         else:
             self.guessLabel.setStyleSheet("QLabel { background-color : white; }")
+            self._enabled = True
 
 
 class AddCollection(QDialog):
