@@ -70,16 +70,32 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
         # ToDo: implement the puzzle previousPuzzle and nextPuzzle functions
         print("Got to puzzleSelectorIndexChanged")
         self._currentPuzzleIndex = self.puzzleSelector.currentIndex()
+        print("currentPuzzleIndex = ", self._currentPuzzleIndex)
         currentPuzzle = self.collection().puzzles()[self._currentPuzzleIndex]
+        print("currentPuzzle code = ", currentPuzzle.puzzleCode())
         if self.puzzleSelector.currentIndex() >= 0:
             code = currentPuzzle.puzzleCode()
             citation = currentPuzzle.citationCode()
         else:
             code = ""
             citation = ""
+        print("displaying puzzle")
         self.display_puzzle(code, citation)
+        print("done displaying puzzle")
         self_currentLetterBox = 0
-        self.moveTo(self.letterUnits[0])
+        print("preparing to moveTo letterUnit 0")
+        self.setActiveUnits(self.moveTo(self.letterUnits[0]))
+
+    def units_set(self):
+        """
+        scans through all the letterUnits until finding one that is not set and returns False
+        if all are set, returns True
+        :return: boolean
+        """
+        for unit in self.letterUnits:
+            if not unit.set():
+                return False
+        return True
 
     def display_puzzle(self, code, citation):
         """

@@ -30,6 +30,8 @@ class UserInterfaceSetup(object):
         self.createAdminControls(menuBar, toolBar)
         self.createHelpControls(menuBar, toolBar)
 
+    def setActiveUnits(self, unitList):
+        self._activeUnits = unitList
 
     # File Controls Section
     # ------------------------------------------------------------------------------------------------------------------
@@ -308,7 +310,6 @@ class UserInterfaceSetup(object):
 
     @pyqtSlot(QObject)
     def letterUnitClicked(self, letter_unit):
-        print("Got to letterUnitClicked with letterUnit: ", letter_unit)
         if letter_unit.enabled():
             self._activeUnits = self.moveTo(letter_unit)
 
@@ -320,14 +321,15 @@ class UserInterfaceSetup(object):
         :param index:
         :return: a list of letterUnits containing the same letter as the one at index
         """
+        if self._activeUnits:
+            for unit in self._activeUnits:
+                unit.setHighlight(False)
         index = self.letterUnits.index(letter_unit)
         self.letterUnits[self._currentLetterBox].setRedFrame(False)
         self._currentLetterBox = index
         letter_unit.setRedFrame(True)
         codeLetter = letter_unit.codeLetter()
         if codeLetter != ' ':
-            for unit in self._activeUnits:
-                unit.setHighlight(False)
             activeUnits = []
             for unit in self.letterUnits:
                 if unit.codeLetter() == codeLetter:

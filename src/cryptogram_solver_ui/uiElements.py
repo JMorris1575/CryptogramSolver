@@ -27,6 +27,7 @@ class LetterUnit(QWidget):
         self._enabled = enabled
         self._letterFont = self.setLetterFont(self._size.width())
         self._active = False
+        self._set = False
         self._charIndex = 0
         self._clickSound = QSound('sounds/click.wav')
         self._timer = QTimer()
@@ -99,7 +100,10 @@ class LetterUnit(QWidget):
         """
         # ToDo: Consider implementing moveToCodeLetter as was your original plan
         self._codeLetter = letter
-        self.advanceDial()
+        self.updateAppearance(letter, ' ')
+
+    def set(self):
+        return self._set
 
     def enabled(self):
         return self._enabled
@@ -111,16 +115,6 @@ class LetterUnit(QWidget):
         :return: None
         """
         self._redFrame.setVisible(value)
-
-    # def setHighlightFrame(self, value):
-    #     """
-    #     Turns the highlight for this LetterUnit on or off
-    #     The highlight indicates the LetterUnits that are currently active i.e. have the same codeLetter as the
-    #     selected LetterUnit
-    #     :param value:
-    #     :return: None
-    #     """
-    #     self._highlightFrame.setVisible(value)
 
     def setHighlight(self, value):
         """
@@ -136,18 +130,25 @@ class LetterUnit(QWidget):
             self.guessLabel.setStyleSheet("QLabel { background-color : white; }")
 
     def advanceDial(self):
-        if characters[self._charIndex] != self._codeLetter:
-            self._charIndex += 1
-            if self._charIndex >= len(characters):
-                self._charIndex = 0
-            # self.codeLabel.setText(characters[self._charIndex])
-            self.updateAppearance(characters[self._charIndex], ' ')
-            if characters[self._charIndex] == self._codeLetter:
-                self.updateAppearance(self._codeLetter, ' ')
-                self._clickSound.play()
-                self._timer.stop()
-            else:
-                self._timer.start(self._interval)
+        #self.codeLabel.setText(self._codeLetter)
+        self.updateAppearance(self._codeLetter, ' ')
+
+    # def advanceDial(self):
+    #     if characters[self._charIndex] != self._codeLetter:
+    #         self._charIndex += 1
+    #         if self._charIndex >= len(characters):
+    #             self._charIndex = 0
+    #         # self.codeLabel.setText(characters[self._charIndex])
+    #         self.updateAppearance(characters[self._charIndex], ' ')
+    #         if characters[self._charIndex] == self._codeLetter:
+    #             self.updateAppearance(self._codeLetter, ' ')
+    #             self._clickSound.play()
+    #             while not self._clickSound.isFinished():
+    #             self._timer.stop()
+    #             self._set = True
+    #         else:
+    #             self._timer.start(self._interval)
+    #             self._set = False
 
     def moveToCodeLetter(self, letter):
         """
