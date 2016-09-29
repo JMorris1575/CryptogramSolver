@@ -18,6 +18,7 @@ class UserInterfaceSetup(object):
         self.setCentralWidget(self.panel)
         self.setupBars(menuBar, toolBar)
         self.panel.resize(self.width(), self.height() - menuBar.height() - toolBar.height())
+        self._keys = []
         self._rows = 5
         self._columns = 40
         self._currentLetterBox = -1
@@ -288,17 +289,20 @@ class UserInterfaceSetup(object):
         xposition = xbase
         yposition = 400
         for key in keyboardLineOne:
-            self.makeKeyButton(key, keySize, xposition, yposition, panel)
+            button = self.makeKeyButton(key, keySize, xposition, yposition, panel)
+            button.clicked.connect(self.keyButtonClicked)
             xposition += keySize + keyGap
         yposition += keySize + keyGap
         xposition = xbase + keySize/2
         for key in keyboardLineTwo:
-            self.makeKeyButton(key, keySize, xposition, yposition, panel)
+            button = self.makeKeyButton(key, keySize, xposition, yposition, panel)
+            button.clicked.connect(self.keyButtonClicked)
             xposition += keySize + keyGap
         yposition += keySize + keyGap
         xposition = xbase + keySize + 2
         for key in keyboardLineThree:
-            self.makeKeyButton(key, keySize, xposition, yposition, panel)
+            button = self.makeKeyButton(key, keySize, xposition, yposition, panel)
+            button.clicked.connect(self.keyButtonClicked)
             xposition += keySize + keyGap
 
     def makeKeyButton(self, key, keySize, xpos, ypos, parent):
@@ -307,6 +311,11 @@ class UserInterfaceSetup(object):
         button.move(xpos, ypos)
         button.setFont(QFont("Arial", 14))
         return button
+
+    def keyButtonClicked(self):
+        button = self.sender()
+        key = button.text()
+        self.updateSolution(key)
 
     @pyqtSlot(QObject)
     def letterUnitClicked(self, letter_unit):
@@ -336,6 +345,11 @@ class UserInterfaceSetup(object):
                     activeUnits.append(unit)
                     unit.setHighlight(True)
             return activeUnits
+
+    def updateSolution(self, key):
+        for box in self._activeUnits:
+            box.setSolutionLetter(key)
+
 
 
 

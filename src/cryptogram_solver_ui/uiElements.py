@@ -16,10 +16,10 @@ class LetterUnit(QWidget):
 
     clicked = pyqtSignal(QObject)
 
-    def __init__(self, codeLetter=" ", guessLetter=" ", xpos=0, ypos=0, size = QSize(20, 60), parent=None, enabled=False):
+    def __init__(self, codeLetter=" ", solutionLetter=" ", xpos=0, ypos=0, size = QSize(20, 60), parent=None, enabled=False):
         super(LetterUnit, self).__init__(parent)
         self._codeLetter = codeLetter
-        self._guessLetter = guessLetter
+        self._solutionLetter = solutionLetter
         self._index = -1                # gives the index of this LetterUnit in the letterUnits list
         self._xpos = xpos
         self._ypos = ypos
@@ -64,7 +64,7 @@ class LetterUnit(QWidget):
     def setAppearance(self):
         self.resize(self.size().width(), self._size.height())
 
-        self.guessLabel = QLabel(self._guessLetter)
+        self.guessLabel = QLabel(self._solutionLetter)
         self.guessLabel.setFont(self._letterFont)
         self.guessLabel.setStyleSheet("QLabel { background-color : white; }")
         self.guessLabel.setFrameStyle(QFrame.Panel | QFrame.Sunken)
@@ -101,6 +101,22 @@ class LetterUnit(QWidget):
         # ToDo: Consider implementing moveToCodeLetter as was your original plan
         self._codeLetter = letter
         self.updateAppearance(letter, ' ')
+
+    def solutionLetter(self):
+        """
+        Returns the solution letter aas a string
+        :return: QString
+        """
+        return self._solutionLetter
+
+    def setSolutionLetter(self, letter):
+        """
+        Sets the letter in the solution section of the box
+        :param letter:
+        :return: None
+        """
+        self._solutionLetter = letter
+        self.updateAppearance(self._codeLetter, letter)
 
     def set(self):
         return self._set

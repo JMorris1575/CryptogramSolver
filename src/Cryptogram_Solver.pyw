@@ -159,10 +159,8 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
     def clearPuzzle(self, direction=None):
         print("Got to clearPuzzle.")
 
-
     def giveUp(self):
         print("Got to giveUp.")
-
 
     def checkSolution(self):
         print("Got to checkSolution")
@@ -287,7 +285,6 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
             self._currentPuzzleIndex = 0
         else:
             self._currentPuzzleIndex = -1
-
 
 if __name__ == "__main__":
     import sys
