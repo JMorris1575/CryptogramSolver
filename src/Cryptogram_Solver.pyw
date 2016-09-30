@@ -14,7 +14,7 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
         super(MainWindow, self).__init__(parent)
 
         self._collection = src.file_handler.readCollection("Collections/test.col")  # temporary - for development
-        self.uiSetup(self)      # this is located in the file SetupUI.py
+        self.uiSetup()      # this is located in the file SetupUI.py
         self._currentPuzzleIndex = -1
 
         self.updatePuzzleSelector(self._collection.puzzles()) # temporary - for development?

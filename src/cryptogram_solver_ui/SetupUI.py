@@ -7,7 +7,7 @@ from src.cryptogram_solver_ui import uiElements
 
 class UserInterfaceSetup(object):
 
-    def uiSetup(self, CryptogramSolver):
+    def uiSetup(self):
 
         self.resize(800, 600)
         menuBar = self.menuBar()
@@ -323,7 +323,6 @@ class UserInterfaceSetup(object):
             self._activeUnits = self.moveTo(letter_unit)
 
     def moveTo(self, letter_unit):
-        # ToDo: Get the highlighting to work -- all the correct letters highlighted all of the time
         """
         Moves the focus to the given letterUnit by turning off the highlight on the previous unit, setting the
         highlight on the current unit and marking all boxes in the puzzle with the same letter.
