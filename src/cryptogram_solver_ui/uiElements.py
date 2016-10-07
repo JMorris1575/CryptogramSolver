@@ -98,7 +98,6 @@ class LetterUnit(QWidget):
         :param letter:
         :return: None
         """
-        # ToDo: Consider implementing moveToCodeLetter as was your original plan
         self._codeLetter = letter
         self.updateAppearance(letter, ' ')
 
@@ -142,29 +141,14 @@ class LetterUnit(QWidget):
         """
         if value:
             self.guessLabel.setStyleSheet("QLabel { background-color: rgb(208, 255, 208); }")
-        else:
+        elif self.codeLabel.text() in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
             self.guessLabel.setStyleSheet("QLabel { background-color : white; }")
+        else:
+            self.guessLabel.setStyleSheet("QLabel { background-color: rgb(240, 240, 240); }")
 
     def advanceDial(self):
         #self.codeLabel.setText(self._codeLetter)
         self.updateAppearance(self._codeLetter, ' ')
-
-    # def advanceDial(self):
-    #     if characters[self._charIndex] != self._codeLetter:
-    #         self._charIndex += 1
-    #         if self._charIndex >= len(characters):
-    #             self._charIndex = 0
-    #         # self.codeLabel.setText(characters[self._charIndex])
-    #         self.updateAppearance(characters[self._charIndex], ' ')
-    #         if characters[self._charIndex] == self._codeLetter:
-    #             self.updateAppearance(self._codeLetter, ' ')
-    #             self._clickSound.play()
-    #             while not self._clickSound.isFinished():
-    #             self._timer.stop()
-    #             self._set = True
-    #         else:
-    #             self._timer.start(self._interval)
-    #             self._set = False
 
     def moveToCodeLetter(self, letter):
         """
@@ -174,14 +158,6 @@ class LetterUnit(QWidget):
         """
         print("Got to moveToCodeLetter with letter: ", letter)
         self.setCodeLetter(letter)      # for now, until you get around to implementing something fancier
-
-    # def setMode(self, letter):
-    #     if letter not in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ':
-    #         self.codeLabel.setEnabled(False)
-    #         set.guessLabel.setEnabled(False)
-    #     else:
-    #         self.codeLabel.setEnabled(True)
-    #         self.guessLabel.setEnabled(True)
 
     def size(self):
         """

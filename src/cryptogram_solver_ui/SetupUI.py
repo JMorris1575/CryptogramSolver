@@ -92,24 +92,24 @@ class UserInterfaceSetup(object):
         selectAction.triggered.connect(self.selectPuzzle)
         puzzleMenu.addAction(selectAction)
 
-        previousAction = QAction(QIcon("images/PreviousIcon.png"), "&Previous Puzzle", self)
-        previousAction.setShortcut(QKeySequence.MoveToPreviousPage)
-        previousAction.setToolTip("Go to the previous puzzle in the collection.")
-        previousAction.triggered.connect(self.previousPuzzle)
-        puzzleMenu.addAction(previousAction)
-        toolBar.addAction(previousAction)
+        self.previousAction = QAction(QIcon("images/PreviousIcon.png"), "&Previous Puzzle", self)
+        self.previousAction.setShortcut(QKeySequence.MoveToPreviousPage)
+        self.previousAction.setToolTip("Go to the previous puzzle in the collection.")
+        self.previousAction.triggered.connect(self.previousPuzzle)
+        puzzleMenu.addAction(self.previousAction)
+        toolBar.addAction(self.previousAction)
 
         self.puzzleSelector = QComboBox()
         self.puzzleSelector.setMinimumWidth(100)
         self.puzzleSelector.currentIndexChanged.connect(self.puzzleSelectorIndexChanged)
         toolBar.addWidget(self.puzzleSelector)
 
-        nextAction = QAction(QIcon("images/NextIcon.png"), "&Next Puzzle", self)
-        nextAction.setShortcut(QKeySequence.MoveToNextPage)
-        nextAction.setToolTip("Go to the next puzzle in the collection.")
-        nextAction.triggered.connect(self.nextPuzzle)
-        puzzleMenu.addAction(nextAction)
-        toolBar.addAction(nextAction)
+        self.nextAction = QAction(QIcon("images/NextIcon.png"), "&Next Puzzle", self)
+        self.nextAction.setShortcut(QKeySequence.MoveToNextPage)
+        self.nextAction.setToolTip("Go to the next puzzle in the collection.")
+        self.nextAction.triggered.connect(self.nextPuzzle)
+        puzzleMenu.addAction(self.nextAction)
+        toolBar.addAction(self.nextAction)
 
         puzzleMenu.addSeparator()
         toolBar.addSeparator()
@@ -311,44 +311,6 @@ class UserInterfaceSetup(object):
         button.move(xpos, ypos)
         button.setFont(QFont("Arial", 14))
         return button
-
-    def keyButtonClicked(self):
-        button = self.sender()
-        key = button.text()
-        self.updateSolution(key)
-
-    @pyqtSlot(QObject)
-    def letterUnitClicked(self, letter_unit):
-        if letter_unit.enabled():
-            self._activeUnits = self.moveTo(letter_unit)
-
-    def moveTo(self, letter_unit):
-        """
-        Moves the focus to the given letterUnit by turning off the highlight on the previous unit, setting the
-        highlight on the current unit and marking all boxes in the puzzle with the same letter.
-        :param index:
-        :return: a list of letterUnits containing the same letter as the one at index
-        """
-        if self._activeUnits:
-            for unit in self._activeUnits:
-                unit.setHighlight(False)
-        index = self.letterUnits.index(letter_unit)
-        self.letterUnits[self._currentLetterBox].setRedFrame(False)
-        self._currentLetterBox = index
-        letter_unit.setRedFrame(True)
-        codeLetter = letter_unit.codeLetter()
-        if codeLetter != ' ':
-            activeUnits = []
-            for unit in self.letterUnits:
-                if unit.codeLetter() == codeLetter:
-                    activeUnits.append(unit)
-                    unit.setHighlight(True)
-            return activeUnits
-
-    def updateSolution(self, key):
-        for box in self._activeUnits:
-            box.setSolutionLetter(key)
-
 
 
 
