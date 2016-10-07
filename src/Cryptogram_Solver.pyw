@@ -14,7 +14,7 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
         super(MainWindow, self).__init__(parent)
 
         self._collection = src.file_handler.readCollection(
-            "Collections/test.col")  # for development
+            "Collections/HumorousCryptograms.col")  # for development
         self.uiSetup()      # this is located in the file SetupUI.py
         self._currentPuzzleIndex = -1
         self._currentPuzzle = None
@@ -329,23 +329,37 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
     def keyButtonClicked(self):
         button = self.sender()
         keyLetter = button.text()
-        if self._activeUnits:
-            letter = self._activeUnits[0].codeLetter()
-            if keyLetter in self._key_dict.values():
-                # ToDo: Fix ugliness of keyButtonClicked in main program
-                print("Give Warning?")
-                values = list(self._key_dict.values())
-                keys = list(self._key_dict.keys())
-                index = values.index(keyLetter)
-                self._key_dict.pop(keys[index])
+        self.processKey(keyLetter)
 
-            self._key_dict[letter] = keyLetter
-        # self.updateSolution(key)
-        currentPuzzle = self.collection().puzzles()[self._currentPuzzleIndex]
-        code = currentPuzzle.puzzleCode()
-        citation = currentPuzzle.citationCode()
-        self.display_puzzle()
-        self.updateActiveUnits()
+    def processKey(self, guessLetter):
+        """
+        warns the user if guessLetter has already been used
+        if user agrees, the old guess is removed from the self._key_dict and
+        replaced with the new one
+        if not, the guess is ignored
+        :param guessLetter: string
+        :return: None
+        """
+        if self._activeUnits:
+            codeLetter = self._activeUnits[0].codeLetter()
+            oldGuesses = list(self._key_dict.values())
+            codes = list(self._key_dict.keys())
+            if guessLetter in oldGuesses:
+                oldCodeLetter = codes[oldGuesses.index(guessLetter)]
+                msg = "The letter '" + guessLetter + "' is already being used\n"
+                msg += "for '" + oldCodeLetter + "'.\n\n"
+                msg += "Do you want to replace it?"
+                # ToDo: add a warnking sound in processKey
+                response = QMessageBox.question(self,
+                                                "Duplicate Letter Guessed",
+                                                msg)
+                if response == QMessageBox.Yes:
+                    self._key_dict.pop(oldCodeLetter)
+                    self._key_dict[codeLetter] = guessLetter
+            else:
+                self._key_dict[codeLetter] = guessLetter
+            self.display_puzzle()
+            self.updateActiveUnits()
 
     @pyqtSlot(QObject)
     def letterUnitClicked(self, letter_unit):
