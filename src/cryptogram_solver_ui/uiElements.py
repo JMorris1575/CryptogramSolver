@@ -44,20 +44,11 @@ class LetterUnit(QWidget):
         self._redFrame.setStyleSheet("QFrame { color : red; }")
         self._redFrame.setVisible(False)
 
-        # self._highlightFrame = QFrame(self)
-        # self._highlightFrame.setFixedSize(self._size)
-        # self._highlightFrame.setFrameStyle(QFrame.StyledPanel)
-        # self._highlightFrame.setLineWidth(1)
-        # self._highlightFrame.setStyleSheet("QFrame { color : blue; }")
-        # self._highlightFrame.setVisible(False)
-
     def mousePressEvent(self, event):
-        # ToDo: implement clicking on a LetterUnit to select it
         if event.button() != Qt.LeftButton:
             event.ignore
             return
         self.clicked.emit(self)
-
 
         # ToDo: implement moving from one LetterUnit to another with the arrow keys (maybe use shift-arrow to go to previous or next puzzle)
 

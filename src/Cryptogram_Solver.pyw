@@ -86,6 +86,7 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
         self.display_puzzle()
         self.setActiveUnits(self.moveTo(self.letterUnits[0]))
         self.manage_prev_next()
+        self.setFocus()
 
     def manage_prev_next(self):
         """
@@ -330,6 +331,33 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
         button = self.sender()
         keyLetter = button.text()
         self.processKey(keyLetter)
+
+    def keyPressEvent(self, e):
+        letter = e.text().upper()
+        keyPressed = e.key()
+        if letter != "" and letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
+            self.processKey(letter)
+        elif keyPressed == Qt.Key_Left:
+            index = self._currentLetterBox - 1
+            if index < 0:
+                index = len(self.letterUnits) - 1
+            while self.letterUnits[index].enabled() == False:
+                index -= 1
+            self._activeUnits = self.moveTo(self.letterUnits[index])
+        elif keyPressed == Qt.Key_Right:
+            print("Right Arrow Pressed")
+            index = self._currentLetterBox + 1
+            if index >= len(self.letterUnits):
+                index = 0
+            while self.letterUnits[index].enabled() == False:
+                index += 1
+            self._activeUnits = self.moveTo(self.letterUnits[index])
+        elif keyPressed == Qt.Key_Up:
+            print("Up Arrow Pressed")
+        elif keyPressed == Qt.Key_Down:
+            print("Down Arrow Pressed")
+        else:
+            return super(MainWindow, self).keyPressEvent(e)
 
     def processKey(self, guessLetter):
         """
