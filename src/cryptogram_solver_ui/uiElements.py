@@ -363,6 +363,8 @@ class CodeTextEdit(QTextEdit):
         super(CodeTextEdit, self).__init__()
 
     def keyPressEvent(self, e):
+        if e.text().upper() in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
+            QSound.play("sounds/" + e.text().upper() + ".wav")
         newEvent = QKeyEvent(QEvent.KeyPress, e.key(), e.modifiers(), text=e.text().upper())
         return super(CodeTextEdit, self).keyPressEvent(newEvent)
 
