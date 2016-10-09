@@ -363,9 +363,11 @@ class CodeTextEdit(QTextEdit):
         super(CodeTextEdit, self).__init__()
 
     def keyPressEvent(self, e):
-        if e.text().upper() in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
-            QSound.play("sounds/" + e.text().upper() + ".wav")
-        newEvent = QKeyEvent(QEvent.KeyPress, e.key(), e.modifiers(), text=e.text().upper())
+        upperText = e.text().upper()
+        if QApplication.focusWidget().accessibleName() == 'puzzleCodeEdit':
+            if upperText in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
+                QSound.play("sounds/" + upperText + ".wav")
+        newEvent = QKeyEvent(QEvent.KeyPress, e.key(), e.modifiers(), text=upperText)
         return super(CodeTextEdit, self).keyPressEvent(newEvent)
 
 class CodeLineEdit(QLineEdit):
@@ -374,7 +376,11 @@ class CodeLineEdit(QLineEdit):
         super(CodeLineEdit, self).__init__()
 
     def keyPressEvent(self, e):
-        newEvent = QKeyEvent(QEvent.KeyPress, e.key(), e.modifiers(), text=e.text().upper())
+        upperText = e.text().upper()
+        if QApplication.focusWidget().accessibleName() == 'citationCodeEdit':
+            if upperText in "ABCDEFGHIJKLMNOPQRSTUVWXY":
+                QSound.play("sounds/" + upperText + ".wav")
+        newEvent = QKeyEvent(QEvent.KeyPress, e.key(), e.modifiers(), text=upperText)
         return super(CodeLineEdit, self).keyPressEvent(newEvent)
 
 
@@ -588,12 +594,14 @@ class AddEditPuzzle(QDialog):
 
         puzzleCodeLabel = QLabel("Puzzle Code:")
         self.puzzleCodeEdit = CodeTextEdit()
+        self.puzzleCodeEdit.setAccessibleName("puzzleCodeEdit")
         self.puzzleCodeEdit.setTabChangesFocus(True)
         self.puzzleCodeEdit.setMaximumHeight(60)
         # self.puzzleCodeEdit.textChanged.connect(self.editBoxChanged)
 
         citationCodeLabel = QLabel("Citation Code (if any):")
         self.citationCodeEdit = CodeLineEdit()
+        self.citationCodeEdit.setAccessibleName("citationCodeEdit")
         # self.citationCodeEdit.textChanged.connect(self.editBoxChanged)
 
         puzzleSolutionLabel = QLabel("Puzzle Solution (if any):")
