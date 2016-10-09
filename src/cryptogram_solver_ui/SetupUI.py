@@ -25,6 +25,12 @@ class UserInterfaceSetup(object):
         self._activeUnits = []
         self.setupPlayPanel(self.panel)
 
+    def codeRows(self):
+        return self._rows
+
+    def codeColumns(self):
+        return self._columns
+
     def setupBars(self, menuBar, toolBar):
         self.createFileControls(menuBar, toolBar)
         self.createPuzzleControls(menuBar, toolBar)
@@ -271,11 +277,7 @@ class UserInterfaceSetup(object):
                 letterUnit = uiElements.LetterUnit(' ', ' ', xpos, ypos,
                                                    QSize(letterWidth, letterHeight), panel)
                 letterUnit.clicked.connect(self.letterUnitClicked)
-                # letterUnit.setIndex(len(self.letterUnits))   # the current length of self.letterUnits will be the index
                 self.letterUnits.append(letterUnit)
-        # self.moveTo(self.letterUnits[0])
-        # # self.letterUnits[0].setRedFrame(True)
-        # self._currentLetterBox = 0
 
     def drawKeyboard(self, panel):
 

@@ -345,17 +345,24 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
                 index -= 1
             self._activeUnits = self.moveTo(self.letterUnits[index])
         elif keyPressed == Qt.Key_Right:
-            print("Right Arrow Pressed")
             index = self._currentLetterBox + 1
             if index >= len(self.letterUnits):
                 index = 0
             while self.letterUnits[index].enabled() == False:
                 index += 1
+                if index >= len(self.letterUnits):
+                    index = 0
             self._activeUnits = self.moveTo(self.letterUnits[index])
         elif keyPressed == Qt.Key_Up:
-            print("Up Arrow Pressed")
+            index = self._currentLetterBox - self.codeColumns()
+            if index < 0:
+                index += len(self.letterUnits)
+            self._activeUnits = self.moveTo(self.letterUnits[index])
         elif keyPressed == Qt.Key_Down:
-            print("Down Arrow Pressed")
+            index = self._currentLetterBox + self.codeColumns()
+            if index >= len(self.letterUnits):
+                index = index % len(self.letterUnits)
+            self._activeUnits = self.moveTo(self.letterUnits[index])
         else:
             return super(MainWindow, self).keyPressEvent(e)
 
