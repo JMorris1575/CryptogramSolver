@@ -14,7 +14,7 @@ characters = [' ', '!', '&', '*', '(', ')', '-', '+' , ';', ':', "'", '"', '<', 
 
 class LetterUnit(QWidget):
 
-    clicked = pyqtSignal(QObject)
+    clicked = pyqtSignal(QObject, int)
 
     def __init__(self, codeLetter=" ", solutionLetter=" ", xpos=0, ypos=0, size = QSize(20, 60), parent=None, enabled=False):
         super(LetterUnit, self).__init__(parent)
@@ -45,12 +45,12 @@ class LetterUnit(QWidget):
         self._redFrame.setVisible(False)
 
     def mousePressEvent(self, event):
-        if event.button() != Qt.LeftButton:
+        button = event.button()
+        if button == Qt.LeftButton or button == Qt.RightButton:
+            self.clicked.emit(self, button)
+        else:
             event.ignore
             return
-        self.clicked.emit(self)
-
-        # ToDo: implement moving from one LetterUnit to another with the arrow keys (maybe use shift-arrow to go to previous or next puzzle)
 
     def setAppearance(self):
         self.resize(self.size().width(), self._size.height())
@@ -378,7 +378,7 @@ class CodeLineEdit(QLineEdit):
     def keyPressEvent(self, e):
         upperText = e.text().upper()
         if QApplication.focusWidget().accessibleName() == 'citationCodeEdit':
-            if upperText in "ABCDEFGHIJKLMNOPQRSTUVWXY":
+            if upperText in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
                 QSound.play("sounds/" + upperText + ".wav")
         newEvent = QKeyEvent(QEvent.KeyPress, e.key(), e.modifiers(), text=upperText)
         return super(CodeLineEdit, self).keyPressEvent(newEvent)

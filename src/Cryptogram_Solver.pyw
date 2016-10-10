@@ -330,13 +330,14 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
     def keyButtonClicked(self):
         button = self.sender()
         keyLetter = button.text()
-        self.processKey(keyLetter)
+        self.processGuess(keyLetter)
 
     def keyPressEvent(self, e):
+        # ToDo: don't highlight all the disabled letterUnits when moving up or down
         letter = e.text().upper()
         keyPressed = e.key()
         if letter != "" and letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
-            self.processKey(letter)
+            self.processGuess(letter)
         elif keyPressed == Qt.Key_Left:
             index = self._currentLetterBox - 1
             if index < 0:
@@ -363,12 +364,16 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
             if index >= len(self.letterUnits):
                 index = index % len(self.letterUnits)
             self._activeUnits = self.moveTo(self.letterUnits[index])
+        elif keyPressed == Qt.Key_Delete:
+            self._activeUnits = self.moveTo(self.letterUnits[self._currentLetterBox])
+            self.processGuess("")
         else:
             return super(MainWindow, self).keyPressEvent(e)
 
-    def processKey(self, guessLetter):
+    def processGuess(self, guessLetter):
         """
-        warns the user if guessLetter has already been used
+        if the guess letter is the empty string, the box is being cleared,
+        otherwise, warns the user if guessLetter has already been used
         if user agrees, the old guess is removed from the self._key_dict and
         replaced with the new one
         if not, the guess is ignored
@@ -376,30 +381,40 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
         :return: None
         """
         if self._activeUnits:
-            codeLetter = self._activeUnits[0].codeLetter()
-            oldGuesses = list(self._key_dict.values())
-            codes = list(self._key_dict.keys())
-            if guessLetter in oldGuesses:
-                oldCodeLetter = codes[oldGuesses.index(guessLetter)]
-                msg = "The letter '" + guessLetter + "' is already being used\n"
-                msg += "for '" + oldCodeLetter + "'.\n\n"
-                msg += "Do you want to replace it?"
-                # ToDo: add a warnking sound in processKey
-                response = QMessageBox.question(self,
-                                                "Duplicate Letter Guessed",
-                                                msg)
-                if response == QMessageBox.Yes:
-                    self._key_dict.pop(oldCodeLetter)
-                    self._key_dict[codeLetter] = guessLetter
+            if guessLetter == "":
+                codeLetter = self._activeUnits[0].codeLetter()
+                if codeLetter in self._key_dict:
+                    self._key_dict.pop(codeLetter)
             else:
-                self._key_dict[codeLetter] = guessLetter
+                codeLetter = self._activeUnits[0].codeLetter()
+                oldGuesses = list(self._key_dict.values())
+                codes = list(self._key_dict.keys())
+                if guessLetter in oldGuesses:
+                    oldCodeLetter = codes[oldGuesses.index(guessLetter)]
+                    QSound.play("sounds/error-01.wav")
+                    msg = "The letter '" + guessLetter + "' is already being used\n"
+                    msg += "for '" + oldCodeLetter + "'.\n\n"
+                    msg += "Do you want to replace it?"
+                    # ToDo: add a warning sound in processKey
+                    response = QMessageBox.question(self,
+                                                    "Duplicate Letter Guessed",
+                                                    msg)
+                    if response == QMessageBox.Yes:
+                        self._key_dict.pop(oldCodeLetter)
+                        self._key_dict[codeLetter] = guessLetter
+                else:
+                    self._key_dict[codeLetter] = guessLetter
             self.display_puzzle()
             self.updateActiveUnits()
 
-    @pyqtSlot(QObject)
-    def letterUnitClicked(self, letter_unit):
+    @pyqtSlot(QObject, int)
+    def letterUnitClicked(self, letter_unit, button):
         if letter_unit.enabled():
-            self._activeUnits = self.moveTo(letter_unit)
+            if button == Qt.LeftButton:
+                self._activeUnits = self.moveTo(letter_unit)
+            elif button == Qt.RightButton:
+                self._activeUnits = self.moveTo(letter_unit)
+                self.processGuess("")
 
     def moveTo(self, letter_unit):
         """
@@ -409,20 +424,18 @@ class MainWindow(QMainWindow, SetupUI.UserInterfaceSetup):
         :return: a list of letterUnits containing the same letter as the one at index
         """
         if self._activeUnits:
-            for unit in self._activeUnits:
-                unit.setHighlight(False)
+            self.clearActiveUnits()
         index = self.letterUnits.index(letter_unit)
         self.letterUnits[self._currentLetterBox].setRedFrame(False)
         self._currentLetterBox = index
         letter_unit.setRedFrame(True)
         codeLetter = letter_unit.codeLetter()
-        if codeLetter != ' ':
-            activeUnits = []
-            for unit in self.letterUnits:
-                if unit.codeLetter() == codeLetter:
-                    activeUnits.append(unit)
-                    unit.setHighlight(True)
-            return activeUnits
+        activeUnits = []
+        for unit in self.letterUnits:
+            if unit.codeLetter() == codeLetter:
+                activeUnits.append(unit)
+                unit.setHighlight(True)
+        return activeUnits
 
     def clearActiveUnits(self):
         for unit in self._activeUnits:
